@@ -5,6 +5,7 @@ body{
     font-family: 'Raleway', sans-serif;
     font-size:24px;
     text-align: center;
+    font-weight: 100;
 
 }
 
@@ -52,6 +53,7 @@ h2{
     color: rgb(0, 0, 0);
     font-size: 32px;
     Line-height: 42px;
+    font-weight: 500;
 
 }
 
@@ -71,7 +73,7 @@ button{
     width: 292px;
     font-size: 32px;   
     font-family: 'Raleway', sans-serif;
-    font-weight: bold;
+    font-weight: 400;
 }
 
 /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
