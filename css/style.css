@@ -1,0 +1,84 @@
+
+
+body{
+    background: linear-gradient(0deg, #1B6CB7, #1B6CB7), #CAF0FC;
+}
+
+.responsive{
+    max-height: 30vh;
+    width: auto;
+}
+
+#banner{
+    /* blue banner */    
+    background: #3C8EDA;
+}
+
+h1{
+    font-family:  'Brush Script MT', cursive;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10vh;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(0, -30%)
+
+}
+
+h2{
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 4vh;
+    font-weight: 500;
+}
+
+
+#content{
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    font-size:3vh;
+    text-align: center;
+    font-weight: 100;
+}
+
+#CTA{
+    text-align: center;
+}
+
+button{
+    
+    /* button style guide: https://www.w3schools.com/css/css3_buttons.asp */
+    
+    background-color: #97D3FF;
+    border: none;
+    color: black;
+    padding: 3.5vh 4vw;
+    border-radius: 4vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    width: 25vw;
+    font-size: 2vw;   
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+}
+
+/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
+
+.main-container {
+    font-family: 'Raleway', sans-serif;
+    background:rgb(255, 255, 255);
+    width:95vw;
+    height: 95vh;
+    display: grid;
+    box-shadow: -7px 8px 15px 3px rgba(71, 55, 171, 0.25);
+    border-radius: 15px;
+    grid-template-rows: 5% 20% auto 10% 8%;
+
+}
