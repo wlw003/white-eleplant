@@ -9,6 +9,19 @@ body{
     width: auto;
 }
 
+input{
+    border: 1px solid black;
+    color: black;
+    padding: 3.5vh 4vw;
+    border-radius: 5vw;
+    width: 25vw;
+    font-size: 2vw;   
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    cursor: ibeam;
+
+}
+
 #banner{
     /* blue banner */    
     background: #3C8EDA;
@@ -45,6 +58,9 @@ h2{
     font-size:3vh;
     text-align: center;
     font-weight: 100;
+    top: 50%;
+    left: 50%;
+
 }
 
 #CTA{
