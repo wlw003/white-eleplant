@@ -5,6 +5,8 @@
         <link href="css/style.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     </head>
     <body>
 
@@ -34,6 +36,73 @@
             
             </section>
         </div>
+        
+        <!-- Trigger the Modal -->
+        <img id="myImg" src="https://cdn3.iconfinder.com/data/icons/bold-blue-glyphs-free-samples/32/Info_Circle_Symbol_Information_Letter-512.png" 
+        alt="info" class="responsive_info">
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>
+                <h2>Game Instruction</h2>
+                1. Create game <br>
+                2. Invite friends<br>
+                3. Enter room code <br>
+                4. Once everyone’s in, host will press start wrapping<br>
+                5. Enter your gift with description<br>
+                6. Choose your wrapping paper<br>
+                7. Choose your gift<br>
+                8. Steal!<br>
+                9. Exchange info & ship!<br>
+
+            </p>
+        </div>
+
+
+        <script>
+        
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var img = document.getElementById("myImg");
+                img.onclick = function(){
+                modal.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
+
+            // Get the image and insert it inside the modal - use its "alt" text as a caption
+            var img = document.getElementById("myImg");
+            img.onclick = function(){
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            captionText.innerHTML = this.alt;
+}
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+            modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+                 }
+            }
+        </script>
+
 
     </body>
 </html>
+
+
