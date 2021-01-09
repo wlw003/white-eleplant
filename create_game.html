@@ -2,6 +2,13 @@
 <html>
     <head> 
         <Title>White Elephant</Title>
+            
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
         <link href="css/style.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
@@ -21,21 +28,23 @@
             <section id="content">
                 <br><br><br><br>
                 <h2>What's your name?
-                <form action="/action_page.php"></h2>
-                    <input type="text" id="name" name="name">
+                <form></h2>
+                    <input type="text" id="playerName" name="playerName" value="" required 
+                        minlength="1" maxlength="50">
+                    <input type="hidden" id="gameCode" name="game" value="">
                 </form>
             </section>
 
             <section id="CTA">
                 <p>
                     <!-- clicking link needs javascript https://www.w3schools.com/html/html_links.asp-->
-                    <button onclick="document.location='default.asp'">Submit</button>
+                    <button type="submit" id="roomSubmit">Submit</button>
                 </p>
             </section>
             <section id="blank">
             
             </section>
         </div>
-
+        <script type="text/javascript" src="js/createGame.js"></script>
     </body>
 </html>
