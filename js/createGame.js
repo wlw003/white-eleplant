@@ -44,12 +44,15 @@ function sendNewGame(code, name){;
   
   //let newGame = db.ref().push(); //this is for unique links
   //console.log(newGame.key);
-  let newGame = db.ref().child("game/" + code);
+  let newGame = db.ref().child("game/" + code +"/players/" + name);
   newGame.set({
-    players: name
+    giftDescription: "asdf",
+    giftLink: "asdf",
+    numSteal: 0,
+    giftReceived: "asdf"
   })
   console.log("sended");
-  return newGame.key;
+  return code;
 };
 
 // This function create a new game instance
