@@ -101,6 +101,11 @@ h2{
 
 }
 
+/* hide list in waiting room */
+
+#playerList{
+    list-style-type:none;
+}
 #CTA{
     text-align: center;
 }
