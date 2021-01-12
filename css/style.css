@@ -238,7 +238,7 @@ button{
 /* !!!!!!!!!!!gift as a radio button!!!!!!!!!!! */
 
 
-    .gb-selector input{
+    .gb-selector input[type="radio"]{
         margin:0;padding:0;
         -webkit-appearance:none;
            -moz-appearance:none;
