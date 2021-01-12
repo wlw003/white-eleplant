@@ -24,7 +24,7 @@ body{
 
 
 /* textbox (not on index page) */
-input{
+input[type="text"]{
     border: 1px solid black;
     color: black;
     padding: 3.5vh 4vw;
@@ -234,26 +234,27 @@ button{
     max-height: 15vh;
     width: auto;
     height: auto;
-
+  }
 /* !!!!!!!!!!!gift as a radio button!!!!!!!!!!! */
 
 
-    .cc-selector input{
+    .gb-selector input{
         margin:0;padding:0;
         -webkit-appearance:none;
            -moz-appearance:none;
                 appearance:none;
     }
-    .visa{background-image:url(/images/blueboxredribbon.png);}
-    .mastercard{background-image:url(/images/blueboxredribbon.png);}
-    
-    .cc-selector input:active +.drinkcard-cc{opacity: .9;}
-    .cc-selector input:checked +.drinkcard-cc{
+
+    .gb1{background-image:url(/images/blueboxredribbon.png);}
+    .gb2{background-image:url(/images/green\ box\ red\ ribbon.png);}
+
+    .gb-selector input:active +.open-gb{opacity: .9;}
+    .gb-selector input:checked +.open-gb{
         -webkit-filter: none;
            -moz-filter: none;
                 filter: none;
     }
-    .drinkcard-cc{
+    .open-gb{
         cursor:pointer;
         background-size:contain;
         background-repeat:no-repeat;
@@ -266,7 +267,7 @@ button{
            -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
                 filter: brightness(1.8) grayscale(1) opacity(.7);
     }
-    .drinkcard-cc:hover{
+    .open-gb:hover{
         -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
            -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
                 filter: brightness(1.2) grayscale(.5) opacity(.9);
