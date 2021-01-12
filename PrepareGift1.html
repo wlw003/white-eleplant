@@ -3,6 +3,12 @@
     <head> 
         <Title>White Elephant</Title>
         <link href="css/style.css" rel="stylesheet">
+                <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -22,22 +28,25 @@
                 <br>
                 <h2>Gift Description
                 <form action="/action_page.php">
-                    <input type="text" id="name" name="name" class="input_gift" placeholder="candy canes, chocolate bells, christmas tree"><br><br>
+                    <input type="text" id="giftDes" name="name" class="input_gift" 
+                        placeholder="candy canes, chocolate bells, christmas tree"
+                        required minlength="1" maxlength="180"><br><br>
                 Product URL <br>
-                    <input type="text" id="code" name="code" class="input_gift" placeholder="https://borders.com/saveourbooks">
+                    <input type="url" id="giftLink" name="code" class="input_gift" 
+                        placeholder="https://borders.com/saveourbooks" required minlength="1">
                 </h2></form>
             </section>
 
             <section id="CTA">
                 <p>
                     <!-- clicking link needs javascript https://www.w3schools.com/html/html_links.asp-->
-                    <button onclick="document.location='default.asp'">Submit</button>
+                    <button type="submit" id="roomSubmit">Submit</button>
                 </p>
             </section>
             <section id="blank">
             
             </section>
         </div>
-
+        <script type="text/javascript" src="js/wrappingGift.js"></script>
     </body>
 </html>

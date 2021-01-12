@@ -14,29 +14,10 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var db = firebase.database();
 
-function checkValidPasscode(c){
-  var ref = db.ref("game");
-
-  ref.once("value").then(function(snapshot){
-    var hasCode = snapshot.child(c).exists();
-    //console.log(hasCode);
-    return hasCode;
-  });
-};
-
-
-function writeNewPlayer(c, n){
-  db.ref().child("game/" + c +"/players/" + n).set({
-    name: n,
-    numSteal: 0,
-    giftReceived: "asdf"
-  });
-};
-
 function addPlayerToList(pn){
   var list = document.getElementById("playerList");
   var items = list.getElementsByTagName("li");
-  var toAdd = false;
+  //var toAdd = false;
   console.log(pn);
   for( var i = 0;i < items.length; ++i ){
     if(items[i].innerText == pn){
@@ -45,6 +26,21 @@ function addPlayerToList(pn){
   }
   var item = document.createElement("li");
   item.appendChild(document.createTextNode(pn));
+  list.appendChild(item);
+};
+
+function addReadyPlayerToList(pn){
+  var list = document.getElementById("playerList");
+  var items = list.getElementsByTagName("li");
+  //var toAdd = false;
+  console.log(pn);
+  for( var i = 0;i < items.length; ++i ){
+    if(items[i].innerText.includes(pn)){
+      return;
+    }
+  }
+  var item = document.createElement("li");
+  item.appendChild(document.createTextNode(pn + " (ready)"));
   list.appendChild(item);
 };
 
@@ -58,19 +54,12 @@ window.addEventListener("load", (event) => {
 
   if(temp[0] == "playerName"){
     var code = temp2[1];
-    var hostName = temp[1];
+    var name = temp[1];
   }
   else {
     var code = temp[1];
-    var hostName = temp2[1];
+    var name = temp2[1];
   }
-
-  var rc = document.getElementById("roomCode");
-  var rctxt = "Room Code: " + code;//window.location.href;
-  var rctn = document.createTextNode(rctxt)
-  rc.appendChild(rctn); 
-  writeNewPlayer(code, hostName);
-  //add host to player list
 
   var ref = db.ref("game/"+code).child("players");
   console.log(ref.toString());
@@ -81,15 +70,21 @@ window.addEventListener("load", (event) => {
     snapshot.forEach((childSnapshot) => {
       var key = childSnapshot.key;
       //var value = childSnapshot.val();
+      var des = childSnapshot.child("giftDescription").exists();
+      //var link = key.child("giftLink").exists();
       //console.log(key);
-      //console.log(value.name);
-      addPlayerToList(key);
+      //console.log(des);
+      if(des){
+        addReadyPlayerToList(key);
+      } else{
+        addPlayerToList(key);
+      }
     });
   });
   
-  let rs = document.getElementById("startWrap");
+/*   let rs = document.getElementById("startWrap");
   rs.addEventListener("click", (event) => {
     window.location.href = "./PrepareGift1.html"+location.search.substring();  
-  });
+  }); */
 });
 
