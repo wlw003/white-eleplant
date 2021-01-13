@@ -61,6 +61,31 @@ function getCurrentPlayer(code){
   });
 }
 
+function addGiftIconToTable(code){
+  var table = document.getElementById("giftTable");
+  var tr = document.createElement("tr");
+  var ref = db.ref("game/"+code).child("gift");
+  ref.once("value", (snapshot) => {
+    snapshot.forEach((childSnapshot) => {
+      var item = document.createElement("td");
+      var img = document.createElement("img");
+      var numSteal = childSnapshot.child("numStealLeft").val();
+        if(numSteal == 0){
+          img.src = "./images/unavailable present.png";
+          img.alt = "unavailable present";
+
+        } else {
+          img.src = "./images/blueboxredribbon.png";
+          img.alt = "Blue gift box with red ribbon";
+        }
+      img.class="responsive_gift";
+      item.appendChild(img);
+      tr.appendChild(item);
+    });
+  });
+  table.appendChild(tr);
+}
+
 function addGiftStealNumToTable(code){
   var table = document.getElementById("giftTable");
   var tr = document.createElement("tr");
@@ -170,8 +195,10 @@ window.addEventListener("load", (event) => {
 
   getCurrentPlayer(code);
   addOrderList(code);
+  addGiftIconToTable(code);
   addOwnGiftToTable(code, name);
   addGiftOwnerToTable(code);
   addGiftInfoToTable(code);
   addGiftStealNumToTable(code);
 });
+
