@@ -7,6 +7,13 @@
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+                        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+    </head>   
     </head>
     <body>
 
@@ -19,15 +26,10 @@
             </section>
 
             <section id="content">
-                <p>
-                <h2>Order</h2>
-                <br><br>
-                    1. name<br>
-                    2. name
-                </p>
-
-                
-
+                <ol id="playerOrder">
+                    <h2>Order</h2>
+                </ol>
+                <h2>Going to next page in <span id="countdown"></span>s</h2>
             </section>
 
             <section id="CTA">
@@ -37,6 +39,6 @@
             
             </section>
         </div>
-
+    <script type="text/javascript" src="js/order.js"></script>
     </body>
 </html>

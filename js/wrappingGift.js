@@ -14,7 +14,14 @@ firebase.initializeApp(config);
 // Get a reference to the database 
 var db = firebase.database();
 
-function writeGiftInfo(name, code, giftDes, giftLink){
+function writeGiftInfo(name, code, giftDes, giftLink){ 
+  db.ref("game/"+code+"/gift/"+name).set({
+    description: giftDes,
+    link: giftLink,
+    numStealLeft: 3,
+    openStatus: false,
+    owner:""
+  });
   var ref = db.ref("game/"+code+"/players").child(name);
   var updates ={};
   updates["/giftDescription"] = giftDes;

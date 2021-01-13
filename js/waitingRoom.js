@@ -26,17 +26,17 @@ function checkValidPasscode(c){
 
 
 function writeNewPlayer(c, n){
+  let orderNum = Math.floor(Math.random()*10000);
   db.ref().child("game/" + c +"/players/" + n).set({
     name: n,
-    numSteal: 0,
-    giftReceived: "asdf"
+    giftReceived: "",
+    order: orderNum
   });
 };
 
 function addPlayerToList(pn){
   var list = document.getElementById("playerList");
   var items = list.getElementsByTagName("li");
-  var toAdd = false;
   console.log(pn);
   for( var i = 0;i < items.length; ++i ){
     if(items[i].innerText == pn){

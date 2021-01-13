@@ -15,7 +15,7 @@ firebase.initializeApp(config);
 var db = firebase.database();
 
 function addPlayerToList(pn){
-  var list = document.getElementById("playerList");
+  var list = document.getElementById("playerOrder");
   var items = list.getElementsByTagName("li");
   //var toAdd = false;
   console.log(pn);
@@ -29,21 +29,26 @@ function addPlayerToList(pn){
   list.appendChild(item);
 };
 
-function addReadyPlayerToList(pn){
-  var list = document.getElementById("playerList");
-  var items = list.getElementsByTagName("li");
-  //var toAdd = false;
-  console.log(pn);
-  for( var i = 0;i < items.length; ++i ){
-    if(items[i].innerText.includes(pn)){
-      return;
-    }
-  }
-  var item = document.createElement("li");
-  item.appendChild(document.createTextNode(pn + " (ready)"));
-  list.appendChild(item);
-};
+function addPlayerToOrder(c, n, o){
+  db.ref("game/"+c+"/order/"+o).set({
+    name: n,
+    done: false
+  });
+}
 
+function goToNextPage(){
+  var timeleft = 5;
+  var countdown = document.getElementById("countdown");
+  countdown.appendChild(document.createTextNode(timeleft));
+  var pageTimer = setInterval(function(){
+    timeleft--;
+    countdown.textContent = timeleft;
+    if(timeleft <= 0) {
+      clearInterval(pageTimer);
+      window.location.href = "./choosingGift.html"+location.search.substring();
+    }
+  }, timeleft*1000);
+}
 
 window.addEventListener("load", (event) => {
   var sp = location.search.substring(1).split("&");
@@ -61,41 +66,24 @@ window.addEventListener("load", (event) => {
     var name = temp2[1];
   }
 
-  var ref = db.ref("game/"+code)
-  var p = ref.child("players");
+  var ref = db.ref("game/"+code).child("players");
   console.log(ref.toString());
-  p.on("value", (snapshot) => {
-    //console.log("inside on");
-    //var players = snapshot.val();
-    //console.log(players);
+  ref.orderByChild("order").once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var key = childSnapshot.key;
-      //var value = childSnapshot.val();
-      var des = childSnapshot.child("giftDescription").exists();
-      //var link = key.child("giftLink").exists();
       //console.log(key);
       //console.log(des);
-      if(des){
-        addPlayerToList(key);
-      }
+      addPlayerToList(key);
+      var orderNum = childSnapshot.child("order").val();
+      addPlayerToOrder(code, key, orderNum);
     });
   });
-
-  ref.once("value").then(function(snapshot){
-    var a = snapshot.child("players").numChildren();
-    var b = snapshot.child("gift").numChildren();
-    //console.log("p: " + a);
-    //console.log("g: " + b);
-    if(a == b){
-      window.location.href = "./order.html"+location.search.substring();
-    }
-  });
-
-  //check if gittNum == numPlayers, then go to order page
   
 /*   let rs = document.getElementById("startWrap");
   rs.addEventListener("click", (event) => {
     window.location.href = "./PrepareGift1.html"+location.search.substring();  
   }); */
+  //timer to go to the next page
+  //window.setTimeout(goToNextPage,10000);
+  goToNextPage();
 });
-
