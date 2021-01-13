@@ -47,6 +47,7 @@ function addOrderList(code){
 
 function getCurrentPlayer(code){
   var ref = db.ref("game/"+code).child("order");
+  var currPlayer = "";
   ref.once("value", (snapshot) => {
     var curr = false;
     snapshot.forEach((childSnapshot) => {
@@ -56,9 +57,25 @@ function getCurrentPlayer(code){
         var n = document.getElementById("currName");
         n.appendChild(document.createTextNode(key));
         curr = true;
+        currPlayer = key;
       }
     });
   });
+  return currPlayer;
+}
+
+function selectGift(){
+  let {code, name} = getUserData();
+  var ref = db.ref("game/"+code).child("gift");
+  ref.once("value", (snapshot) =>{
+    //get selected gift info
+  });
+  var update = {};
+  //update gift owner
+  update["/owner"] = name;
+  //update steal counter
+  //update open status
+  update["/openStatus"] = true;
 }
 
 function addGiftIconToTable(code){
@@ -70,7 +87,7 @@ function addGiftIconToTable(code){
       var item = document.createElement("td");
       var img = document.createElement("img");
       var numSteal = childSnapshot.child("numStealLeft").val();
-        if(numSteal == 0){
+        if(numSteal <= 0){
           img.src = "./images/unavailable present.png";
           img.alt = "unavailable present";
 
@@ -81,6 +98,11 @@ function addGiftIconToTable(code){
       img.class="responsive_gift";
       item.appendChild(img);
       tr.appendChild(item);
+
+      img.addEventListener("click", (event) =>{
+        //window.alert("testing");
+
+      });
     });
   });
   table.appendChild(tr);
@@ -97,7 +119,7 @@ function addGiftStealNumToTable(code){
       var strings = "";
       var item = document.createElement("td");
       if(open){
-        if(numSteal == 0){
+        if(numSteal <= 0){
           strings = "No steals left!";
         } else if(numSteal == 1){
           strings = "1 steal left!"; 
@@ -176,22 +198,27 @@ function addGiftInfoToTable(code){
   table.appendChild(tr);
 }
 
-
-window.addEventListener("load", (event) => {
+function getUserData(){
   var sp = location.search.substring(1).split("&");
   var temp = sp[0].split("=");
   //console.log(temp);
   var temp2 = sp[1].split("=");
   //console.log(temp2);
-
+  var code = "";
+  var name = "";
   if(temp[0] == "playerName"){
-    var code = temp2[1];
-    var name = temp[1];
+    code = temp2[1];
+    name = temp[1];
   }
   else {
-    var code = temp[1];
-    var name = temp2[1];
+    code = temp[1];
+    name = temp2[1];
   }
+  return {code, name};
+}
+
+window.addEventListener("load", (event) => {
+  let {code, name} = getUserData();
 
   getCurrentPlayer(code);
   addOrderList(code);
