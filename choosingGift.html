@@ -7,6 +7,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
     </head>
     <body>
 
@@ -15,7 +21,7 @@
 
             </section>
             <section id="banner">
-                <h1>NAME is choosing a gift</h1>
+                <h1><span id="currName"></span> is choosing a gift</h1>
             </section>
 
             <section id="content">
@@ -23,93 +29,14 @@
                 <div class="grid-container2">
 
                     <div class="item1">
-
-                        <h2>Order</h2>
-                        name<br>
-                        name<br>
-                        name<br>
-                        name<br>
-                        name<br>
-                        name<br>
-                        name<br>
-                        name<br>
-                        name<br>
-
-                    </div>
-                    <form>
-                    <div class="gb-selector">
-                            <input id="gb1" type="radio" name="gift-box1" value="gb1" />
-                            <label class="open-gb gb1" for="gb1"></label>
-                            <input id="gb2" type="radio" name="gift-box2" value="gb2"/>
-                            <label class="open-gb gb2" for="gb2"></label>
-                    </div>
-                    </form>
-
-                    <div class="item3">3
-
-                    </div> 
-
-
-
-                    <div class="item4">
-
-                        <p>
-                            Name's <br>
-                            <img src="/images/blueboxredribbon.png" alt="Blue Blue" class="responsive_gift"><br>
-                            3 steals left
-                        </p>
-
-                    </div>
-                    <div class="item5">
-                        <p>
-                            Name's <br>
-                            <img src="/images/orange box red ribbon.png" alt="Orange Red" class="responsive_gift"><br>
-                            3 steals left 
-                        </p>
-                        
-                    </div>
-                    <div class="item6">
-
-                        <p>
-                            Name's <br>
-                            <img src="/images/blueboxredribbon.png" alt="Blue Blue" class="responsive_gift"><br>
-                            3 steals left
-                        </p>
-                    </div>
-                    <div class="item7">
-
-                        <p>
-                            Name's <br>
-                            <img src="/images/blueboxredribbon.png" alt="Blue Blue" class="responsive_gift"><br>
-                            3 steals left
-                        </p>
-                    </div>
-                    <div class="item8">
-                        <p>
-                            Name's <br>
-                            <img src="/images/green box yellow ribbon.png" alt="Green Yellow" class="responsive_gift"><br>
-                            3 steals left 
-                        </p>
-                        
-                    </div>  
-                    <div class="item9">
-
-                        <p>
-                            Name's <br>
-                            <img src="/images/blueboxredribbon.png" alt="Blue Blue" class="responsive_gift"><br>
-                            3 steals left
-                        </p>
-                    </div>
-                    <div class="item10">
-
-                        <p>
-                            Name's <br>
-                            <img src="/images/blueboxredribbon.png" alt="Blue Blue" class="responsive_gift"><br>
-                            3 steals left
-                        </p>
+                        <ol id="playerOrder">
+                            <h2>Order</h2>
+                        </ol>
                     </div>
 
-                  </div>
+                    <table id="giftTable">
+                    </table>
+                </div>
 
             </section>
 
@@ -120,6 +47,6 @@
             
             </section>
         </div>
-
+    <script type="text/javascript" src="js/game.js"></script>
     </body>
 </html>
