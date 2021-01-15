@@ -7,6 +7,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
     </head>
     <body>
 
@@ -20,17 +26,9 @@
 
             <section id="content">
                 <h2> Game Summary</h2>
-                <p>
-                    NAME will give their gift to NAME<br>
-                    NAME will give their gift to NAME<br>
-                    NAME will give their gift to NAME<br>
-                    NAME will give their gift to NAME<br>
-                    NAME will give their gift to NAME<br>
-                    NAME will give their gift to NAME<br>
-                    NAME will give their gift to NAME<br>
-                    NAME will give their gift to NAME<br>
-                    NAME will give their gift to NAME<br>
-                </p>
+                <ol id="giftSummary">
+                </ol>
+                
                 <h2>Don't forget to contact your gift recipient for shipping details</h2>
             </section>
 
@@ -41,6 +39,6 @@
             
             </section>
         </div>
-
+        <script type="text/javascript" src="js/summary.js"></script>
     </body>
 </html>

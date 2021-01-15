@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head> 
-        <Title>White Elephant</Title>
+        <Title>White Elephant: Last Move</Title>
         <link href="css/style.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+                <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
     </head>
     <body>
 
@@ -15,13 +21,13 @@
 
             </section>
             <section id="banner">
-                <h1>NAME went first so they have a chance to steal!</h1>
+                <h1><span id="currName"></span> went first so they have a chance to steal!</h1>
             </section>
 
             <section id="content">
                 <br><br><br><br>
-                <button onclick="document.location='default.asp'">Steal a gift</button><br><br><br>
-                <button onclick="document.location='default.asp'">Keep my gift</button>
+                <button id="steal">Steal a gift</button><br><br><br>
+                <button id="keep">Keep my gift</button>
             </section>
 
             <section id="CTA">
@@ -31,6 +37,6 @@
             
             </section>
         </div>
-
+        <script type="text/javascript" src="js/firstPerson.js"></script>
     </body>
 </html>

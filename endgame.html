@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head> 
-        <Title>White Elephant</Title>
+        <Title>White Elephant: Game Summary</Title>
         <link href="css/style.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+            <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
     </head>
     <body>
 
@@ -20,7 +26,10 @@
 
             <section id="content">
                 <br><br><br><br>
-                <p>Here are the gifts everyone has received</p>
+                <p></p>
+                <ol id="giftSummary">
+                    <h2>Here are the gifts everyone has received</h2>
+                </ol>
                 
             </section>
 
@@ -31,6 +40,6 @@
             
             </section>
         </div>
-
+        <script type="text/javascript" src="js/endGame.js"></script>
     </body>
 </html>

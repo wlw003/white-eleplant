@@ -66,6 +66,13 @@ window.addEventListener("load", (event) => {
     var name = temp2[1];
   }
 
+  //create game play history
+  var newKey = db.ref().child("game/"+code+"/history").push().key;
+  var updates = {};
+  updates["game/"+code+"/history"+"/"+newKey] = name + " is ready!";
+  db.ref().update(updates);
+
+  //make player order list
   var ref = db.ref("game/"+code).child("players");
   console.log(ref.toString());
   ref.orderByChild("order").once("value", (snapshot) => {

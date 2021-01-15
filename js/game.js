@@ -49,10 +49,10 @@ function getCurrentPlayer(c){
   var ref = db.ref("game/"+c).child("order");
   ref.once("value", (snapshot) => {
     var curr = false;
-    var currPlayer = "";
     snapshot.forEach((childSnapshot) => {
       var key = childSnapshot.child("name").val();
       var d = childSnapshot.child("done").val();
+      var currPlayer = "";
       if(!d && !curr){
         var n = document.getElementById("currName");
         n.appendChild(document.createTextNode(key));
@@ -94,9 +94,11 @@ function selectGift(id){
     //change owner
     update["gift/"+id+"/owner"] = cp;
     update["order/"+order+"/done"] = true;
+    var newKey = ref.child("history").push().key;
+    update["history/"+newKey] = {currPlayer: cp, gift: id};
     //console.log(update);
     ref.update(update);
-    db.ref("game/"+code+"/gift").on("child_changed", location.reload());
+    //db.ref("game/"+code+"/gift").on("child_changed", location.reload());
   });
   
 }
@@ -117,13 +119,13 @@ function addGiftIconToTable(c){
         } else {
           img.src = "./images/blueboxredribbon.png";
           img.alt = "Blue gift box with red ribbon";
+          img.addEventListener("click", (event) =>{
+            window.alert("testing " + event.target.id);
+            selectGift(event.target.id);
+          }); 
         }
       img.id = childSnapshot.key;
       img.className = "responsive_gift "+ childSnapshot.key;
-      img.addEventListener("click", (event) =>{
-        window.alert("testing " + event.target.id);
-        selectGift(event.target.id);
-      }); 
       item.appendChild(img);
       tr.appendChild(item);
     });
@@ -248,18 +250,35 @@ function getUserData(){
   return {code, name};
 }
 
+function lastMove(c){
+  var ref = db.ref("game/"+c).child("order");
+  var doneCounter = 0;
+  ref.once("value", (snapshot) => {
+    snapshot.forEach((childSnapshot) => {
+      var open = childSnapshot.child("done").val();
+      if(open){
+        doneCounter++;
+      }
+    });
+    if(snapshot.numChildren() == doneCounter){
+      window.location.href = "./firstperson.html"+location.search.substring();
+    }
+  });
+}
+
 let ud = getUserData();
 let code = ud.code;
 let pname = ud.name;
 //console.log("code is "+ code + " & pname is "+ pname);
-
+getCurrentPlayer(code);
 addOrderList(code);
 addGiftIconToTable(code);
 addOwnGiftToTable(code, pname);
 addGiftOwnerToTable(code);
 addGiftInfoToTable(code);
 addGiftStealNumToTable(code);
-getCurrentPlayer(code);
+lastMove(code);
+
 /* window.addEventListener("DOMContentLoaded", (event) => {
   console.log(document.getElementById("currName"));
   document.querySelectorAll(".responsive_gift").forEach(function (icon){
@@ -296,3 +315,6 @@ const observer = new MutationObserver(function(){
   }
 });
 observer.observe(currPlayer, {subtree: true, childList: true});
+db.ref("game/"+code+"/order").on("child_changed", function(){
+  window.location.href = "./giftreveal.html"+location.search.substring();
+});
