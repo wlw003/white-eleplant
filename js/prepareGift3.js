@@ -78,18 +78,20 @@ window.addEventListener("load", (event) => {
       if(des){
         addPlayerToList(key);
       }
+
+      ref.once("value").then(function(snapshot){
+        var a = snapshot.child("players").numChildren();
+        var b = snapshot.child("gift").numChildren();
+        //console.log("p: " + a);
+        //console.log("g: " + b);
+        if(a == b){
+          window.location.href = "./order.html"+location.search.substring();
+        }
+      });
     });
   });
 
-  ref.once("value").then(function(snapshot){
-    var a = snapshot.child("players").numChildren();
-    var b = snapshot.child("gift").numChildren();
-    //console.log("p: " + a);
-    //console.log("g: " + b);
-    if(a == b){
-      window.location.href = "./order.html"+location.search.substring();
-    }
-  });
+
 
   //check if gittNum == numPlayers, then go to order page
   

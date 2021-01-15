@@ -15,17 +15,20 @@ firebase.initializeApp(config);
 var db = firebase.database();
 
 function writeGiftInfo(name, code, giftDes, giftLink){ 
-  db.ref("game/"+code+"/gift/"+name).set({
+  let passcode = Math.floor(Math.random()*10000);
+  db.ref("game/"+code+"/gift/"+passcode).set({
     description: giftDes,
     link: giftLink,
     numStealLeft: 3,
     openStatus: false,
-    owner:""
+    owner:"",
+    name: name,
   });
   var ref = db.ref("game/"+code+"/players").child(name);
   var updates ={};
   updates["/giftDescription"] = giftDes;
   updates["/giftLink"] = giftLink;
+  updates["/giftCode"] = passcode;
   console.log(updates);
   return ref.update(updates);
 }

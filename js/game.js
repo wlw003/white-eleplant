@@ -30,8 +30,8 @@ function addDonePlayerToList(pn){
   list.appendChild(item);
 };
 
-function addOrderList(code){
-  var ref = db.ref("game/"+code).child("order");
+function addOrderList(c){
+  var ref = db.ref("game/"+c).child("order");
   ref.once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var key = childSnapshot.child("name").val();
@@ -45,11 +45,11 @@ function addOrderList(code){
   });
 }
 
-function getCurrentPlayer(code){
-  var ref = db.ref("game/"+code).child("order");
-  var currPlayer = "";
+function getCurrentPlayer(c){
+  var ref = db.ref("game/"+c).child("order");
   ref.once("value", (snapshot) => {
     var curr = false;
+    var currPlayer = "";
     snapshot.forEach((childSnapshot) => {
       var key = childSnapshot.child("name").val();
       var d = childSnapshot.child("done").val();
@@ -61,27 +61,50 @@ function getCurrentPlayer(code){
       }
     });
   });
-  return currPlayer;
 }
 
-function selectGift(){
+function selectGift(id){
   let {code, name} = getUserData();
-  var ref = db.ref("game/"+code).child("gift");
-  ref.once("value", (snapshot) =>{
-    //get selected gift info
-  });
+  //console.log(id);
+  var ref = db.ref("game/"+code);
+  var cp = document.getElementById("currName").innerText;
+  //console.log(cp);
   var update = {};
-  //update gift owner
-  update["/owner"] = name;
-  //update steal counter
-  //update open status
-  update["/openStatus"] = true;
+  ref.once("value", (snapshot) =>{
+    //check if the gift is open or not
+    var openStatus = snapshot.child("gift/"+id+"/openStatus").val();
+    //console.log("openStatus: "+ openStatus);
+    if(openStatus){
+      //change the previous owner's openStatus to false
+      var prevOwner = snapshot.child("gift/"+id+"/owner").val();
+      //console.log(prevOwner);
+      var prevOwnerOrder = snapshot.child("players/"+prevOwner+"/order").val();
+      update["order/"+prevOwnerOrder+"/done"] = false;
+      //console.log(prevOwnerOrder);
+      //decrease steal counter
+      var currSteal = snapshot.child("gift/"+id+"/numStealLeft").val();
+      update["gift/"+id+"/numStealLeft"] = currSteal - 1;
+    } else {
+      //change openstatus to true
+      update["gift/"+id+"/openStatus"] = true;      
+    }
+    //change done status for current player to true
+    var order = snapshot.child("players/"+cp+"/order").val();
+    update["order/"+order+"/done"] = true;
+    //change owner
+    update["gift/"+id+"/owner"] = cp;
+    update["order/"+order+"/done"] = true;
+    //console.log(update);
+    ref.update(update);
+    db.ref("game/"+code+"/gift").on("child_changed", location.reload());
+  });
+  
 }
 
-function addGiftIconToTable(code){
+function addGiftIconToTable(c){
   var table = document.getElementById("giftTable");
   var tr = document.createElement("tr");
-  var ref = db.ref("game/"+code).child("gift");
+  var ref = db.ref("game/"+c).child("gift");
   ref.once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var item = document.createElement("td");
@@ -95,23 +118,23 @@ function addGiftIconToTable(code){
           img.src = "./images/blueboxredribbon.png";
           img.alt = "Blue gift box with red ribbon";
         }
-      img.class="responsive_gift";
+      img.id = childSnapshot.key;
+      img.className = "responsive_gift "+ childSnapshot.key;
+      img.addEventListener("click", (event) =>{
+        window.alert("testing " + event.target.id);
+        selectGift(event.target.id);
+      }); 
       item.appendChild(img);
       tr.appendChild(item);
-
-      img.addEventListener("click", (event) =>{
-        //window.alert("testing");
-
-      });
     });
   });
   table.appendChild(tr);
 }
 
-function addGiftStealNumToTable(code){
+function addGiftStealNumToTable(c){
   var table = document.getElementById("giftTable");
   var tr = document.createElement("tr");
-  var ref = db.ref("game/"+code).child("gift");
+  var ref = db.ref("game/"+c).child("gift");
   ref.once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var numSteal = childSnapshot.child("numStealLeft").val();
@@ -128,16 +151,17 @@ function addGiftStealNumToTable(code){
         }
       }
       item.appendChild(document.createTextNode(strings));
+      item.className = childSnapshot.key;
       tr.appendChild(item);
     });
   });
   table.appendChild(tr);
 }
 
-function addGiftOwnerToTable(code){
+function addGiftOwnerToTable(c){
   var table = document.getElementById("giftTable");
   var tr = document.createElement("tr");
-  var ref = db.ref("game/"+code).child("gift");
+  var ref = db.ref("game/"+c).child("gift");
   ref.once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var owner = childSnapshot.child("owner").val();
@@ -148,50 +172,56 @@ function addGiftOwnerToTable(code){
         s = owner;
       }
       item.appendChild(document.createTextNode(s));
+      item.className = childSnapshot.key;
       tr.appendChild(item);
     });
   });
   table.appendChild(tr);
 }
 
-function addOwnGiftToTable(code, name){
+function addOwnGiftToTable(c, pn){
   var table = document.getElementById("giftTable");
   var tr = document.createElement("tr");
-  var ref = db.ref("game/"+code).child("gift");
+  var ref = db.ref("game/"+c).child("gift");
   ref.once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
-      var key = childSnapshot.key;
+      var key = childSnapshot.child("name").val();
       var item = document.createElement("td");
-      if(key == name){
+      if(key == pn){
         item.appendChild(document.createTextNode("This is from you!"));
       } else {
         item.appendChild(document.createTextNode(""));
       }
+      item.className = childSnapshot.key;
       tr.appendChild(item);
     });
   });
   table.appendChild(tr);
 }
 
-function addGiftInfoToTable(code){
+function addGiftInfoToTable(c){
   var table = document.getElementById("giftTable");
   var tr = document.createElement("tr");
-  var ref = db.ref("game/"+code).child("gift");
+  var ref = db.ref("game/"+c).child("gift");
   ref.once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var open = childSnapshot.child("openStatus").val();
       var des = childSnapshot.child("description").val();
       var link = childSnapshot.child("link").val();
       var item = document.createElement("td");
+      //
       if(open){
         var a = document.createElement("a");
         a.appendChild(document.createTextNode(des))
         a.title = des;
         a.href = link;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
         item.appendChild(a);
       } else {
         item.appendChild(document.createTextNode(""));
       }
+      item.className = childSnapshot.key;
       tr.appendChild(item);
     });
   });
@@ -214,18 +244,55 @@ function getUserData(){
     code = temp[1];
     name = temp2[1];
   }
+  console.log("code is "+ code + " & name is "+ name);
   return {code, name};
 }
 
-window.addEventListener("load", (event) => {
-  let {code, name} = getUserData();
+let ud = getUserData();
+let code = ud.code;
+let pname = ud.name;
+//console.log("code is "+ code + " & pname is "+ pname);
 
-  getCurrentPlayer(code);
-  addOrderList(code);
-  addGiftIconToTable(code);
-  addOwnGiftToTable(code, name);
-  addGiftOwnerToTable(code);
-  addGiftInfoToTable(code);
-  addGiftStealNumToTable(code);
+addOrderList(code);
+addGiftIconToTable(code);
+addOwnGiftToTable(code, pname);
+addGiftOwnerToTable(code);
+addGiftInfoToTable(code);
+addGiftStealNumToTable(code);
+getCurrentPlayer(code);
+/* window.addEventListener("DOMContentLoaded", (event) => {
+  console.log(document.getElementById("currName"));
+  document.querySelectorAll(".responsive_gift").forEach(function (icon){
+    icon.addEventListener("click", (event) =>{
+      window.alert("testing " + event.target.id);
+      selectGift(event.target.id);
+    });
+  });
+  //console.log(document.getElementById("currName").innerHTML);
+  //db.ref("game/"+code+"/order").on("child_changed", location.reload());
+}); */
+
+/* img.addEventListener("click", (event) =>{
+  window.alert("testing " + event.target.id);
+  selectGift(event.target.id);
+}); */
+
+
+//make gift icon clickable only for current player
+var currPlayer = document.getElementById("currName");
+const observer = new MutationObserver(function(){
+  console.log('callback that runs when observer is triggered');
+  console.log(currPlayer.innerText);
+  //console.log("pname: "+pname);
+  if(currPlayer.innerText == pname){
+    console.log("same");
+    console.log(document.querySelectorAll(".responsive_gift"));
+/*     .forEach(function (icon){
+      icon.addEventListener("click", (event) =>{
+        window.alert("testing " + event.target.id);
+        selectGift(event.target.id);
+      });
+    }); */
+  }
 });
-
+observer.observe(currPlayer, {subtree: true, childList: true});

@@ -37,7 +37,7 @@ function addPlayerToOrder(c, n, o){
 }
 
 function goToNextPage(){
-  var timeleft = 5;
+  var timeleft = 3;
   var countdown = document.getElementById("countdown");
   countdown.appendChild(document.createTextNode(timeleft));
   var pageTimer = setInterval(function(){
@@ -76,6 +76,7 @@ window.addEventListener("load", (event) => {
       addPlayerToList(key);
       var orderNum = childSnapshot.child("order").val();
       addPlayerToOrder(code, key, orderNum);
+      goToNextPage();
     });
   });
   
@@ -85,5 +86,7 @@ window.addEventListener("load", (event) => {
   }); */
   //timer to go to the next page
   //window.setTimeout(goToNextPage,10000);
-  goToNextPage();
+
+  // need to find a way to get all users to get to the next pge at same time
+  
 });
