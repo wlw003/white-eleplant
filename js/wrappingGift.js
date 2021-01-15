@@ -22,6 +22,7 @@ function writeGiftInfo(name, code, giftDes, giftLink){
     numStealLeft: 3,
     openStatus: false,
     owner:"",
+    prevOwner:"",
     name: name,
   });
   var ref = db.ref("game/"+code+"/players").child(name);

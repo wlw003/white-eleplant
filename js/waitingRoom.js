@@ -29,7 +29,6 @@ function writeNewPlayer(c, n){
   let orderNum = Math.floor(Math.random()*10000);
   db.ref().child("game/" + c +"/players/" + n).set({
     name: n,
-    giftReceived: "",
     order: orderNum
   });
 };
@@ -66,7 +65,7 @@ window.addEventListener("load", (event) => {
   }
 
   var rc = document.getElementById("roomCode");
-  var rctxt = "Room Code: " + code;//window.location.href;
+  var rctxt = "Room Code: " + code;
   var rctn = document.createTextNode(rctxt)
   rc.appendChild(rctn); 
   writeNewPlayer(code, hostName);

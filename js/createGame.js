@@ -64,20 +64,8 @@ function createGame(){
   //get hostname from the form
   let name = document.getElementById("playerName").value;
   let  gc = document.getElementById("gameCode");
-  //console.log("before gc is " + gc.value + "!");
-  //add game UID to Firebase
-
-  var i = sendNewGame(code, name);
-  //console.log("done");
-  //console.log(code);
-  //console.log(name);
-  //console.log(url);   
   
-  checkValidPasscode(i);
-
-  //add game code to url
-  
-  gc.value = i;
+  gc.value = code;
   console.log(" after x is " + gc.value);
   return code;
 };
@@ -85,6 +73,8 @@ function createGame(){
 let rs = document.getElementById("roomSubmit");
 rs.addEventListener("click", (event) => {
   let x = createGame();
+  
+  //add game code to url
   let y = document.getElementById("playerName").value;
   let paramsString = "?playerName=" + y + "&game=" + x;
   //document.location.search = paramsString;

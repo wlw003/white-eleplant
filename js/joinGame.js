@@ -14,55 +14,37 @@ firebase.initializeApp(config);
 // Get a reference to the database 
 var db = firebase.database();
 
-function checkValidPasscode(c){
-  var ref = db.ref("game");
-
-  ref.once("value").then(function(snapshot){
-    var hasCode = snapshot.child(c).exists();
-    console.log(hasCode);
-    return hasCode;
-  });
-  //return false;
-};
-
-function checkValidPlayerName(n, c){
-  var ref = db.ref("game/"+c).child("players");
-  ref.on("value", (snapshot) => {
-    var hasName = snapshot.child(n).exists();
-    console.log("player: " + hasName);
-    return hasName;
-  });
-};
-
-function checkValid(n, c){
-  var ref = db.ref("game");
-  
-  ref.once("value").then(function(snapshot){
-    var code = snapshot.child(c);
-    var hasCode = code.exists();
-    console.log(hasCode);
-    if(hasCode){
-      var name = db.ref("game/"+c+"/players").get(n);
-      console.log(name);
-    }
-  });
-};
 let rs = document.getElementById("roomSubmit");
 rs.addEventListener("click", (event) => {
   //check if the code is valid
   let code = document.getElementById("gameCode").value;
   let name = document.getElementById("playerName").value;
-  if(checkValidPasscode(code)){
-    if(!checkValidPlayerName(name)){
-      let paramsString = "?playerName=" + name + "&game=" + code;
-      document.location.search = paramsString;
-      window.location.href = "./WaitingRoom.html"+paramsString;
+  
+  var ref = db.ref("game");
+  ref.once("value", (snapshot) => {
+    var c = snapshot.child(code);
+    var hasCode = c.exists();
+    //console.log(c.val());
+    if(hasCode){
+      console.log("inside hascode");
+      ref.child(code+"/players").once("value", (childSnapshot) =>{
+        var hasName = childSnapshot.child(name).exists();
+        if(hasName){
+          window.alert("This name is already taken! Please choose another name.");
+        } else{
+          let paramsString = "?playerName=" + name + "&game=" + code;
+          document.location.search = paramsString;
+          //console.log(paramsString);
+          window.location.href = "./WaitingRoom.html"+paramsString;  
+        }
+      });
+    } else{
+      window.alert("Invaild Code! Please enter a vaild code.")
     }
-
-  } 
-    let paramsString = "?playerName=" + name + "&game=" + code;
-    document.location.search = paramsString;
-    //console.log(paramsString);
-    window.location.href = "./WaitingRoom.html"+paramsString;  
-
+  });
+  
+/*   let paramsString = "?playerName=" + name + "&game=" + code;
+  document.location.search = paramsString;
+  //console.log(paramsString);
+  window.location.href = "./WaitingRoom.html"+paramsString;   */
 });
