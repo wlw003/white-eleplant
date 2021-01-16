@@ -99,9 +99,7 @@ function selectGift(id){
     update["history/"+newKey] = {currPlayer: cp, gift: id};
     //console.log(update);
     ref.update(update);
-    //db.ref("game/"+code+"/gift").on("child_changed", location.reload());
   });
-  
 }
 
 function addGiftIconToTable(c){
@@ -270,6 +268,17 @@ function lastMove(c){
         console.log("sdfsd");
         window.location.href = "./endGame.html"+location.search.substring();
       }
+      //case when all gift are stolen
+      var stealCounter = 0;
+      snapshot.child("gift").forEach((childSnapshot) =>{
+        var numSteal = childSnapshot.child("numStealLeft").val();
+        if(numSteal <= 0){
+          stealCounter++;
+        }
+      });
+      if(snapshot.child("gift").numChildren() == stealCounter){
+        window.location.href = "./endGame.html"+location.search.substring();
+      }
     } else{
       //first person even has not happened
       //want to check if everyone has choosen a gift already
@@ -281,7 +290,8 @@ function lastMove(c){
       })
       if(snapshot.child("order").numChildren() == doneCounter){
         console.log("sdfsd");
-        window.location.href = "./firstperson.html"+location.search.substring();
+        //window.location.href = "./firstperson.html"+location.search.substring();
+        window.location.href = "./endGame.html"+location.search.substring();
       }
     }
   });
