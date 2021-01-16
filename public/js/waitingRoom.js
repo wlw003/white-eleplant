@@ -88,7 +88,12 @@ window.addEventListener("load", (event) => {
   
   let rs = document.getElementById("startWrap");
   rs.addEventListener("click", (event) => {
-    window.location.href = "./PrepareGift1.html"+location.search.substring();  
+    var ref = db.ref("game/"+code).child("players");
+    ref.on("value", (snapshot) => {
+      if(snapshot.numChildren() > 1){
+        window.location.href = "./PrepareGift1.html"+location.search.substring();  
+      }
+    });
   });
 });
 

@@ -80,6 +80,7 @@ function selectGift(id){
       //console.log(prevOwner);
       var prevOwnerOrder = snapshot.child("players/"+prevOwner+"/order").val();
       update["order/"+prevOwnerOrder+"/done"] = false;
+      update["gift/"+id+"/prevOwner"] = prevOwner;
       //console.log(prevOwnerOrder);
       //decrease steal counter
       var currSteal = snapshot.child("gift/"+id+"/numStealLeft").val();
@@ -120,7 +121,7 @@ function addGiftIconToTable(c){
           img.src = "./images/blueboxredribbon.png";
           img.alt = "Blue gift box with red ribbon";
           img.addEventListener("click", (event) =>{
-            window.alert("testing " + event.target.id);
+            //window.alert("testing " + event.target.id);
             selectGift(event.target.id);
           }); 
         }
