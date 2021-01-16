@@ -212,7 +212,6 @@ function addGiftInfoToTable(c){
       var des = childSnapshot.child("description").val();
       var link = childSnapshot.child("link").val();
       var item = document.createElement("td");
-      //
       if(open){
         var a = document.createElement("a");
         a.appendChild(document.createTextNode(des))
@@ -254,36 +253,40 @@ function getUserData(){
 function lastMove(c){
   var ref = db.ref("game/"+c);
   var doneCounter = 0;
-  
-  ref.child("history").once("value", (childSnapshot) =>{
-    childSnapshot.forEach((childChildSnapshot) => {
-      var string = childChildSnapshot.val();
-     // console.log(string);
-      if(string == "End Game"){
-        //console.log("ending game");
+
+  ref.once("value").then(function(snapshot){
+    var fpe = snapshot.hasChild("firstPersonEvent");
+    if(fpe){
+      //first person event has happened already
+      console.log("firstPersonEvent");
+      //want to check if everyone has choosen a gift already
+      snapshot.child("order").forEach((childSnapshot) => {
+        var open = childSnapshot.child("done").val();
+        if(open){
+          doneCounter++;
+        }
+      })
+      if(snapshot.child("order").numChildren() == doneCounter){
+        console.log("sdfsd");
         window.location.href = "./endGame.html"+location.search.substring();
-      } else if(string == "First person is stealing"){
-        //console.log("stealing gift");
-        ref.child("order").once("value", (snapshot) => {
-          doneCounter = 0;
-          snapshot.forEach((childSnapshot) => {
-            var open = childSnapshot.child("done").val();
-            if(open){
-              doneCounter++;
-            }
-          });
-          if(snapshot.numChildren() == doneCounter){
-            //window.location.href = "./firstperson.html"+location.search.substring();
-            window.location.href = "./endGame.html"+location.search.substring();
-          }
-        });
-        //window.location.href = "./endGame.html"+location.search.substring();
-        //window.location.href = "./firstperson.html"+location.search.substring();
       }
-    });  
-    //window.location.href = "./firstperson.html"+location.search.substring();
+    } else{
+      //first person even has not happened
+      //want to check if everyone has choosen a gift already
+      snapshot.child("order").forEach((childSnapshot) => {
+        var open = childSnapshot.child("done").val();
+        if(open){
+          doneCounter++;
+        }
+      })
+      if(snapshot.child("order").numChildren() == doneCounter){
+        console.log("sdfsd");
+        window.location.href = "./firstperson.html"+location.search.substring();
+      }
+    }
   });
 
+/*   //all gift are choosen & first person event has not happened yet
   ref.child("order").once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var open = childSnapshot.child("done").val();
@@ -292,9 +295,37 @@ function lastMove(c){
       }
     });
     if(snapshot.numChildren() == doneCounter){
+      ref.child("firstPersonEvent").set(true);
+      console.log("sdfsd");
       window.location.href = "./firstperson.html"+location.search.substring();
     }
   });
+
+  ref.child("history").once("value", (childSnapshot) =>{
+    childSnapshot.forEach((childChildSnapshot) => {
+      var string = childChildSnapshot.val();
+     // console.log(string);
+      if(string == "End Game"){
+        //console.log("ending game");
+        window.location.href = "./endGame.html"+location.search.substring();
+      } else if(string == "First person is stealing"){
+        
+        ref.once("value", (snapshot) => {
+          var fpc = snapshot.hasChild("firstPersonEvent");
+          console.log("stealing gift");
+          if(fpc){
+            console.log("firstpersonevent happened");
+            window.location.href = "./endGame.html"+location.search.substring();
+          } else{
+            console.log("firstpersonevent didn't happened");
+            window.location.href = "./firstperson.html"+location.search.substring();
+          }
+        });
+      }
+    });  
+  }); */
+
+
 }
 
 let ud = getUserData();

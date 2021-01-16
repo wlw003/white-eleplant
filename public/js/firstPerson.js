@@ -62,6 +62,7 @@ function stealGift(c){
     //update history
     var newKey = ref.child("history").push().key;
     updates["history/"+newKey] = "First person is stealing";
+    ref.child("firstPersonEvent").set(true);
     ref.update(updates);
   });
   //go to choosing gift page
