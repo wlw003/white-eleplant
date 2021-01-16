@@ -56,7 +56,7 @@ window.addEventListener("load", (event) => {
       var link = childSnapshot.child("link").val();
 
       var item = document.createElement("li");
-      var txt = owner + "has received ";
+      var txt = owner + " has received ";
       item.appendChild(document.createTextNode(txt));
       var a = document.createElement("a");
       a.appendChild(document.createTextNode(giftDes))
