@@ -251,9 +251,39 @@ function getUserData(){
 }
 
 function lastMove(c){
-  var ref = db.ref("game/"+c).child("order");
+  var ref = db.ref("game/"+c);
   var doneCounter = 0;
-  ref.once("value", (snapshot) => {
+  
+  ref.child("history").once("value", (childSnapshot) =>{
+    childSnapshot.forEach((childChildSnapshot) => {
+      var string = childChildSnapshot.val();
+      console.log(string);
+      if(string == "End Game"){
+        console.log("ending game");
+        window.location.href = "./endGame.html"+location.search.substring();
+      } else if(string == "First person is stealing"){
+        console.log("stealing gift");
+        ref.child("order").once("value", (snapshot) => {
+          doneCounter = 0;
+          snapshot.forEach((childSnapshot) => {
+            var open = childSnapshot.child("done").val();
+            if(open){
+              doneCounter++;
+            }
+          });
+          if(snapshot.numChildren() == doneCounter){
+            //window.location.href = "./firstperson.html"+location.search.substring();
+            window.location.href = "./endGame.html"+location.search.substring();
+          }
+        });
+        //window.location.href = "./endGame.html"+location.search.substring();
+        //window.location.href = "./firstperson.html"+location.search.substring();
+      }
+    });  
+    //window.location.href = "./firstperson.html"+location.search.substring();
+  });
+
+  ref.child("order").once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var open = childSnapshot.child("done").val();
       if(open){

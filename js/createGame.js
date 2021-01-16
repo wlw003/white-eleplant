@@ -14,70 +14,32 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var db = firebase.database();
 
-function checkValidPasscode(c){
-  console.log("checking code");
-  var ref = db.ref("game/");
-  ref.once("value").then(function(snapshot){
-    var hasCode = snapshot.child(c).exists();
-    console.log(c+ " " + hasCode);
-    return hasCode;
-  });
-  return false;
-};
-
-// This function generate a random 4-digits passcode
-// need to add 0's in front if >= 3 digits in the html
-function generatePasscode(){  
-  let passcode = Math.floor(Math.random()*10000);
-  
-  //check if it is an unqiue passcode
-  let x = checkValidPasscode(passcode);
-  console.log(x);
-
-  return passcode.toString();
-};
-
-function sendNewGame(code, name){;
-/*   console.log("sending data to firebase");
-  console.log(code);
-  console.log(name); */
-  
-  //let newGame = db.ref().push(); //this is for unique links
-  //console.log(newGame.key);
-  let newGame = db.ref().child("game/" + code +"/players/" + name);
-  newGame.set({
-    giftDescription: "asdf",
-    giftLink: "asdf",
-    numSteal: 0,
-    giftReceived: "asdf"
-  })
-  console.log("sended");
-  return code;
-};
-
-// This function create a new game instance
-function createGame(){
-
-  //check if the generated passcode already exist or not
-  let code = generatePasscode();
-
-  //get hostname from the form
-  let name = document.getElementById("playerName").value;
-  let  gc = document.getElementById("gameCode");
-  
-  gc.value = code;
-  console.log(" after x is " + gc.value);
-  return code;
-};
-
 let rs = document.getElementById("roomSubmit");
 rs.addEventListener("click", (event) => {
-  let x = createGame();
+  let passcode = "";
+  //console.log("first: " + passcode);
+
+  var ref = db.ref("game/");
+  ref.once("value", (snapshot) => {
+    passcode = Math.floor(Math.random()*10000);
+    //check if it is an unqiue passcode
+    var hasCode = snapshot.child(passcode).exists();
+    //console.log(passcode+ " " + hasCode);
+    while(hasCode){
+      //console.log("inside while - "+ passcode+ " " + hasCode);
+      passcode = Math.floor(Math.random()*10000);
+      hasCode = snapshot.child(passcode).exists();
+      //console.log("new "+ passcode+ " " + hasCode);
+    }
+    //console.log("final " + passcode);
+
+    //add user & game code to url
+    let y = document.getElementById("playerName").value;
+    let paramsString = "?playerName=" + y + "&game=" + passcode;
+    //document.location.search = paramsString;
+    //console.log(paramsString);
+    window.location.href = "./WaitingRoom.html"+paramsString;
+
+  });
   
-  //add game code to url
-  let y = document.getElementById("playerName").value;
-  let paramsString = "?playerName=" + y + "&game=" + x;
-  //document.location.search = paramsString;
-  //console.log(paramsString);
-  window.location.href = "./WaitingRoom.html"+paramsString;
 });
