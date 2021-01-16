@@ -37,7 +37,7 @@ function getUserData(){
 let ud = getUserData();
 let code = ud.code;
 let pname = ud.name;
-var stealBtn = document.getElementById("steal");
+//var stealBtn = document.getElementById("steal");
 var keepBtn = document.getElementById("keep");
 
 var ref = db.ref("game/"+code);
@@ -89,9 +89,9 @@ const observer = new MutationObserver(function(){
   console.log(currPlayer.innerText);
   if(currPlayer.innerText == pname){
     console.log("same");
-    stealBtn.addEventListener("click", function(){
+/*     stealBtn.addEventListener("click", function(){
       stealGift(code);
-    });
+    }); */
     keepBtn.addEventListener("click", function(){
       keepGift(code);
     });

@@ -37,17 +37,21 @@ function addPlayerToOrder(c, n, o){
 }
 
 function goToNextPage(){
-  var timeleft = 3;
+  var timeleft = "";
   var countdown = document.getElementById("countdown");
+  var txt = "Now you will be redirected to the next step.";
   countdown.appendChild(document.createTextNode(timeleft));
+  timeleft = 3;
+  countdown.innerText = timeleft;
   var pageTimer = setInterval(function(){
+    countdown.innerText = timeleft;
     timeleft--;
-    countdown.textContent = timeleft;
     if(timeleft <= 0) {
       clearInterval(pageTimer);
       window.location.href = "./choosingGift.html"+location.search.substring();
     }
   }, timeleft*1000);
+  
 }
 
 window.addEventListener("load", (event) => {

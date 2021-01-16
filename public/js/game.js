@@ -317,7 +317,7 @@ function lastMove(c){
      // console.log(string);
       if(string == "End Game"){
         //console.log("ending game");
-        window.location.href = "./endGame.html"+location.search.substring();
+        window.location.href = "./endgame.html"+location.search.substring();
       } else if(string == "First person is stealing"){
         
         ref.once("value", (snapshot) => {
@@ -325,7 +325,7 @@ function lastMove(c){
           console.log("stealing gift");
           if(fpc){
             console.log("firstpersonevent happened");
-            window.location.href = "./endGame.html"+location.search.substring();
+            window.location.href = "./endgame.html"+location.search.substring();
           } else{
             console.log("firstpersonevent didn't happened");
             window.location.href = "./firstperson.html"+location.search.substring();
