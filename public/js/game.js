@@ -258,12 +258,12 @@ function lastMove(c){
   ref.child("history").once("value", (childSnapshot) =>{
     childSnapshot.forEach((childChildSnapshot) => {
       var string = childChildSnapshot.val();
-      console.log(string);
+     // console.log(string);
       if(string == "End Game"){
-        console.log("ending game");
+        //console.log("ending game");
         window.location.href = "./endGame.html"+location.search.substring();
       } else if(string == "First person is stealing"){
-        console.log("stealing gift");
+        //console.log("stealing gift");
         ref.child("order").once("value", (snapshot) => {
           doneCounter = 0;
           snapshot.forEach((childSnapshot) => {
@@ -331,12 +331,12 @@ lastMove(code);
 //make gift icon clickable only for current player
 var currPlayer = document.getElementById("currName");
 const observer = new MutationObserver(function(){
-  console.log('callback that runs when observer is triggered');
-  console.log(currPlayer.innerText);
+  //console.log('callback that runs when observer is triggered');
+  //console.log(currPlayer.innerText);
   //console.log("pname: "+pname);
   if(currPlayer.innerText == pname){
     console.log("same");
-    console.log(document.querySelectorAll(".responsive_gift"));
+    //console.log(document.querySelectorAll(".responsive_gift"));
 /*     .forEach(function (icon){
       icon.addEventListener("click", (event) =>{
         window.alert("testing " + event.target.id);
