@@ -266,7 +266,7 @@ function lastMove(c){
       })
       if(snapshot.child("order").numChildren() == doneCounter){
         console.log("sdfsd");
-        window.location.href = "./endGame.html"+location.search.substring();
+        window.location.href = "./endgame.html"+location.search.substring();
       }
       //case when all gift are stolen
       var stealCounter = 0;
@@ -277,7 +277,7 @@ function lastMove(c){
         }
       });
       if(snapshot.child("gift").numChildren() == stealCounter){
-        window.location.href = "./endGame.html"+location.search.substring();
+        window.location.href = "./endgame.html"+location.search.substring();
       }
     } else{
       //first person even has not happened
@@ -291,7 +291,7 @@ function lastMove(c){
       if(snapshot.child("order").numChildren() == doneCounter){
         console.log("sdfsd");
         //window.location.href = "./firstperson.html"+location.search.substring();
-        window.location.href = "./endGame.html"+location.search.substring();
+        window.location.href = "./endgame.html"+location.search.substring();
       }
     }
   });
