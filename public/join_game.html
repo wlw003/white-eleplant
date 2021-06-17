@@ -30,7 +30,9 @@
                 <h2>What's your name?
                 <form>
                     <input type="text" id="playerName" name="playerName" value="" required 
-                        minlength="1" maxlength="50"><br><br>
+                        minlength="1" maxlength="12" pattern="[A-Za-z0-9_]">
+                    <br>
+                    <span id="charas">12</span> characters remaining<br>
                 Enter Room Code <br>
                     <input type="text" id="gameCode" name="code" required minlength="1"
                         maxlength="4">

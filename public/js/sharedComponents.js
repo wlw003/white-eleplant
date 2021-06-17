@@ -15,3 +15,9 @@ firebase.initializeApp(config);
 
 // Get a reference to the database service
 const db = firebase.database();
+
+function countCharacters(playerNameLength, counter){
+  var maxLength = 12;
+
+  counter.textContent = maxLength-playerNameLength;
+}
