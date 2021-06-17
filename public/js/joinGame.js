@@ -6,13 +6,11 @@ input.addEventListener("input", (event) => {
   playerNameLength = input.value.legnth;
   counter = document.getElementById("charas");
 
-  countCharacters(input.value.length, counter);
+  countCharactersRemaining(input.value.length, counter);
 
-  if(input.validity.typeMismatch){
-    input.setCustomValidity("Name cannot start with a space or contain any emojis.");
-  } else{
-    input.setCustomValidity("");
-  }
+  var errorMessage = document.getElementById("errorMessage");
+
+  validateName(input.value, errorMessage);
 });
 
 rs.addEventListener("click", (event) => {
