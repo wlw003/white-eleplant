@@ -14,7 +14,31 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 var db = firebase.database();
 
+// check name's validity
+const input = document.getElementById("playerName");
+input.addEventListener("input", (event) => {
+  if(input.validity.typeMismatch){
+    input.setCustomValidity("Name cannot start with a space or contain any emojis.");
+  } else{
+    input.setCustomValidity("");
+  }
+});
+
+//name character remining counter
+var maxLength = 12;
+input.addEventListener('keyup', countCharacters, false);
+
+function countCharacters(e){
+  var textEntered, countRemaining, counter;
+  textEntered = document.getElementById("playerName").value;
+  counter = (12-(textEntered.length));
+  countRemaining = document.getElementById("charas");
+  countRemaining.textContent = counter;
+}
+
+
 let rs = document.getElementById("roomSubmit");
+
 rs.addEventListener("click", (event) => {
   let passcode = "";
   //console.log("first: " + passcode);

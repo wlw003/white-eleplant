@@ -27,10 +27,12 @@
 
             <section id="content">
                 <br><br><br><br>
-                <h2>What's your name?
-                <form></h2>
+                <form>
+                    <label for="name"><h2> What's your name? </h2></label>
                     <input type="text" id="playerName" name="playerName" value="" required 
-                        minlength="1" maxlength="50">
+                        minlength="1" maxlength="12" pattern="[A-Za-z0-9_]">
+                    <br>    
+                    <span id="charas">12</span> characters remaining
                 </form>
             </section>
 
