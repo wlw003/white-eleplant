@@ -1,5 +1,4 @@
 // Set the configuration for your app
-// TODO: Replace with your project's config object
 const config = {
   apiKey: "AIzaSyBjoRL9kjfr_kDvf9xbLvT6SaNjX2Up_pU",
   authDomain: "white-elephant-9ca35.firebaseapp.com",
@@ -15,18 +14,22 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 const db = firebase.database();
 
-// Count player names remaining characters
-// playerNameLength (int)
-// counter (int)
+/**
+ * Function that counts player's name's remaining characters
+ * @param {int} playerNameLength 
+ * @param {element} element containing counter 
+ */
 function updateCounter(playerNameLength, counter){
   var maxLength = 12;
 
   counter.textContent = maxLength-playerNameLength;
 };
 
-// Validate player name
-// playerName (node)
-// errorMessage (string)
+/** 
+ * Function that validate player's name
+ * @param {element} element containing player's name
+ * @param {element} element containing error message  
+*/
 function validatePlayerName(playerName, errorMessage) {
   // Define regular expression: No starting and trailing spaces or empty playerName
   var regex = /^(?! )[\u0020-\u007E]+(?<! )$/;

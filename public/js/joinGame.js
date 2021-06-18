@@ -1,25 +1,25 @@
-// Get playerName node
+// Get playerName element
 const playerName = document.getElementById("playerName");
 
-//  Handle playerName node input event
+//  Handle playerName element input event
 playerName.addEventListener("input", (event) => {
-  //  Get counter node
+  //  Get counter element
   counter = document.getElementById("counter");
 
   //  Update counter
   updateCounter(playerName.value.length, counter);
 
-  //  Get errorMessage node
+  //  Get errorMessage element
   var errorMessage = document.getElementById("errorMessage");
 
   //  Validate player name
   validatePlayerName(playerName, errorMessage);
 });
 
-//  Get roomSubmit node
+//  Get roomSubmit element
 let roomSubmit = document.getElementById("roomSubmit");
 
-//  Handle roomSubmit node click event
+//  Handle roomSubmit element click event
 roomSubmit.addEventListener("click", (event) => {
   //check if the code is valid
   let code = document.getElementById("gameCode").value;
