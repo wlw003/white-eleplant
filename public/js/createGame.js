@@ -1,25 +1,25 @@
-// Get playerName element
+// Get playerName node
 const playerName = document.getElementById("playerName");
 
-// Handle playerName element input event
+//  Handle playerName node input event
 playerName.addEventListener("input", (event) => {
-  // Get counter element
+  // Get counter node
   counter = document.getElementById("counter");
 
   // Update counter
   updateCounter(playerName.value.length, counter);
 
-  // Get errorMessage element
+  // Get errorMessage node
   var errorMessage = document.getElementById("errorMessage");
 
   // Validate player name
   validatePlayerName(playerName, errorMessage);
 });
 
-// Get roomSubmit element
+// Get roomSubmit node
 let roomSubmit = document.getElementById("roomSubmit");
 
-// Handle roomSubmit element click event
+// Handle roomSubmit node click event
 roomSubmit.addEventListener("click", (event) => {
   let passcode = "";
   //console.log("first: " + passcode);
@@ -27,7 +27,7 @@ roomSubmit.addEventListener("click", (event) => {
   var ref = db.ref("game/");
   ref.once("value", (snapshot) => {
     passcode = Math.floor(Math.random()*10000);
-    // check if it is an unqiue passcode
+    //check if it is an unqiue passcode
     var hasCode = snapshot.child(passcode).exists();
     //console.log(passcode+ " " + hasCode);
     while(hasCode){
@@ -38,7 +38,7 @@ roomSubmit.addEventListener("click", (event) => {
     }
     //console.log("final " + passcode);
 
-    // add user & game code to url
+    //add user & game code to url
     let y = document.getElementById("playerName").value;
     let paramsString = "?playerName=" + y + "&game=" + passcode;
     //document.location.search = paramsString;
