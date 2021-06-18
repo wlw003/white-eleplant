@@ -1,19 +1,26 @@
-// check name's validity
-const input = document.getElementById("playerName");
-input.addEventListener("input", (event) => {
-  playerNameLength = input.value.legnth;
-  counter = document.getElementById("charas");
+// Get playerName node
+const playerName = document.getElementById("playerName");
 
-  countCharactersRemaining(input.value.length, counter);
+//  Handle playerName node input event
+playerName.addEventListener("input", (event) => {
+  // Get counter node
+  counter = document.getElementById("counter");
 
+  // Update counter
+  updateCounter(playerName.value.length, counter);
+
+  // Get errorMessage node
   var errorMessage = document.getElementById("errorMessage");
 
-  validateName(input.value, errorMessage);
+  // Validate player name
+  validatePlayerName(playerName, errorMessage);
 });
 
-let rs = document.getElementById("roomSubmit");
+// Get roomSubmit node
+let roomSubmit = document.getElementById("roomSubmit");
 
-rs.addEventListener("click", (event) => {
+// Handle roomSubmit node click event
+roomSubmit.addEventListener("click", (event) => {
   let passcode = "";
   //console.log("first: " + passcode);
 

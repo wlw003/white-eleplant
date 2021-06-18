@@ -15,24 +15,32 @@ firebase.initializeApp(config);
 // Get a reference to the database service
 const db = firebase.database();
 
-//  Count player names remaining characters
-function countCharactersRemaining(playerNameLength, counter){
+// Count player names remaining characters
+// playerNameLength (int)
+// counter (int)
+function updateCounter(playerNameLength, counter){
   var maxLength = 12;
 
   counter.textContent = maxLength-playerNameLength;
 };
 
-//  Validate player names
-function validateName(name, errorMessage) {
-  var regex = /[\u0021-\u007E][\u0020-\u007E]*[\u0021-\u007E]$/;
+// Validate player name
+// playerName (node)
+// errorMessage (string)
+function validatePlayerName(playerName, errorMessage) {
+  // Define regular expression: No starting and trailing spaces or empty playerName
+  var regex = /^(?! )[\u0020-\u007E]+(?<! )$/;
 
-  //  This should be separated into a different function
-  if(regex.test(name)){
+  // This should be separated into a different function
+  // If the playerName is valid, remove the error messsage
+  if(regex.test(playerName.value)){
     errorMessage.textContent = "";
+
+  // Else, print out the appropriate errorMessage
   } else {
-    if (input.value.length > 0) {
-      if (input.value[0] === " " || input.value[input.value.length-1] === " ") {
-        errorMessage.textContent = "Invalid name: Please spaces at the start or the end";
+    if (playerName.value.length > 0) {
+      if (playerName.value[0] === " " || playerName.value[playerName.value.length-1] === " ") {
+        errorMessage.textContent = "Invalid name: Please no spaces at the start or the end";
       } else {
         errorMessage.textContent = "Invalid name";
       }
