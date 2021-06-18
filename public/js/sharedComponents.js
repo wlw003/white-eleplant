@@ -52,3 +52,36 @@ function validatePlayerName(playerName, errorMessage) {
     }
   }
 };
+
+/**
+ * 
+ * @param {*} gameCode 
+ * @param {*} playerName 
+ */
+function writeNewPlayer(gameCode, playerName){
+
+};
+
+/**
+ * 
+ * @param {*} gameCode 
+ */
+function validateGameCode(gameCode){
+
+};
+
+/**
+ * 
+ */
+function createNewGame(){
+
+};
+
+/**
+ * 
+ * @param {*} gameCode 
+ * @param {*} playerName 
+ */
+function addPlayerToOrder(gameCode, playerName){
+
+};
