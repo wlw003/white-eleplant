@@ -62,19 +62,24 @@ function writeNewPlayer(gameCode, playerName){
 
 };
 
-/**
- * 
- * @param {*} gameCode 
- */
-function validateGameCode(gameCode){
+function createUniqueGameCode(){
+  var gameCode;
 
+  // Retrieve a snapshot of all existing games in the databse
+  db.ref("game/").once("value", (snapshot) => {
+    // Generate unique game code
+    do {
+      gameCode = Math.floor(10000*Math.random());
+    } while(snapshot.child(gameCode).exists());
+  });
+
+  return gameCode;
 };
 
 /**
  * 
  */
 function createNewGame(){
-
 };
 
 /**
