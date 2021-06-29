@@ -1,7 +1,7 @@
 // Get playerName element
 const playerName = document.getElementById("playerName");
 
-//  Handle playerName element input event
+// Handle playerName element input event
 playerName.addEventListener("input", (event) => {
   // Get counter element
   var counter = document.getElementById("counter");

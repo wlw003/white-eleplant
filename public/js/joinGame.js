@@ -1,27 +1,27 @@
 // Get playerName element
 const playerName = document.getElementById("playerName");
 
-//  Handle playerName element input event
+// Handle playerName element input event
 playerName.addEventListener("input", (event) => {
-  //  Get counter element
-  counter = document.getElementById("counter");
+  // Get counter element
+  var counter = document.getElementById("counter");
 
-  //  Update counter
+  // Update counter
   updateCounter(playerName.value.length, counter);
 
-  //  Get errorMessage element
+  // Get errorMessage element
   var errorMessage = document.getElementById("errorMessage");
 
-  //  Validate player name
+  // Validate player name
   validatePlayerName(playerName, errorMessage);
 });
 
-//  Get roomSubmit element
+// Get roomSubmit element
 let roomSubmit = document.getElementById("roomSubmit");
 
-//  Handle roomSubmit element click event
+// Handle roomSubmit element click event
 roomSubmit.addEventListener("click", (event) => {
-  //check if the code is valid
+  // check if the code is valid
   let code = document.getElementById("gameCode").value;
   let name = document.getElementById("playerName").value;
   
@@ -29,7 +29,7 @@ roomSubmit.addEventListener("click", (event) => {
   ref.once("value", (snapshot) => {
     var c = snapshot.child(code);
     var hasCode = c.exists();
-    //console.log(c.val());
+    // console.log(c.val());
     if(hasCode){
       console.log("inside hascode");
       ref.child(code+"/players").once("value", (childSnapshot) =>{
