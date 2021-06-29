@@ -55,31 +55,42 @@ function validatePlayerName(playerName, errorMessage) {
 
 /**
  * 
- * @param {*} gameCode 
- * @param {*} playerName 
+ * @param {*} gameCode
+ * @param {*} playerName
  */
 function writeNewPlayer(gameCode, playerName){
 
 };
 
-function createUniqueGameCode(){
-  var gameCode;
-
+/**
+ * 
+ * @param {callback} asynchronous call back function
+ */
+function createUniqueGameCode(callBack){
   // Retrieve a snapshot of all existing games in the databse
   db.ref("game/").once("value", (snapshot) => {
+    var gameCode;
+
     // Generate unique game code
     do {
       gameCode = Math.floor(10000*Math.random());
     } while(snapshot.child(gameCode).exists());
-  });
 
-  return gameCode;
+    // Return game code
+    callBack(gameCode);
+  });
 };
 
 /**
  * 
+ * @param {element} element containing player's name
  */
-function createNewGame(){
+function createNewGame(playerName){
+  // Generate unique game code, then...
+  createUniqueGameCode((gameCode) => {
+    // Modify URL
+    window.location.href = "./WaitingRoom.html"+"?playerName="+playerName+"&game="+gameCode;
+  });
 };
 
 /**
