@@ -17,39 +17,33 @@ playerName.addEventListener("input", (event) => {
 });
 
 // Get roomSubmit element
-let roomSubmit = document.getElementById("roomSubmit");
+var roomSubmit = document.getElementById("roomSubmit");
 
 // Handle roomSubmit element click event
 roomSubmit.addEventListener("click", (event) => {
-  // check if the code is valid
-  let code = document.getElementById("gameCode").value;
-  let name = document.getElementById("playerName").value;
+  // Get gameCode element
+  var gameCode = document.getElementById("gameCode").value;
+
+  // Get playerName element
+  var playerName = document.getElementById("playerName").value;
   
-  var ref = db.ref("game");
-  ref.once("value", (snapshot) => {
-    var c = snapshot.child(code);
-    var hasCode = c.exists();
-    // console.log(c.val());
-    if(hasCode){
-      console.log("inside hascode");
-      ref.child(code+"/players").once("value", (childSnapshot) =>{
-        var hasName = childSnapshot.child(name).exists();
-        if(hasName){
+  // Retrieve a snapshot of all existing games in the database
+  db.ref("game").ref.once("value", (snapshot) => {
+    // If the game code exists...
+    if(snapshot.child(gameCode).exists()){
+      // Retrieve a snapshot of all existing players in the database
+      db.ref("game").child(gameCode+"/players").once("value", (childSnapshot) =>{
+        // If a player with the same name already exists...
+        if(childSnapshot.child(playerName).exists()){
           window.alert("This name is already taken! Please choose another name.");
         } else{
-          let paramsString = "?playerName=" + name + "&game=" + code;
-          document.location.search = paramsString;
-          //console.log(paramsString);
-          window.location.href = "./WaitingRoom.html"+paramsString;  
+          // Modify URL
+          document.location.search = "?playerName="+playerName+"&game="+gameCode;
+          window.location.href = "./WaitingRoom.html"+"?playerName="+playerName+"&game="+gameCode;
         }
       });
     } else{
-      window.alert("Invaild Code! Please enter a vaild code.")
+      window.alert("Invaild Code! Please enter a vaild game code.")
     }
   });
-  
-/*   let paramsString = "?playerName=" + name + "&game=" + code;
-  document.location.search = paramsString;
-  //console.log(paramsString);
-  window.location.href = "./WaitingRoom.html"+paramsString;   */
 });

@@ -17,12 +17,12 @@ playerName.addEventListener("input", (event) => {
 });
 
 // Get roomSubmit element
-let roomSubmit = document.getElementById("roomSubmit");
+var roomSubmit = document.getElementById("roomSubmit");
 
 // Handle roomSubmit element click event
 roomSubmit.addEventListener("click", (event) => {
   // Get playerName element
-  let playerName = document.getElementById("playerName").value;
+  var playerName = document.getElementById("playerName").value;
 
   // Create new game
   createNewGame(playerName);

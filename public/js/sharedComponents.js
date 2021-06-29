@@ -67,7 +67,7 @@ function writeNewPlayer(gameCode, playerName){
  * @param {callback} asynchronous call back function
  */
 function createUniqueGameCode(callBack){
-  // Retrieve a snapshot of all existing games in the databse
+  // Retrieve a snapshot of all existing games in the database
   db.ref("game/").once("value", (snapshot) => {
     var gameCode;
 
