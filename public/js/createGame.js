@@ -24,6 +24,14 @@ roomSubmit.addEventListener("click", (event) => {
   // Get playerName element
   var playerName = document.getElementById("playerName").value;
 
-  // Create new game
-  createNewGame(playerName);
+  // Get errorMessage element
+  var errorMessage = document.getElementById("errorMessage");
+
+  // If player name is valid...
+  if (errorMessage.textContent == "") {
+    // Create new game
+    createNewGame(playerName);
+  } else {
+    window.alert("Invalid Name! Please enter a vaild name.");
+  }
 });
