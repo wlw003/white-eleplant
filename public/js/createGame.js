@@ -32,6 +32,6 @@ roomSubmit.addEventListener("click", (event) => {
     // Create new game
     createNewGame(playerName);
   } else {
-    window.alert("Invalid Name! Please enter a vaild name.");
+    window.alert("Invalid Name! Please enter a valid name.");
   }
 });
