@@ -27,8 +27,8 @@ function updateCounter(playerNameLength, counter){
 
 /** 
  * Function that validate player's name
- * @param {element} element containing player's name
- * @param {element} element containing error message  
+ * @param {element} playerName element containing player's name
+ * @param {element} errorMessage element containing error message  
 */
 function validatePlayerName(playerName, errorMessage) {
   // Define regular expression: No starting and trailing spaces or empty playerName
@@ -54,17 +54,41 @@ function validatePlayerName(playerName, errorMessage) {
 };
 
 /**
- * 
- * @param {*} gameCode
- * @param {*} playerName
+ * Function that create a new player for the game
+ * @param {string} gameCode 
+ * @param {string} playerName 
+ * @param {function} callBack asynchronous call back function 
  */
-function writeNewPlayer(gameCode, playerName){
+function createNewPlayer(gameCode, playerName, callBack){
+  var gameRef = db.ref("game/" + gameCode);
+  gameRef.child("order").once("value", (snapshot) => {
+    var playerID;
+    
+    // generate unique player ID/Order
+    do{
+      playerID = Math.floor(Math.random()*10000);
+    } while(snapshot.child(playerID).exists());
+
+    // add new player
+    gameRef.child("players/" + playerName).set({
+      name: playerName,
+      order: playerID
+    }).then(() => {
+      // add player to order list
+      gameRef.child("order/"+ playerID).set({
+        name: playerName,
+        done: false
+      }).then(callBack(playerID));
+
+    });
+  });
+  
 
 };
 
 /**
- * 
- * @param {callback} asynchronous call back function
+ * Function that creates a unique game code
+ * @param {function} callBack asynchronous call back function
  */
 function createUniqueGameCode(callBack){
   // Retrieve a snapshot of all existing games in the database
@@ -82,22 +106,16 @@ function createUniqueGameCode(callBack){
 };
 
 /**
- * 
- * @param {element} element containing player's name
+ * Function that creates a new game
+ * @param {string} playerName 
  */
 function createNewGame(playerName){
   // Generate unique game code, then...
   createUniqueGameCode((gameCode) => {
     // Modify URL
-    window.location.href = "./WaitingRoom.html"+"?playerName="+playerName+"&game="+gameCode;
+    createNewPlayer(gameCode, playerName, (playerID) =>{
+      window.location.href = "./WaitingRoom.html"+"?playerName="+playerID+"&game="+gameCode;
+    });
+    
   });
-};
-
-/**
- * 
- * @param {*} gameCode 
- * @param {*} playerName 
- */
-function addPlayerToOrder(gameCode, playerName){
-
 };

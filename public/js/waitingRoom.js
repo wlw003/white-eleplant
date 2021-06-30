@@ -1,22 +1,3 @@
-function checkValidPasscode(c){
-  var ref = db.ref("game");
-
-  ref.once("value").then(function(snapshot){
-    var hasCode = snapshot.child(c).exists();
-    //console.log(hasCode);
-    return hasCode;
-  });
-};
-
-
-function writeNewPlayer(c, n){
-  let orderNum = Math.floor(Math.random()*10000);
-  db.ref().child("game/" + c +"/players/" + n).set({
-    name: n,
-    order: orderNum
-  });
-};
-
 function addPlayerToList(pn){
   var list = document.getElementById("playerList");
   var items = list.getElementsByTagName("li");
@@ -52,8 +33,7 @@ window.addEventListener("load", (event) => {
   var rctxt = "Room Code: " + code;
   var rctn = document.createTextNode(rctxt)
   rc.appendChild(rctn); 
-  writeNewPlayer(code, hostName);
-  //add host to player list
+
 
   var ref = db.ref("game/"+code).child("players");
   console.log(ref.toString());

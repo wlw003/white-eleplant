@@ -27,23 +27,33 @@ roomSubmit.addEventListener("click", (event) => {
   // Get playerName element
   var playerName = document.getElementById("playerName").value;
   
-  // Retrieve a snapshot of all existing games in the database
-  db.ref("game").ref.once("value", (snapshot) => {
-    // If the game code exists...
-    if(snapshot.child(gameCode).exists()){
-      // Retrieve a snapshot of all existing players in the database
-      db.ref("game").child(gameCode+"/players").once("value", (childSnapshot) =>{
-        // If a player with the same name already exists...
-        if(childSnapshot.child(playerName).exists()){
-          window.alert("This name is already taken! Please choose another name.");
-        } else{
-          // Modify URL
-          document.location.search = "?playerName="+playerName+"&game="+gameCode;
-          window.location.href = "./WaitingRoom.html"+"?playerName="+playerName+"&game="+gameCode;
-        }
-      });
-    } else{
-      window.alert("Invaild Code! Please enter a vaild game code.")
-    }
-  });
+  // Get errorMessage element
+  var errorMessage = document.getElementById("errorMessage");
+  
+  // If player name is valid...
+  if (errorMessage.textContent == "") {
+    // Retrieve a snapshot of all existing games in the database
+    db.ref("game").ref.once("value", (snapshot) => {
+      // If the game code exists...
+      if(snapshot.child(gameCode).exists()){
+        // Retrieve a snapshot of all existing players in the database
+        db.ref("game").child(gameCode+"/players").once("value", (childSnapshot) =>{
+          // If a player with the same name already exists...
+          if(childSnapshot.child(playerName).exists()){
+            window.alert("This name is already taken! Please choose another name.");
+          } else{
+            createNewPlayer(gameCode, playerName, (playerID) =>{
+              // Modify URL
+              document.location.search = "?playerName="+playerName+"&game="+gameCode;
+              window.location.href = "./WaitingRoom.html"+"?playerName="+playerID+"&game="+gameCode;
+            });
+          }
+        });
+      } else{
+        window.alert("Invaild Code! Please enter a vaild game code.")
+      }
+    });
+  } else {
+    window.alert("Invalid Name! Please enter a valid name.");
+  }
 });
