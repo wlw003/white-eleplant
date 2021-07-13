@@ -24,17 +24,6 @@ function updateDisplay() {
   });
 };
 
-function getGameCode() {
-  // Extract query string from URL
-  let queryString = location.search.substring(1).split("&");
-
-  // Get gameCode from query string
-  let gameCodeQuery = queryString[1].split("=");
-
-  // Return gameCode
-  return gameCodeQuery[1];
-}
-
 function addPlayerToList(playerName){
   // Get playerList element
   var list = document.getElementById("playerList");

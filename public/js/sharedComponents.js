@@ -122,3 +122,35 @@ function createNewGame(playerName){
     
   });
 };
+
+/**
+ * Function that extracts the gameCode from the URL
+ */
+function getGameCode() {
+  // Extract query string from URL
+  let queryString = location.search.substring(1).split("&");
+
+  // Get gameCode from query string
+  let gameCodeQuery = queryString[1].split("=");
+
+  // Return gameCode
+  return gameCodeQuery[1];
+}
+
+/**
+ * Function that extracts the playerName from the URL
+ * @param {function} callBack asynchronous call back function
+ */
+function getPlayerName(callBack) {
+  // Extract query string from URL
+  let queryString = location.search.substring(1).split("&");
+
+  // Get gameCode from query string
+  let playerIDQuery = queryString[0].split("=");
+
+  // Get playerName from the database
+  var playerName;
+
+  // Return playerName
+  callback(playerName);
+}
