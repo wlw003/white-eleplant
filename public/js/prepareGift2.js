@@ -33,3 +33,11 @@ document.querySelectorAll('.ribbon').forEach((ribbon) => {
     chooseRibbonColor(ribbon.value);
   });
 });
+
+// Get Ready element
+var ready = document.getElementById("ready");
+
+// Handle ready element click event
+ready.addEventListener("click", (event) => {
+  window.location.href = "./PrepareGift3.html"+location.search.substring();
+});
