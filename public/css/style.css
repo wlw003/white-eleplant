@@ -300,6 +300,22 @@ button{
            -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
                 filter: brightness(1.2) grayscale(.5) opacity(.9);
     }
+
+    /* radio color button for PrepareGift2 */
+    .gift_color input[type="radio"]{
+      display: none;
+    }
+
+    .gift_color label{
+      display: inline;
+      cursor: pointer;
+      padding: 1px;
+    }
+
+    .gift_color input[type=radio]:checked+img{
+      border: 1px solid #ACE6F9;
+      box-shadow: 0 0 3px 3px #ACE6F9;
+    }
     
     /* Extras */
     a:visited{color:#888}

@@ -20,13 +20,14 @@
 
             <section id="content"><br>
                 Choose a Gift Box Color <br><br>
+                <div class="gift_color">
                 <form>
                     <label class="radio">
-                        <input type="radio" id="box_red" name="box" value="red" > 
+                        <input type="radio" id="box_red" name="box" value="red" checked> 
                         <img for="box_red" src="images/box red.png" alt="red"/>
                     </label>
                     <label class="radio">
-                        <input type="radio" id="box_orange" name="box" value="orange"> 
+                        <input type="radio" id="box_orange" name="box" value="orange" > 
                         <img for="box_orange" src="images/box orange.png" alt="orange"/>
                     </label>
                     <label class="radio">
@@ -34,22 +35,23 @@
                         <img for="box_yellow" src="images/box yellow.png" alt="yellow"/>
                     </label>
                     <label class="radio">
-                        <input type="radio" id="box_green" name="box" value="green"> 
+                        <input type="radio" id="box_green" name="box" value="green" > 
                         <img for="box_green" src="images/box green.png" alt="green"/>
                     </label>
                     <label class="radio">
-                        <input type="radio" id="box_blue" name="box" value="blue"> 
+                        <input type="radio" id="box_blue" name="box" value="blue" >
                         <img for="box_blue" src="images/box blue.png" alt="blue"/>
                     </label>
                 </form>
+                </div>
                 <br><br><br>
                 Choose a Ribbon Color <br><br>
+                <div class="gift_color">
                 <form>
                     <label class="radio">
                         <input type="radio" id="ribbon_red" name="ribbon" value="red" > 
                         <img for="ribbon_red" src="images/ribbon red.png" alt="red"/>
                     </label>
-
                     <label class="radio">
                         <input type="radio" id="ribbon_yellow" name="ribbon" value="yellow" > 
                         <img for="ribbon_yellow" src="images/ribbon yellow.png" alt="yellow"/>
@@ -67,13 +69,14 @@
                         <img for="ribbon_white" src="images/ribbon white.png" alt="white"/>
                     </label>
                 </form>
+                </div>
                 <br>
             </section>
 
             <section id="CTA">
                 <p>
                     <!-- clicking link needs javascript https://www.w3schools.com/html/html_links.asp-->
-                    <button onclick="document.location='default.asp'">I'm ready</button>
+                    <button type="submit" id="roomSubmit">I'm ready</button>
                 </p>
             </section>
             <section id="blank">
