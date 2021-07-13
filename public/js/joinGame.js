@@ -31,11 +31,11 @@ roomSubmit.addEventListener("click", (event) => {
   var errorMessage = document.getElementById("errorMessage");
   
   // If player name is valid...
-  if (errorMessage.textContent == "") {
+  if (errorMessage.value == false) {
     // Retrieve a snapshot of all existing games in the database
     db.ref("game").ref.once("value", (snapshot) => {
       // If the game code exists...
-      if(snapshot.child(gameCode).exists()){
+      if(gameCode !== "" && snapshot.child(gameCode).exists()){
         // Retrieve a snapshot of all existing players in the database
         db.ref("game").child(gameCode+"/players").once("value", (childSnapshot) =>{
           // If a player with the same name already exists...

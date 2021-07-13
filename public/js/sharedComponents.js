@@ -37,10 +37,13 @@ function validatePlayerName(playerName, errorMessage) {
   // This should be separated into a different function
   // If the playerName is valid, remove the error messsage
   if(regex.test(playerName.value)){
+    errorMessage.value = false;
     errorMessage.textContent = "";
 
   // Else, print out the appropriate errorMessage
   } else {
+    errorMessage.value = true;
+
     if (playerName.value.length > 0) {
       if (playerName.value[0] === " " || playerName.value[playerName.value.length-1] === " ") {
         errorMessage.textContent = "Invalid name: Please no spaces at the start or the end";
