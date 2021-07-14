@@ -1,73 +1,53 @@
-function writeGiftInfo(name, code, giftDes, giftLink){ 
-  let passcode = Math.floor(Math.random()*10000);
-  db.ref("game/"+code+"/gift/"+passcode).set({
-    description: giftDes,
-    link: giftLink,
-    numStealLeft: 3,
-    openStatus: false,
-    owner:"",
-    prevOwner:"",
-    name: name,
+function writeGiftInfo(gameCode, playerName, giftDes, giftLink, callBack){
+  // Retrieve a snapshot of all existing gifts in the database
+  db.ref("game/" + gameCode).child("gift").once("value", (snapshot) => {
+    var giftCode;
+
+    // Generate unique gift code
+    do {
+      giftCode = Math.floor(10000*Math.random());
+    } while(snapshot.child(gameCode).exists());
+
+    // Set gift information
+    db.ref("game/" + gameCode + "/gift/" + giftCode).set({
+      description: giftDes,
+      link: giftLink,
+      numStealLeft: 3,
+      openStatus: false,
+      owner:"",
+      prevOwner:"",
+      name: playerName,
+    }, (error) => {
+      if (error == null) {
+        // Update player
+        db.ref("game/" + gameCode).child("players/" + playerName).update({
+          giftDescription: giftDes,
+          giftLink: giftLink,
+          giftCode: giftCode
+        }, callBack);
+      } else {
+        callBack(error);
+      }
+    });
   });
-  var ref = db.ref("game/"+code+"/players").child(name);
-  var updates ={};
-  updates["/giftDescription"] = giftDes;
-  updates["/giftLink"] = giftLink;
-  updates["/giftCode"] = passcode;
-  console.log(updates);
-  return ref.update(updates);
 }
 
-/* window.addEventListener("load", (event) => {
-  var sp = location.search.substring(1).split("&");
-  var temp = sp[0].split("=");
-  //console.log(temp);
-  var temp2 = sp[1].split("=");
-  //console.log(temp2);
+// Get roomSubmit element
+let roomSubmit = document.getElementById("roomSubmit");
 
-  if(temp[0] == "playerName"){
-    var code = temp2[1];
-    var hostName = temp[1];
-  }
-  else {
-    var code = temp[1];
-    var hostName = temp2[1];
-  }
-}); */
+// Handle roomSubmit element click event
+roomSubmit.addEventListener("click", (event) => {
+  var gameCode = getGameCode();
 
-let rs = document.getElementById("roomSubmit");
-rs.addEventListener("click", (event) => {
-  //check if the code is valid
-  let des = document.getElementById("giftDes").value;
-  let link = document.getElementById("giftLink").value;
-
-  var sp = location.search.substring(1).split("&");
-  var temp = sp[0].split("=");
-  //console.log(temp);
-  var temp2 = sp[1].split("=");
-  //console.log(temp2);
-
-  if(temp[0] == "playerName"){
-    var code = temp2[1];
-    var name = temp[1];
-  }
-  else {
-    var code = temp[1];
-    var name = temp2[1];
-  }
-
-  let x = writeGiftInfo(name, code, des, link);
-  console.log(x);
-
-  var ref = db.ref("game/"+code+"/players/"+name);
-  ref.on("value", function(snapshot){
-    var code = snapshot.child("giftDescription");
-    var hasCode = code.exists();
-    console.log(hasCode);
-    if(hasCode){
-      window.location.href = "./PrepareGift2.html"+location.search.substring();
-    }
+  getPlayerName((playerName) => {
+    // Write gift information into database
+    writeGiftInfo(gameCode, playerName, document.getElementById("giftDes").value, document.getElementById("giftLink").value, (error) => {
+      // Check for set and update error
+      if (error == null) {
+        window.location.href = "./PrepareGift2.html"+location.search.substring();
+      } else {
+        window.alert(error);
+      }
+    });
   });
-  //window.location.href = "./PrepareGift3.html"+location.search.substring();  
-
 });
