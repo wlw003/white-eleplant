@@ -51,7 +51,7 @@ function validatePlayerName(playerName, errorMessage) {
         errorMessage.textContent = "Invalid name";
       }
     } else {
-      errorMessage.textContent = "Please enter a name";
+      errorMessage.textContent = "";
     }
   }
 };
