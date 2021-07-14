@@ -301,20 +301,47 @@ button{
                 filter: brightness(1.2) grayscale(.5) opacity(.9);
     }
 
-    /* radio color button for PrepareGift2 */
-    .gift_color input[type="radio"]{
+      /* radio color button for PrepareGift2 */
+    .color_button input[type="radio"]{
       display: none;
     }
 
-    .gift_color label{
+    .color_button label{
       display: inline;
       cursor: pointer;
       padding: 1px;
     }
 
-    .gift_color input[type=radio]:checked+img{
+    .color_button input[type=radio]:checked+img{
       border: 1px solid #ACE6F9;
       box-shadow: 0 0 3px 3px #ACE6F9;
+    }
+
+    /* layout for the radio buttons */
+    .box_header{
+      grid-area: boxHeader;
+    }
+
+    .ribbon_header{
+      grid-area: ribbonHeader;
+    }
+
+    .box_button{
+      grid-area: boxButton;
+    }
+
+    .ribbon_button{
+      grid-area: ribbonButton;
+    }
+
+    .gift_color{
+      display: grid;
+      grid-template-columns: auto;
+      grid-template-areas: 
+        "boxHeader ribbonHeader"
+        "boxButton ribbonButton";
+      grid-gap: 10px;
+      padding: 10px;
     }
     
     /* Extras */
