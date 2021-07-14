@@ -1,3 +1,6 @@
+/**
+ * Function that update the page when a new player joins
+ */
 function updateDisplay() {
   var gameCode = getGameCode();
 
@@ -24,6 +27,10 @@ function updateDisplay() {
   });
 };
 
+/**
+ * Function that adds player's name on a list
+ * @param {string} playerName
+ */
 function addPlayerToList(playerName){
   // Get playerList element
   var list = document.getElementById("playerList");

@@ -1,3 +1,11 @@
+/**
+ * Function that writes infomation about the gift to Firebase
+ * @param {string} gameCode game code
+ * @param {string} playerName player's name
+ * @param {string} giftDes desciption of the gift
+ * @param {string} giftLink gift URL
+ * @param {*} callBack 
+ */
 function writeGiftInfo(gameCode, playerName, giftDes, giftLink, callBack){
   // Retrieve a snapshot of all existing gifts in the database
   db.ref("game/" + gameCode).child("gift").once("value", (snapshot) => {
