@@ -65,7 +65,7 @@ rs.addEventListener("click", (event) => {
     var hasCode = code.exists();
     console.log(hasCode);
     if(hasCode){
-      window.location.href = "./PrepareGift3.html"+location.search.substring(); 
+      window.location.href = "./PrepareGift2.html"+location.search.substring();
     }
   });
   //window.location.href = "./PrepareGift3.html"+location.search.substring();  

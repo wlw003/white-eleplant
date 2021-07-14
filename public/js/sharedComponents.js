@@ -146,11 +146,16 @@ function getPlayerName(callBack) {
   let queryString = location.search.substring(1).split("&");
 
   // Get gameCode from query string
+  let gameCodeQuery = queryString[1].split("=");
+
+  // Get playerID from query string
   let playerIDQuery = queryString[0].split("=");
 
   // Get playerName from the database
-  var playerName;
-
-  // Return playerName
-  callback(playerName);
+  db.ref("game/" + gameCodeQuery[1]).child("players").orderByChild("order").equalTo(Number(playerIDQuery[1])).on("value", (snapshot) => {
+    snapshot.forEach((data) => {
+      // Return playerName
+      callBack(data.key);
+    });
+  });
 }
