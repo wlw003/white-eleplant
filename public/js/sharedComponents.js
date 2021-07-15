@@ -160,7 +160,7 @@ function getPlayerName(callBack) {
   let playerIDQuery = queryString[0].split("=");
 
   // Get playerName from the database
-  db.ref("game/" + gameCodeQuery[1]).child("players").orderByChild("order").equalTo(Number(playerIDQuery[1])).on("value", (snapshot) => {
+  db.ref("game/" + gameCodeQuery[1]).child("players").orderByChild("order").equalTo(Number(playerIDQuery[1])).once("value", (snapshot) => {
     snapshot.forEach((data) => {
       // Return playerName
       callBack(data.key);
