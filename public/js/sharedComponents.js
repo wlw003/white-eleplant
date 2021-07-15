@@ -60,9 +60,10 @@ function validatePlayerName(playerName, errorMessage) {
  * Function that create a new player for the game
  * @param {string} gameCode 
  * @param {string} playerName 
+ * @param {boolean} hostStatus indicts if the player is the host or not
  * @param {function} callBack asynchronous call back function 
  */
-function createNewPlayer(gameCode, playerName, callBack){
+function createNewPlayer(gameCode, playerName, hostStatus, callBack){
   var gameRef = db.ref("game/" + gameCode);
   gameRef.child("order").once("value", (snapshot) => {
     var playerID;
@@ -75,7 +76,8 @@ function createNewPlayer(gameCode, playerName, callBack){
     // add new player
     gameRef.child("players/" + playerName).set({
       name: playerName,
-      order: playerID
+      order: playerID,
+      host: hostStatus 
     }).then(() => {
       // add player to order list
       gameRef.child("order/"+ playerID).set({
@@ -115,8 +117,14 @@ function createUniqueGameCode(callBack){
 function createNewGame(playerName){
   // Generate unique game code, then...
   createUniqueGameCode((gameCode) => {
+    var gameRef = db.ref("game/" + gameCode);
+    gameRef.child("status").set({
+      start: false,
+      firstPerson: false,
+      done: false
+    });
     // Modify URL
-    createNewPlayer(gameCode, playerName, (playerID) =>{
+    createNewPlayer(gameCode, playerName, true, (playerID) =>{
       window.location.href = "./WaitingRoom.html"+"?playerName="+playerID+"&game="+gameCode;
     });
     

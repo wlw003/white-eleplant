@@ -42,7 +42,7 @@ roomSubmit.addEventListener("click", (event) => {
           if(childSnapshot.child(playerName).exists()){
             window.alert("This name is already taken! Please choose another name.");
           } else{
-            createNewPlayer(gameCode, playerName, (playerID) =>{
+            createNewPlayer(gameCode, playerName, false, (playerID) =>{
               // Modify URL
               document.location.search = "?playerName="+playerName+"&game="+gameCode;
               window.location.href = "./WaitingRoom.html"+"?playerName="+playerID+"&game="+gameCode;
