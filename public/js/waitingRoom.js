@@ -59,7 +59,7 @@ function hostEvent(){
   // make the button clickable
   button.addEventListener("click", (event) => {
     // Retrieve a snapshot of all existing players in the current game
-    db.ref("game/"+gameCode).child("players").on("value", (snapshot) => {
+    db.ref("game/"+gameCode).child("players").once("value", (snapshot) => {
       // If the game has more more than one participant, allow the game to proceed
       if(snapshot.numChildren() > 1) {
 
