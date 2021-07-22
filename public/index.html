@@ -15,7 +15,7 @@
 
             </section>
             <section id="banner">
-                <h1>*White Elephant</h1>
+                <h1>White Elephant</h1>
             </section>
 
             <section id="content">
@@ -26,10 +26,9 @@
 
             <section id="CTA">
                 <p>
-                    <!-- clicking link needs javascript https://www.w3schools.com/html/html_links.asp-->
                     <button onclick="document.location='./create_game.html'">Create Game</button>
                         &ensp;&ensp;&ensp;                    
-                    <button onclick="document.location='./join_game.html'">Join Game</button><br><br><br><br>
+                    <button onclick="document.location='./join_game.html'">Join Game</button>
                 </p>
             </section>
             <section id="blank">
@@ -49,57 +48,20 @@
             <span class="close">&times;</span>
             <p>
                 <h2>Game Instruction</h2>
-                1. Create game <br>
-                2. Invite friends<br>
-                3. Enter room code <br>
-                4. Once everyone’s in, host will press start wrapping<br>
-                5. Enter your gift with description<br>
-                6. Choose your gift<br>
-                7. Steal!<br>
-                8. Exchange info & ship!<br>
-
+                <ol>
+                    <li>Create game </li>
+                    <li>Invite friends</li>
+                    <li>Enter room code</li>
+                    <li>Once everyone’s in, host will press start wrapping</li>
+                    <li>Enter your gift with description</li>
+                    <li>Choose your gift</li>
+                    <li>Steal!</li>
+                    <li>Exchange info &amp; ship!</li>
+                </ol>
             </p>
         </div>
 
-
-        <script>
-        
-            // Get the modal
-            var modal = document.getElementById("myModal");
-
-            // Get the button that opens the modal
-            var img = document.getElementById("myImg");
-                img.onclick = function(){
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
-            }
-
-            // Get the image and insert it inside the modal - use its "alt" text as a caption
-            var img = document.getElementById("myImg");
-            img.onclick = function(){
-            modal.style.display = "block";
-            modalImg.src = this.src;
-            captionText.innerHTML = this.alt;
-}
-
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-
-
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
-            modal.style.display = "none";
-            }
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-                 }
-            }
-        </script>
-
+        <script type="text/javascript" src="js/index.js"></script>
 
     </body>
 </html>

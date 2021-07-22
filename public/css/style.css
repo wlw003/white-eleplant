@@ -1,5 +1,3 @@
-
-
 body{
     background: linear-gradient(0deg, #1B6CB7, #1B6CB7), #CAF0FC;
     font-family: 'Raleway', sans-serif;
@@ -79,7 +77,6 @@ h1{
     top: 50%;
     left: 50%;
     transform: translate(0, -30%)
-
 }
 
 h2{
@@ -262,44 +259,6 @@ button{
 
 }
 
-
-/* !!!!!!!!!!!gift as a radio button!!!!!!!!!!! */
-
-
-    .gb-selector input[type="radio"]{
-        margin:0;padding:0;
-        -webkit-appearance:none;
-           -moz-appearance:none;
-                appearance:none;
-    }
-
-    .gb1{background-image:url(/images/blueboxredribbon.png);}
-    .gb2{background-image:url(/images/green\ box\ red\ ribbon.png);}
-
-    .gb-selector input:active +.open-gb{opacity: .9;}
-    .gb-selector input:checked +.open-gb{
-        -webkit-filter: none;
-           -moz-filter: none;
-                filter: none;
-    }
-    .open-gb{
-        cursor:pointer;
-        background-size:contain;
-        background-repeat:no-repeat;
-        display:inline-block;
-        width:100px;height:70px;
-        -webkit-transition: all 100ms ease-in;
-           -moz-transition: all 100ms ease-in;
-                transition: all 100ms ease-in;
-        -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
-           -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
-                filter: brightness(1.8) grayscale(1) opacity(.7);
-    }
-    .open-gb:hover{
-        -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
-           -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
-                filter: brightness(1.2) grayscale(.5) opacity(.9);
-    }
 
       /* radio color button for PrepareGift2 */
     .color_button input[type="radio"]{
