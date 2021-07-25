@@ -167,3 +167,17 @@ function getPlayerName(callBack) {
     });
   });
 }
+
+/**
+ * Function that gets a player's gift code
+ * @param {function} callBack asynchronous call back function
+ */
+function getPlayerGiftCode(gameCode, playerName, callBack) {
+  // Get playerGiftCode from the database
+  db.ref("game/" + gameCode).child("gift").orderByChild("name").equalTo(playerName).once("value", (snapshot) => {
+    snapshot.forEach((data) => {
+      // Return playerGiftCode
+      callBack(data.key);
+    });
+  });
+}
