@@ -1,0 +1,102 @@
+html{ 
+    height: 100%;
+}
+
+body{
+    background: linear-gradient(0deg, #1B6CB7, #1B6CB7), #CAF0FC;
+    font-family: 'Raleway', sans-serif;
+    font-size: 3vh;
+    font-weight: 100;
+    
+}
+
+h1{
+    font-family:  'Pacifico', cursive;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 8vh;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(0, -30%);
+}
+
+h2{
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-size: 4vh;
+    font-weight: 500;
+}
+
+button{
+    background-color: #97D3FF;
+    border: none;
+    color: black;
+    padding: 3.5vh 4vw;
+    border-radius: 4vw;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    width: 25vw;
+    font-size: 2vw;   
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+}
+
+/* textbox (not on index page) */
+input[type="text"]{
+    border: 1px solid black;
+    color: black;
+    padding: 3.5vh 4vw;
+    border-radius: 3vw;
+    width: 25vw;
+    font-size: 2vw;   
+    font-family: 'Raleway', sans-serif;
+    font-weight: 100;
+    cursor: ibeam;
+    text-align: center;
+    justify-content: center;
+}
+
+#banner{
+    /* blue banner */    
+    background: #3C8EDA;
+    vertical-align: middle;
+    grid-area: banner;
+}
+
+#content{
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    font-size:3vh;
+    font-weight: 100;
+    top: 50%;
+    left: 50%;
+    grid-area: main;
+}
+
+.main-container {
+    font-family: 'Raleway', sans-serif;
+    background:rgb(255, 255, 255);
+    width: 95vw;
+    height: 95vh;
+    display: grid;
+    grid-template-rows: 5% 20% auto 5%;
+    grid-template-areas: 
+        "."
+        "banner"
+        "main"
+        ".";
+    box-shadow: -7px 8px 15px 3px rgba(71, 55, 171, 0.25);
+    border-radius: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
+}
+

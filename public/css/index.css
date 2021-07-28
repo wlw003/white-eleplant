@@ -1,0 +1,77 @@
+/* index page elephant logo resize */
+.responsive{
+  max-height: 30vh;
+  width: auto;
+}
+
+/* info button on index page*/
+.responsive_info{
+  max-height: 10vh;
+  max-width: 10vh;
+  left: 90vw;
+  bottom: 9vh;
+  position:fixed;
+}
+
+/* !!!!! ALL below are for the Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+  
+  /* Modal Content/Box */
+.modal-content {
+  background-color: #ffffff;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding-top: 2vh;
+  padding-right: 3vw;
+  padding-left: 4vw;
+  padding-bottom:3vh;
+  width: 50%; /* Could be more or less, depending on screen size */
+  box-shadow: -4px 4px 4px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 1vw;
+}
+  
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Style the Image Used to Trigger the Modal */
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {
+  opacity: 0.7;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.2s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}

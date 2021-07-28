@@ -10,7 +10,7 @@
             https://firebase.google.com/docs/web/setup#available-libraries -->
         <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
         <script type="text/javascript" src="js/sharedComponents.js"></script>
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/layout.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -19,39 +19,26 @@
     <body>
 
         <div class="main-container">
-            <section id="blank">
-
-            </section>
             <section id="banner">
                 <h1>Join Game</h1>
             </section>
 
             <section id="content">
-                <br>
-                <h2>What's your name?
                 <form>
+                    <label for="playerName"><h2>What's your name?</h2></label>
                     <input type="text" id="playerName" name="playerName" value="" required 
                         minlength="1" maxlength="12" pattern="[A-Za-z0-9_]">
-                    <br><br>
-                    <span id="counter">12</span> characters remaining
-                    <br><br>
-                    <span id="errorMessage" value=true></span>
-                    <br><br>
-                Enter Room Code <br>
+                    <p><span id="counter">12</span> characters remaining</p>
+                    <p><span id="errorMessage" value=true></span>&nbsp</p>
+                    <label for="gameCode"><h2>Enter Room Code</h2></label>
                     <input type="text" id="gameCode" name="code" required minlength="1"
                         maxlength="4">
-                </h2></form>
-            </section>
-
-            <section id="CTA">
+                </form>
                 <p>
-                    <!-- clicking link needs javascript https://www.w3schools.com/html/html_links.asp-->
                     <button type="submit" id="roomSubmit">Submit</button>
                 </p>
             </section>
-            <section id="blank">
-            
-            </section>
+
         </div>
         <script type="text/javascript" src="js/joinGame.js"></script>
     </body>

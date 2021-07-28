@@ -50,6 +50,7 @@ function validatePlayerName(playerName, errorMessage) {
       } else {
         errorMessage.textContent = "Invalid name";
       }
+      errorMessage.style.color = "red";
     } else {
       errorMessage.textContent = "";
     }
