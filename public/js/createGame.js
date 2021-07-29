@@ -1,26 +1,5 @@
-// Get playerName element
-const playerName = document.getElementById("playerName");
-
-// Handle playerName element input event
-playerName.addEventListener("input", (event) => {
-  // Get counter element
-  var counter = document.getElementById("counter");
-
-  // Update counter
-  updateCounter(playerName.value.length, counter);
-
-  // Get errorMessage element
-  var errorMessage = document.getElementById("errorMessage");
-
-  // Validate player name
-  validatePlayerName(playerName, errorMessage);
-});
-
-// Get roomSubmit element
-var roomSubmit = document.getElementById("roomSubmit");
-
-// Handle roomSubmit element click event
-roomSubmit.addEventListener("click", (event) => {
+// Handle submission
+var handleSubmit = () => {
   // Get playerName element
   var playerName = document.getElementById("playerName").value;
 
@@ -34,4 +13,36 @@ roomSubmit.addEventListener("click", (event) => {
   } else {
     window.alert("Invalid Name! Please enter a valid name.");
   }
+}
+
+// Get playerName element
+const playerName = document.getElementById("playerName");
+
+// Handle playerName element input event
+playerName.addEventListener("keypress", (event) => {
+  // Try to submit if the enter key is pressed
+  if (event.key == "Enter") {
+    // Prevent default error messages from popping up
+    event.preventDefault();
+
+    handleSubmit();
+  } else {
+    // Get counter element
+    var counter = document.getElementById("counter");
+
+    // Update counter
+    updateCounter(playerName.value.length, counter);
+
+    // Get errorMessage element
+    var errorMessage = document.getElementById("errorMessage");
+
+    // Validate player name
+    validatePlayerName(playerName, errorMessage);
+  }
 });
+
+// Get roomSubmit element
+var roomSubmit = document.getElementById("roomSubmit");
+
+// Handle roomSubmit element click event
+roomSubmit.addEventListener("click", handleSubmit);
