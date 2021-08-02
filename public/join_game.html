@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <Title>White Elephant: Join Game</Title>
         <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
@@ -34,11 +35,11 @@
                     <input type="text" id="gameCode" name="code" required minlength="1"
                         maxlength="4">
                 </form>
-                <p>
-                    <button type="submit" id="roomSubmit">Submit</button>
-                </p>
             </section>
 
+            <section id="CTA">
+                <button type="submit" id="roomSubmit">Submit</button>
+            </section>
         </div>
         <script type="text/javascript" src="js/joinGame.js"></script>
     </body>
