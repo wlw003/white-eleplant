@@ -24,19 +24,22 @@
             </section>
 
             <section id="content">
-                <form>
-                    <label for="playerName"><h2>What's your name?</h2></label>
-                    <input type="text" id="playerName" name="playerName" value="" required 
-                        minlength="1" maxlength="12" pattern="[A-Za-z0-9_]">
-                    <p><span id="counter">12</span> characters remaining</p>
-                    <p><span id="errorMessage" value=true></span>&nbsp</p>
-                    <label for="gameCode"><h2>Enter Room Code</h2></label>
-                    <input type="text" id="gameCode" name="code" required minlength="1"
-                        maxlength="4">
-                </form>
-                <p>
+                <div id="content-body">
+                    <form>
+                        <label for="playerName"><h2>What's your name?</h2></label>
+                        <input type="text" id="playerName" name="playerName" value="" required 
+                            minlength="1" maxlength="12" pattern="[A-Za-z0-9_]">
+                        <p><span id="counter">12</span> characters remaining</p>
+                        <p><span id="errorMessage" value=true></span>&nbsp</p>
+                        <label for="gameCode"><h2>Enter Room Code</h2></label>
+                        <input type="text" id="gameCode" name="code" required minlength="1"
+                            maxlength="4">
+                    </form>
+                </div>
+   
+                <div id="CTA">
                     <button type="submit" id="roomSubmit">Submit</button>
-                </p>
+                </div>
             </section>
 
         </div>

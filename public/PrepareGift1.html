@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <Title>White Elephant: Gift Form</Title>
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/layout.css" rel="stylesheet">
                 <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
 
@@ -19,36 +19,30 @@
     <body>
 
         <div class="main-container">
-            <section id="blank">
 
-            </section>
             <section id="banner">
-                <h1>*White Elephant</h1>
+                <h1>White Elephant</h1>
             </section>
 
             <section id="content">
-                <br>
-                <h2>Gift Description
-                <form action="/action_page.php">
-                    <input type="text" id="giftDes" name="name" class="input_gift" 
-                        placeholder="candy canes, chocolate bells, christmas tree"
-                        required minlength="1" maxlength="120"><br><br>
-                Product URL <br>
-                    <input type="url" id="giftLink" name="url" class="input_gift" 
-                        placeholder="https://borders.com/saveourbooks" required 
-                        pattern="https://.*" minlength="1">
-                </h2></form>
+                <div id="content-body">
+                    <form action="/action_page.php">
+                        <label for="giftDes"><h2>Gift Description</h2></label>
+                        <input type="text" id="giftDes" name="name" class="input_gift" 
+                            placeholder="candy canes, chocolate bells, christmas tree"
+                            required minlength="1" maxlength="120">
+                        <label for="giftLink"><h2>Product URL</h2></label>
+                        <input type="url" id="giftLink" name="url" class="input_gift" 
+                            placeholder="https://borders.com/saveourbooks" required 
+                            pattern="https://.*" minlength="1">
+                    </form>
+                </div>
+
+                <div id="CTA">
+                    <button type="submit" id="roomSubmit">Submit</button>
+                </div>
             </section>
 
-            <section id="CTA">
-                <p>
-                    <!-- clicking link needs javascript https://www.w3schools.com/html/html_links.asp-->
-                    <button type="submit" id="roomSubmit">Submit</button>
-                </p>
-            </section>
-            <section id="blank">
-            
-            </section>
         </div>
         <script type="text/javascript" src="js/prepareGift1.js"></script>
     </body>
