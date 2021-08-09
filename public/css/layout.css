@@ -105,17 +105,24 @@ input[type="text"]{
     grid-area: main;
 }
 
+#CTA{
+  text-align: center;
+  background: #ffffff;
+  grid-area: button;
+}
+
 .main-container {
     font-family: 'Raleway', sans-serif;
     background:rgb(255, 255, 255);
     width: 95vw;
     height: 95vh;
     display: grid;
-    grid-template-rows: 5% 20% auto 5%;
+    grid-template-rows: 5% 20% auto 8% 5%;
     grid-template-areas: 
         "."
         "banner"
         "main"
+        "button"
         ".";
     box-shadow: -7px 8px 15px 3px rgba(71, 55, 171, 0.25);
     border-radius: 15px;
