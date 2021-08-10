@@ -23,8 +23,12 @@ h2{
     font-family: 'Raleway', sans-serif;
     text-align: center;
     color: rgb(0, 0, 0);
-    font-size: 4vh;
+    font-size: 4vmin;
     font-weight: 500;
+}
+
+p{
+    margin: 0;
 }
 
 button{
@@ -38,7 +42,7 @@ button{
     display: inline-block;
     cursor: pointer;
     width: 25vw;
-    font-size: 2vw;   
+    font-size: 2.5vmin;   
     font-family: 'Raleway', sans-serif;
     font-weight: 400;
 }
@@ -47,10 +51,10 @@ button{
 input[type="text"]{
     border: 1px solid black;
     color: black;
-    padding: 3.5vh 4vw;
+    padding: 3vh 4vw;
     border-radius: 3vw;
     width: 25vw;
-    font-size: 2vw;   
+    font-size: 3vmin;   
     font-family: 'Raleway', sans-serif;
     font-weight: 100;
     cursor: ibeam;
@@ -62,10 +66,10 @@ input[type="text"]{
 .input_gift{
     border: 1px solid black;
     color: black;
-    padding: 3.5vh 4vw;
+    padding: 3vh 4vw;
     border-radius: 3vw;
     width: 25vw;
-    font-size: 1.5vw;   
+    font-size: 3vmin;   
     font-family: 'Raleway', sans-serif;
     font-weight: 100;
     cursor: ibeam;
@@ -82,12 +86,13 @@ input[type="text"]{
 
 #content-body{
     grid-area: cBody;
-    align-items: center;
+    min-width: 0;
 }
 
 #CTA{
     grid-area: button;
     align-items: center;
+    margin: 2rem;
 }
 
 #content{
@@ -97,18 +102,18 @@ input[type="text"]{
     font-weight: 100;
     margin-top: 2rem;
     margin-bottom: 2rem;
+    min-width: 0;
+    min-height: 0;
     display: grid;
-    grid-template-rows: auto 20%;
+    grid-template-rows: 3fr 1fr;
     grid-template-areas: 
         "cBody"
         "button";
     grid-area: main;
-}
-
-#CTA{
-  text-align: center;
-  background: #ffffff;
-  grid-area: button;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    justify-items: center;
 }
 
 .main-container {
@@ -117,12 +122,11 @@ input[type="text"]{
     width: 95vw;
     height: 95vh;
     display: grid;
-    grid-template-rows: 5% 20% auto 8% 5%;
+    grid-template-rows: 5% 1.5fr 7fr 5%;
     grid-template-areas: 
         "."
         "banner"
         "main"
-        "button"
         ".";
     box-shadow: -7px 8px 15px 3px rgba(71, 55, 171, 0.25);
     border-radius: 15px;
@@ -130,5 +134,20 @@ input[type="text"]{
     margin-right: auto;
     margin-top: 2.5vh;
     margin-bottom: 2.5vh;
+}
+
+/* hide list in waiting room */
+#playerList{
+    list-style-type:none;
+}
+
+/* hide list in summary */
+#giftSummary{
+    list-style-type:none;
+}
+
+/* hide list in order */
+#playerOrder{
+    list-style-type:none;
 }
 
