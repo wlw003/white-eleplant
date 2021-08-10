@@ -1,3 +1,7 @@
+/**
+ * Write gift box color information to Firebase
+ * @param {string} color - gift box color
+ */
 function chooseBoxColor(color) {
 	var gameCode = getGameCode();
 
@@ -11,6 +15,10 @@ function chooseBoxColor(color) {
 	});
 };
 
+/**
+ * Write gift ribbon color information to Firebase
+ * @param {string} color - gift ribbon color
+ */
 function chooseRibbonColor(color) {
 	var gameCode = getGameCode();
 
