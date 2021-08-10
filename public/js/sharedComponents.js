@@ -169,6 +169,16 @@ function getPlayerName(callBack) {
 }
 
 /**
+ * Function that returns player's hosting status
+ * @param {function} callBack asynchronous call back function
+ */
+function getPlayerHostingStatus(gameCode, playerName, callBack) {
+  db.ref("game/"+gameCode+"/players/"+playerName).child("host").once("value", (snapshot) => {
+    callBack(snapshot.val());
+  });
+}
+
+/**
  * Function that gets a player's gift code
  * @param {function} callBack asynchronous call back function
  */
