@@ -50,7 +50,6 @@ function validatePlayerName(playerName, errorMessage) {
       } else {
         errorMessage.textContent = "Invalid name";
       }
-      errorMessage.style.color = "red";
     } else {
       errorMessage.textContent = "";
     }
@@ -166,6 +165,16 @@ function getPlayerName(callBack) {
       // Return playerName
       callBack(data.key);
     });
+  });
+}
+
+/**
+ * Function that returns player's hosting status
+ * @param {function} callBack asynchronous call back function
+ */
+function getPlayerHostingStatus(gameCode, playerName, callBack) {
+  db.ref("game/"+gameCode+"/players/"+playerName).child("host").once("value", (snapshot) => {
+    callBack(snapshot.val());
   });
 }
 
