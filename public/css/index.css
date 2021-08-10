@@ -8,9 +8,13 @@
 .responsive_info{
   max-height: 10vh;
   max-width: 10vh;
-  left: 90vw;
-  bottom: 9vh;
-  position:fixed;
+  position: fixed;
+  right: 3%;
+  bottom: 3%;
+}
+
+#car {
+  display: inline;
 }
 
 /* !!!!! ALL below are for the Modal (background) */
