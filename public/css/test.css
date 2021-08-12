@@ -1,0 +1,102 @@
+body{
+  background: linear-gradient(0deg, #1B6CB7, #1B6CB7), #CAF0FC;
+  font-family: 'Raleway', sans-serif;
+  font-size:3vh;
+  font-weight: 100;
+}
+
+/* index page elephant logo resize */
+.responsive{
+  max-height: 30vh;
+  width: auto;
+}
+
+/* info button on index page*/
+.responsive_info{
+  max-height: 10vh;
+  max-width: 10vh;
+  left: 90vw;
+  bottom: 9vh;
+  position:fixed;
+}
+
+button{
+  background-color: #97D3FF;
+  border: none;
+  color: black;
+  padding: 3.5vh 4vw;
+  border-radius: 4vw;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  width: 25vw;
+  font-size: 2vw;   
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+}
+
+h1{
+  font-family: 'Pacifico', cursive;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 8vmin;
+  text-align: center;
+  color: #FFFFFF;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(0, -30%)
+}
+
+h2{
+  font-family: 'Raleway', sans-serif;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  font-size: 4vh;
+  font-weight: 500;
+}
+
+#banner{
+  /* blue banner */    
+  background: #3C8EDA;
+  grid-area: banner;
+}
+
+#content{
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  font-size: 3vh;
+  font-weight: 100;
+  top: 50%;
+  left: 50%;
+  background: #ffffff;
+  grid-area: main;
+}
+
+#CTA{
+  text-align: center;
+  background: #ffffff;
+  grid-area: button;
+}
+
+.main-container{
+  display: grid;
+  grid-template-rows: 5% 20% auto 10% 8%;
+  grid-template-areas: 
+    "."
+    "banner"
+    "main"
+    "button"
+    ".";
+  font-family: 'Raleway', sans-serif;
+  background:rgb(255, 255, 255);
+  width:95vw;
+  height: 95vh;
+  box-shadow: -7px 8px 15px 3px rgba(71, 55, 171, 0.25);
+  border-radius: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2.5vh;
+}

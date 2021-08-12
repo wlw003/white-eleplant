@@ -2,8 +2,10 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <Title>White Elephant</Title>
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/layout.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -12,34 +14,26 @@
     <body>
 
         <div class="main-container">
-            <section id="blank">
-
-            </section>
             <section id="banner">
                 <h1>White Elephant</h1>
             </section>
 
             <section id="content">
-                <h2>Gift. Steal. Win.</h2>
-                <p>Play your favorite holiday game with your friends virtually from around the world, not just your living room</p><br>
-                <img src="images/logo.png" alt="White Elephant" class="responsive">
-            </section>
+                <div id="content-body">
+                    <h2>Gift. Steal. Win.</h2>
+                    <p>Play your favorite holiday game with your friends virtually from around the world, not just your living room</p><br>
+                    <img src="images/logo.png" alt="White Elephant" class="responsive">
+                </div>
 
-            <section id="CTA">
-                <p>
+                <div id="CTA">
                     <button onclick="document.location='./create_game.html'">Create Game</button>
-                        &ensp;&ensp;&ensp;                    
                     <button onclick="document.location='./join_game.html'">Join Game</button>
-                </p>
-            </section>
-            <section id="blank">
-            
+                </div>
             </section>
         </div>
-        
-        <!-- Trigger the Modal -->
-        <img id="myImg" src="images/instructions icon.png" 
-        alt="info" class="responsive_info">
+
+        <!-- Trigger the Modal -->  
+        <img id="myImg" src="images/instructions icon.png" alt="info" class="responsive_info">       
 
         <!-- The Modal -->
         <div id="myModal" class="modal">
@@ -47,24 +41,20 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p>
-                <h2>Game Instruction</h2>
-                <ol>
-                    <li>Create game </li>
-                    <li>Invite friends</li>
-                    <li>Enter room code</li>
-                    <li>Once everyone’s in, host will press start wrapping</li>
-                    <li>Enter your gift with description</li>
-                    <li>Choose your gift</li>
-                    <li>Steal!</li>
-                    <li>Exchange info &amp; ship!</li>
-                </ol>
-            </p>
+            <h2>Game Instruction</h2>
+            <ol>
+                <li>Create game </li>
+                <li>Invite friends</li>
+                <li>Enter room code</li>
+                <li>Once everyone’s in, host will press start wrapping</li>
+                <li>Enter your gift with description</li>
+                <li>Choose your gift</li>
+                <li>Steal!</li>
+                <li>Exchange info &amp; ship!</li>
+            </ol>
         </div>
 
         <script type="text/javascript" src="js/index.js"></script>
 
     </body>
 </html>
-
-

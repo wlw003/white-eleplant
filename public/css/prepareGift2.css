@@ -1,0 +1,64 @@
+*{
+  font-weight: normal;
+  min-width: 0;
+  min-height: 0;
+}
+
+label{
+  overflow: hidden;
+}
+
+.color_button{
+  overflow: hidden;
+  padding: 1rem;
+}
+
+img{
+  padding: 0.5rem;
+}
+/* radio color button for PrepareGift2 */
+.color_button input[type="radio"]{
+  display: none;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 1rem;
+}
+
+.color_button label{
+  display: inline;
+  cursor: pointer;
+}
+
+.color_button input[type=radio]:checked+img{
+  border: 1px solid #ACE6F9;
+  box-shadow: 0 0 3px 3px #ACE6F9;
+}
+
+/* layout for the radio buttons */
+.box_header{
+  grid-area: boxHeader;
+}
+
+.ribbon_header{
+  grid-area: ribbonHeader;
+}
+
+.box_button{
+  grid-area: boxButton;
+}
+
+.ribbon_button{
+  grid-area: ribbonButton;
+}
+
+.gift_color{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas: 
+    "boxHeader ribbonHeader"
+    "boxButton ribbonButton";
+  gap: 1rem;
+  min-height: 0;
+  min-width: 0;
+  margin: 2rem;
+}

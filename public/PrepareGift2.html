@@ -5,7 +5,8 @@
         <Title>White Elephant</Title>
         <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/layout.css" rel="stylesheet">
+        <link href="css/prepareGift2.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -14,79 +15,72 @@
     <body>
 
         <div class="main-container">
-            <section id="blank">
-
-            </section>
             <section id="banner">
                 <h1>Decorate Your Gift!</h1>
             </section>
 
-            <section id="content"><br>
-                <div class="gift_color">
-                    <p class="box_header">Choose a Gift Box Color</p>
-                
-                    <form class="color_button box_button">
-                        <label class="radio">
-                            <input type="radio" id="box_red" name="box" value="red"> 
-                            <img for="box_red" src="images/box red.png" alt="red"/>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" id="box_orange" name="box" value="orange" > 
-                            <img for="box_orange" src="images/box orange.png" alt="orange"/>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" id="box_yellow" name="box" value="yellow" > 
-                            <img for="box_yellow" src="images/box yellow.png" alt="yellow"/>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" id="box_green" name="box" value="green" > 
-                            <img for="box_green" src="images/box green.png" alt="green"/>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" id="box_blue" name="box" value="blue" >
-                            <img for="box_blue" src="images/box blue.png" alt="blue"/>
-                        </label>
-                    </form>
+            <section id="content">
+                <div id="content-body">
+                    <div class="gift_color">
+                        <h2 class="box_header">Choose a Gift Box Color</h2>
+                    
+                        <form class="color_button box_button">
+                            <label class="radio">
+                                <input type="radio" id="box_red" name="box" value="red"> 
+                                <img for="box_red" src="images/box red.png" alt="red"/>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" id="box_orange" name="box" value="orange" > 
+                                <img for="box_orange" src="images/box orange.png" alt="orange"/>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" id="box_yellow" name="box" value="yellow" > 
+                                <img for="box_yellow" src="images/box yellow.png" alt="yellow"/>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" id="box_green" name="box" value="green" > 
+                                <img for="box_green" src="images/box green.png" alt="green"/>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" id="box_blue" name="box" value="blue" >
+                                <img for="box_blue" src="images/box blue.png" alt="blue"/>
+                            </label>
+                        </form>
 
-                    <p class="ribbon_header">Choose a Ribbon Color</p>
-                
-                    <form class="color_button ribbon_button"> 
-                        <label class="radio">
-                            <input type="radio" id="ribbon_red" name="ribbon" value="red" > 
-                            <img for="ribbon_red" src="images/ribbon red.png" alt="red"/>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" id="ribbon_yellow" name="ribbon" value="yellow" > 
-                            <img for="ribbon_yellow" src="images/ribbon yellow.png" alt="yellow"/>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" id="ribbon_green" name="ribbon" value="green"> 
-                            <img for="ribbon_green" src="images/ribbon green.png" alt="green"/>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" id="ribbon_blue" name="ribbon" value="blue"> 
-                            <img for="ribbon_blue" src="images/ribbon blue.png" alt="blue"/>
-                        </label>                    
-                        <label class="radio">
-                            <input type="radio" id="ribbon_white" name="ribbon" value="white"> 
-                            <img for="ribbon_white" src="images/ribbon white.png" alt="white"/>
-                        </label>
-                    </form>
+                        <h2 class="ribbon_header">Choose a Ribbon Color</h2>
+                    
+                        <form class="color_button ribbon_button"> 
+                            <label class="radio">
+                                <input type="radio" id="ribbon_red" name="ribbon" value="red" > 
+                                <img for="ribbon_red" src="images/ribbon red.png" alt="red"/>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" id="ribbon_yellow" name="ribbon" value="yellow" > 
+                                <img for="ribbon_yellow" src="images/ribbon yellow.png" alt="yellow"/>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" id="ribbon_green" name="ribbon" value="green"> 
+                                <img for="ribbon_green" src="images/ribbon green.png" alt="green"/>
+                            </label>
+                            <label class="radio">
+                                <input type="radio" id="ribbon_blue" name="ribbon" value="blue"> 
+                                <img for="ribbon_blue" src="images/ribbon blue.png" alt="blue"/>
+                            </label>                    
+                            <label class="radio">
+                                <input type="radio" id="ribbon_white" name="ribbon" value="white"> 
+                                <img for="ribbon_white" src="images/ribbon white.png" alt="white"/>
+                            </label>
+                        </form>
+                    </div>
                 </div>
-                <br>
-            </section>
 
-            <section id="CTA">
-                <p>
-                    <!-- clicking link needs javascript https://www.w3schools.com/html/html_links.asp-->
+                <div id="CTA">
                     <button type="submit" id="roomSubmit">I'm ready</button>
-                </p>
-            </section>
-            <section id="blank">
+                </div>
             
             </section>
         </div>
-
+        
         <script type="text/javascript" src="js/sharedComponents.js"></script>
         <script type="text/javascript" src="js/prepareGift2.js"></script>
 
