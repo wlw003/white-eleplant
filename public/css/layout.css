@@ -147,9 +147,3 @@ input[type="text"]{
 #giftSummary{
     list-style-type:none;
 }
-
-/* hide list in order */
-#playerOrder{
-    list-style-type:none;
-}
-

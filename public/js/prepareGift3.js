@@ -25,7 +25,7 @@ window.addEventListener("load", (event) => {
   db.ref("game/"+gameCode).child("players").on("value", (snapshot) =>{
 
     // get player list
-    var list = document.getElementById("playerList");
+    var list = document.getElementById("playerOrder");
 
       // Clear playerList
       while (list.firstChild) {
@@ -37,7 +37,7 @@ window.addEventListener("load", (event) => {
         // Add player to playerList
         var des = player.child("giftDescription").exists();
         if(des){
-          addPlayerToList(player.key);
+          addPlayerToList(player.key, list);
         }
       });
       everyoneReadyEvent(gameCode);

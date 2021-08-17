@@ -22,7 +22,7 @@ function updateDisplay(isHost) {
     // Update playerList
     snapshot.forEach((player) => {
       // Add player to playerList
-      addPlayerToList(player.key);
+      addPlayerToList(player.key, list);
     });
 
     // If the player is the host and there is more than one player in the game...

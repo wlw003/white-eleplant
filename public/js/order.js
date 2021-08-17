@@ -36,10 +36,11 @@ window.addEventListener("load", (event) => {
 
   //make player order list
   var ref = db.ref("game/"+gameCode).child("players");
+  var list = document.getElementById("playerOrder");
   ref.orderByChild("order").once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
       var name = childSnapshot.key;
-      addPlayerToList(name);
+      addPlayerToList(name, list);
       goToNextPage();
     });
   });
