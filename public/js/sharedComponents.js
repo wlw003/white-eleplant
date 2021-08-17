@@ -87,8 +87,6 @@ function createNewPlayer(gameCode, playerName, hostStatus, callBack){
 
     });
   });
-  
-
 };
 
 /**
@@ -127,7 +125,6 @@ function createNewGame(playerName){
     createNewPlayer(gameCode, playerName, true, (playerID) =>{
       window.location.href = "./WaitingRoom.html"+"?playerName="+playerID+"&game="+gameCode;
     });
-    
   });
 };
 

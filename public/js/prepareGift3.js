@@ -43,8 +43,6 @@ window.addEventListener("load", (event) => {
       everyoneReadyEvent(gameCode);
   });
 
- 
-
 });
 
 
