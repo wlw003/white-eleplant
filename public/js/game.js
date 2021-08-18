@@ -100,8 +100,12 @@ function addGiftIconToTable(c){
           img.alt = "unavailable present";
 
         } else {
-          img.src = "./images/blueboxredribbon.png";
-          img.alt = "Blue gift box with red ribbon";
+          var ribbonColor = childSnapshot.child("ribbonColor").val();
+          var boxColor = childSnapshot.child("boxColor").val();
+
+          img.src = "./images/" + boxColor + " box " + ribbonColor + " ribbon.png";
+          img.alt = boxColor + " gift box with " + ribbonColor + " ribbon";
+
           img.addEventListener("click", (event) =>{
             //window.alert("testing " + event.target.id);
             selectGift(event.target.id);
