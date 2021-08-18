@@ -6,7 +6,7 @@ function goToNextPage(){
   var countdown = document.getElementById("countdown");
 
   // Count down for three seconds
-  var pageTimer = setInterval(() => {
+  setInterval(() => {
     // Decrement count
     countdown.innerText = Number(countdown.innerText) - 1;
 
@@ -32,10 +32,10 @@ window.addEventListener("load", (event) => {
 
   var list = document.getElementById("playerOrder");
 
-  db.ref("game/"+gameCode).child("players").orderByChild("order").once("value", (snapshot) => {
+  db.ref("game/"+gameCode+"/order").once("value", (snapshot) => {
     // Create player order list
     snapshot.forEach((childSnapshot) => {
-      var name = childSnapshot.key;
+      var name = childSnapshot.child("name").val();
 
       addPlayerToList(name, list);
     });
