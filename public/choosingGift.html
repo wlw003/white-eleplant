@@ -2,12 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <Title>White Elephant: Choosing Gift</Title>
-        <link href="css/style.css" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
         <!-- The core Firebase JS SDK is always required and must be listed first -->
         <script src="https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js"></script>
 
@@ -15,13 +12,17 @@
             https://firebase.google.com/docs/web/setup#available-libraries -->
         <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
         <script type="text/javascript" src="js/sharedComponents.js"></script>
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     </head>
     <body>
-
         <div class="main-container">
             <section id="blank">
-
             </section>
+
             <section id="banner">
                 <h1><span id="currName"></span> is choosing a gift</h1>
             </section>
@@ -29,29 +30,22 @@
             <section id="content">
                 <br>
                 <div class="grid-container2">
-
                     <div class="item1">
                         <ol id="playerOrder">
                             <h2>Order</h2>
                         </ol>
                     </div>
-
                     <div class="giftwithincontainer">
-
                         <table id="giftTable">
                         </table>
-
                     </div>
-
                 </div>
-
             </section>
 
             <section id="CTA">
-
             </section>
+
             <section id="blank">
-            
             </section>
         </div>
     <script type="text/javascript" src="js/game.js"></script>
