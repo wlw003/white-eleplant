@@ -9,8 +9,10 @@
     // get number of players
     var playerNum = snapshot.child("players").numChildren();
 
-    //get number of gifts
-    var giftNum = snapshot.child("gift").numChildren();
+    //get number of ready gift
+    var list = document.getElementById("playerOrder");
+    var giftNum = list.children.length;
+    console.log("giftNum: " + giftNum);
 
     // go to the next page when the numbers of players and gift are equal
     if(playerNum == giftNum){
@@ -22,7 +24,7 @@
 window.addEventListener("load", (event) => {
 
   var gameCode = getGameCode();
-  db.ref("game/"+gameCode).child("players").on("value", (snapshot) =>{
+  db.ref("game/"+gameCode+"/gift").on("value", (snapshot) =>{
 
     // get player list
     var list = document.getElementById("playerOrder");
@@ -33,11 +35,13 @@ window.addEventListener("load", (event) => {
       }
   
       // Update playerList
-      snapshot.forEach((player) => {
+      snapshot.forEach((gift) => {
         // Add player to playerList
-        var des = player.child("giftDescription").exists();
-        if(des){
-          addPlayerToList(player.key, list);
+        var box = gift.child("boxColor").exists();
+        var ribbon = gift.child("ribbonColor").exists();
+        if(box && ribbon){
+          var playerName = gift.child("name").val(); 
+          addPlayerToList(playerName, list);
         }
       });
       everyoneReadyEvent(gameCode);
