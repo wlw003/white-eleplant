@@ -108,7 +108,15 @@ function addGiftIconToTable(c){
 
           img.addEventListener("click", (event) =>{
             //window.alert("testing " + event.target.id);
-            selectGift(event.target.id);
+            let currentPlayerName = document.getElementById("currName").textContent;
+
+            getPlayerName((playerName) => {
+              if (currentPlayerName === playerName) {
+                selectGift(event.target.id);
+              } else {
+                alert("It is not your turn!");
+              }
+            })
           }); 
         }
       img.id = childSnapshot.key;
