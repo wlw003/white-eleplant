@@ -114,7 +114,43 @@ function addGiftIconToTable(c){
               if (currentPlayerName === playerName) {
                 selectGift(event.target.id);
               } else {
-                alert("It is not your turn!");
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                db.ref("game/"+c+"/gift/"+event.target.id).once("value", (snapshot) => {
+                  // If the gift has been opened...
+                  if (snapshot.child("openStatus").val() === true) {
+                    let giftDescription = document.getElementById("giftDescription");
+
+                    // Display gift description
+                    giftDescription.textContent = snapshot.child("description").val();
+
+                    // Change gift descriptions style
+                    giftDescription.style.fontWeight = "bold";
+
+                    // Create link tag element
+                    let a = document.createElement('a');
+
+                    // Define link tag attributes
+                    a.textContent = snapshot.child("link").val();
+                    a.title = snapshot.child("link").val();
+                    a.href = snapshot.child("link").val();
+                    a.rel = "noopener noreferrer";
+                    a.target = "_blank";
+
+                    // Change link's style
+                    a.style.textDecoration = "underline";
+                    a.style.color = "blue";
+
+                    // Append link to giftURL element in DOM
+                    document.getElementById("giftURL").appendChild(a);
+
+                    // Open the display modal
+                    modal.style.display = "block";
+                  } else {
+                    alert("You can't look at unopened gifts...");
+                  }
+                });
               }
             })
           }); 
@@ -386,3 +422,24 @@ observer.observe(currPlayer, {subtree: true, childList: true});
 db.ref("game/"+code+"/order").on("child_changed", function(){
   window.location.href = "./giftreveal.html"+location.search.substring();
 });
+
+// Get the <button> element that closes the modal
+var closeModal = document.getElementById("closeModal");
+
+// When the user clicks on <span> (x), close the modal
+closeModal.onclick = function() {
+  var modal = document.getElementById("myModal");
+
+  // Close the modal
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  var modal = document.getElementById("myModal");
+
+  if (event.target === modal) {
+    // Close the modal
+    modal.style.display = "none";
+  }
+}
