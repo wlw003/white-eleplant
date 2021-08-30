@@ -215,7 +215,7 @@ function addGiftIconToTable(gameCode) {
  * Function displays opened gifts' number of steals left
  * @param {string} gameCode
  */
-function addGiftStealNumToTable(gameCode){
+function addGiftStealNumToTable(gameCode) {
   db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
     // Get table element and create new table row element
     var table = document.getElementById("giftTable");
@@ -248,25 +248,35 @@ function addGiftStealNumToTable(gameCode){
   });
 }
 
-function addGiftOwnerToTable(c){
-  var table = document.getElementById("giftTable");
-  var tr = document.createElement("tr");
-  var ref = db.ref("game/"+c).child("gift");
-  ref.once("value", (snapshot) => {
+/**
+ * Function displays opened gifts' owners
+ * @param {string} gameCode
+ */
+function addGiftOwnerToTable(c) {
+  db.ref("game/"+c).child("gift").once("value", (snapshot) => {
+    // Get table element and create new table row element
+    var table = document.getElementById("giftTable");
+    var tr = document.createElement("tr");
+
+    // For every gift in the game...
     snapshot.forEach((childSnapshot) => {
+    // Get owner and create new item element
       var owner = childSnapshot.child("owner").val();
-      var open = childSnapshot.child("openStatus").val();
       var item = document.createElement("td");
-      var s = "";
-      if(open){
-        s = owner;
+
+      // If the gift was opened before...
+      if(childSnapshot.child("openStatus").val() === true){
+        item.textContent = owner;
       }
-      item.appendChild(document.createTextNode(s));
+
+      // Set item's class
       item.className = childSnapshot.key;
+
       tr.appendChild(item);
     });
+
+    table.appendChild(tr);
   });
-  table.appendChild(tr);
 }
 
 function addOwnGiftToTable(c, pn){
