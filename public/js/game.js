@@ -112,82 +112,101 @@ function selectGift(gameCode, giftID) {
   });
 }
 
-function addGiftIconToTable(c){
-  var table = document.getElementById("giftTable");
-  var tr = document.createElement("tr");
-  var ref = db.ref("game/"+c).child("gift");
-  ref.once("value", (snapshot) => {
+function addGiftIconToTable(gameCode){
+  db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
+    // Get table element and create new table row element
+    var table = document.getElementById("giftTable");
+    var tr = document.createElement("tr");
+
+    // For every gift in the game...
     snapshot.forEach((childSnapshot) => {
+      // Create a new table item and img element
       var item = document.createElement("td");
       var img = document.createElement("img");
+
+      // Get gift's number of steals left
       var numSteal = childSnapshot.child("numStealLeft").val();
-        if(numSteal <= 0){
-          img.src = "./images/unavailable present.png";
-          img.alt = "unavailable present";
 
-        } else {
-          var ribbonColor = childSnapshot.child("ribbonColor").val();
-          var boxColor = childSnapshot.child("boxColor").val();
+      // If a gift has steals left...
+      if (numSteal > 0) {
+        // Get gift ribbon anf box color
+        var ribbonColor = childSnapshot.child("ribbonColor").val();
+        var boxColor = childSnapshot.child("boxColor").val();
 
-          img.src = "./images/" + boxColor + " box " + ribbonColor + " ribbon.png";
-          img.alt = boxColor + " gift box with " + ribbonColor + " ribbon";
+        // Set gift image and description
+        img.src = "./images/" + boxColor + " box " + ribbonColor + " ribbon.png";
+        img.alt = boxColor + " gift box with " + ribbonColor + " ribbon";
 
-          img.addEventListener("click", (event) =>{
-            //window.alert("testing " + event.target.id);
-            let currentPlayerName = document.getElementById("currName").textContent;
+        // Handle gift click event
+        img.addEventListener("click", (event) =>{
+          let currentPlayer = document.getElementById("currName").textContent;
 
-            getPlayerName((playerName) => {
-              if (currentPlayerName === playerName) {
-                selectGift(c, event.target.id);
-              } else {
-                // Get the modal
-                var modal = document.getElementById("myModal");
+          getPlayerName((playerName) => {
+            // If the player is the current player
+            if (currentPlayer === playerName) {
+              // Allow them to select a gift
+              selectGift(gameCode, event.target.id);
+            } else {
+              // Get gift information modal
+              var modal = document.getElementById("myModal");
 
-                db.ref("game/"+c+"/gift/"+event.target.id).once("value", (snapshot) => {
-                  // If the gift has been opened...
-                  if (snapshot.child("openStatus").val() === true) {
-                    let giftDescription = document.getElementById("giftDescription");
+              // Get the clicked gift information from the database
+              db.ref("game/"+gameCode+"/gift/"+event.target.id).once("value", (snapshot) => {
+                // If the gift has been opened...
+                if (snapshot.child("openStatus").val() === true) {
+                  // Get gift description element
+                  let giftDescription = document.getElementById("giftDescription");
 
-                    // Display gift description
-                    giftDescription.textContent = snapshot.child("description").val();
+                  // Display gift description
+                  giftDescription.textContent = snapshot.child("description").val();
 
-                    // Change gift descriptions style
-                    giftDescription.style.fontWeight = "bold";
+                  // Change gift descriptions style
+                  giftDescription.style.fontWeight = "bold";
 
-                    // Create link tag element
-                    let a = document.createElement('a');
+                  // Create link tag element
+                  let a = document.createElement('a');
 
-                    // Define link tag attributes
-                    a.textContent = snapshot.child("link").val();
-                    a.title = snapshot.child("link").val();
-                    a.href = snapshot.child("link").val();
-                    a.rel = "noopener noreferrer";
-                    a.target = "_blank";
+                  // Define link tag attributes
+                  a.textContent = snapshot.child("link").val();
+                  a.title = snapshot.child("link").val();
+                  a.href = snapshot.child("link").val();
+                  a.rel = "noopener noreferrer";
+                  a.target = "_blank";
 
-                    // Change link's style
-                    a.style.textDecoration = "underline";
-                    a.style.color = "blue";
+                  // Change link's style
+                  a.style.textDecoration = "underline";
+                  a.style.color = "blue";
 
-                    // Append link to giftURL element in DOM
-                    document.getElementById("giftURL").appendChild(a);
+                  // Append link to giftURL element in DOM
+                  document.getElementById("giftURL").appendChild(a);
 
-                    // Open the display modal
-                    modal.style.display = "block";
-                  } else {
-                    alert("You can't look at unopened gifts...");
-                  }
-                });
-              }
-            })
-          }); 
-        }
+                  // Open the display modal
+                  modal.style.display = "block";
+                } else {
+                  alert("You can't look at unopened gifts...");
+                }
+              });
+            }
+          })
+        });
+      } else {
+        // Set gift image source and description to unavailable
+        img.src = "./images/unavailable present.png";
+        img.alt = "unavailable present";
+      }
+
+      // Set gift image's ID and class
       img.id = childSnapshot.key;
       img.className = "responsive_gift "+ childSnapshot.key;
+
+      // Append img to item and item to table row
       item.appendChild(img);
       tr.appendChild(item);
     });
+
+    // Append table row to table
+    table.appendChild(tr);
   });
-  table.appendChild(tr);
 }
 
 function addGiftStealNumToTable(c){
