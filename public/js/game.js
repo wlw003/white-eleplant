@@ -30,19 +30,27 @@ function generatePlayerOrderList(gameCode){
   });
 }
 
-function getCurrentPlayer(c){
-  var ref = db.ref("game/"+c).child("order");
-  ref.once("value", (snapshot) => {
-    var curr = false;
+/**
+ * Function that gets current player
+ * @param {string} gameCode
+ * @param {function} callBack function
+ */
+function getCurrentPlayer(gameCode, callBack){
+  // Get players randomly generated order from database
+  db.ref("game/"+gameCode).child("order").once("value", (snapshot) => {
+    // For each player...
     snapshot.forEach((childSnapshot) => {
-      var key = childSnapshot.child("name").val();
-      var d = childSnapshot.child("done").val();
-      var currPlayer = "";
-      if(!d && !curr){
-        var n = document.getElementById("currName");
-        n.appendChild(document.createTextNode(key));
-        curr = true;
-        currPlayer = key;
+      // Get player name and their done status
+      var playerName = childSnapshot.child("name").val();
+      var done = childSnapshot.child("done").val();
+
+      // If the player didn't take their turn yet
+      if (!done) {
+        // Callback the player as the current player
+        callBack(playerName);
+
+        // Break out of forEach iteration
+        return true;
       }
     });
   });
@@ -375,7 +383,10 @@ let ud = getUserData();
 let code = ud.code;
 let pname = ud.name;
 //console.log("code is "+ code + " & pname is "+ pname);
-getCurrentPlayer(code);
+getCurrentPlayer(code, (playerName) => {
+  var node = document.getElementById("currName");
+  node.textContent = playerName;
+});
 generatePlayerOrderList(code);
 addGiftIconToTable(code);
 addOwnGiftToTable(code, pname);
