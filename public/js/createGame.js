@@ -19,25 +19,30 @@ var handleSubmit = () => {
 const playerName = document.getElementById("playerName");
 
 // Handle playerName element input event
-playerName.addEventListener("keypress", (event) => {
-  // Try to submit if the enter key is pressed
+playerName.addEventListener("input", (event) => {
+  // Prevent default error messages from popping up
+  event.preventDefault();
+
+  // Get counter element
+  var counter = document.getElementById("counter");
+
+  // Update counter
+  updateCounter(playerName.value.length, counter);
+
+  // Get errorMessage element
+  var errorMessage = document.getElementById("errorMessage");
+
+  // Validate player name
+  validatePlayerName(playerName, errorMessage);
+});
+
+// Handle playerName element enter input event
+playerName.addEventListener("keydown", (event) => {
   if (event.key == "Enter") {
     // Prevent default error messages from popping up
     event.preventDefault();
 
     handleSubmit();
-  } else {
-    // Get counter element
-    var counter = document.getElementById("counter");
-
-    // Update counter
-    updateCounter(playerName.value.length, counter);
-
-    // Get errorMessage element
-    var errorMessage = document.getElementById("errorMessage");
-
-    // Validate player name
-    validatePlayerName(playerName, errorMessage);
   }
 });
 
