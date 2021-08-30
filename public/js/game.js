@@ -2,7 +2,7 @@
  * Function that generates player order list
  * @param {string} gameCode
  */
-function generatePlayerOrderList(gameCode){
+function generatePlayerOrderList(gameCode) {
   // Get players randomly generated order from database
   db.ref("game/"+gameCode).child("order").once("value", (snapshot) => {
     // For each player...
@@ -56,41 +56,58 @@ function getCurrentPlayer(gameCode, callBack){
   });
 }
 
-function selectGift(id){
-  let {code, name} = getUserData();
-  //console.log(id);
-  var ref = db.ref("game/"+code);
-  var cp = document.getElementById("currName").innerText;
-  //console.log(cp);
+/**
+ * Function that allows players to select gifts
+ * @param {string} giftID
+ */
+function selectGift(gameCode, giftID) {
+  // Get current player and database reference to game
+  var currentPlayer = document.getElementById("currName").innerText;
+  var ref = db.ref("game/"+gameCode);
+
+  // Initialize an object to update the database
   var update = {};
+
+  // Get a snapshot of the game
   ref.once("value", (snapshot) =>{
-    //check if the gift is open or not
-    var openStatus = snapshot.child("gift/"+id+"/openStatus").val();
-    //console.log("openStatus: "+ openStatus);
-    if(openStatus){
-      //change the previous owner's openStatus to false
-      var prevOwner = snapshot.child("gift/"+id+"/owner").val();
-      //console.log(prevOwner);
-      var prevOwnerOrder = snapshot.child("players/"+prevOwner+"/order").val();
-      update["order/"+prevOwnerOrder+"/done"] = false;
-      update["gift/"+id+"/prevOwner"] = prevOwner;
-      //console.log(prevOwnerOrder);
-      //decrease steal counter
-      var currSteal = snapshot.child("gift/"+id+"/numStealLeft").val();
-      update["gift/"+id+"/numStealLeft"] = currSteal - 1;
-    } else {
-      //change openstatus to true
-      update["gift/"+id+"/openStatus"] = true;      
-    }
-    //change done status for current player to true
-    var order = snapshot.child("players/"+cp+"/order").val();
-    update["order/"+order+"/done"] = true;
-    //change owner
-    update["gift/"+id+"/owner"] = cp;
-    update["order/"+order+"/done"] = true;
+    // Get gift open status and current player's order number
+    var openStatus = snapshot.child("gift/"+giftID+"/openStatus").val();
+    var order = snapshot.child("players/"+currentPlayer+"/order").val();
+
+    // Generate a new key
     var newKey = ref.child("history").push().key;
-    update["history/"+newKey] = {currPlayer: cp, gift: id};
-    //console.log(update);
+
+    // If the gift was opened before...
+    if(openStatus) {
+      // Get gift's previous owner and their order number
+      var prevOwner = snapshot.child("gift/"+giftID+"/owner").val();
+      var prevOwnerOrder = snapshot.child("players/"+prevOwner+"/order").val();
+
+      // Get gift's number of steals left
+      var numStealLeft = snapshot.child("gift/"+giftID+"/numStealLeft").val();
+
+      // Change the previous owner's done status to false
+      // Set gift's previous owner to prevOwner
+      // Decrease gift's steal counter
+      update["order/"+prevOwnerOrder+"/done"] = false;
+      update["gift/"+giftID+"/prevOwner"] = prevOwner;
+      update["gift/"+giftID+"/numStealLeft"] = numStealLeft - 1;
+    } else {
+      // Change gift's open status to true
+      update["gift/"+giftID+"/openStatus"] = true;
+    }
+
+    // Create new record of player's gift choice
+    update["history/"+newKey] = {
+      currPlayer: currentPlayer,
+      gift: giftID
+    };
+
+    // Set gift's current owner to current player
+    // Change done status of current player to true
+    update["gift/"+giftID+"/owner"] = currentPlayer;
+    update["order/"+order+"/done"] = true;
+
     ref.update(update);
   });
 }
@@ -121,7 +138,7 @@ function addGiftIconToTable(c){
 
             getPlayerName((playerName) => {
               if (currentPlayerName === playerName) {
-                selectGift(event.target.id);
+                selectGift(c, event.target.id);
               } else {
                 // Get the modal
                 var modal = document.getElementById("myModal");
