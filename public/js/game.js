@@ -1,29 +1,20 @@
-function addPlayerToList(pn){
-  var list = document.getElementById("playerOrder");
-  var item = document.createElement("li");
-  item.appendChild(document.createTextNode(pn));
-  item.style.fontWeight = "bolder";
-  list.appendChild(item);
-};
-
-function addDonePlayerToList(pn){
-  var list = document.getElementById("playerOrder");
-  var item = document.createElement("li");
-  item.appendChild(document.createTextNode(pn));
-  item.style.fontWeight = "lighter";
-  list.appendChild(item);
-};
-
 function addOrderList(c){
   var ref = db.ref("game/"+c).child("order");
   ref.once("value", (snapshot) => {
     snapshot.forEach((childSnapshot) => {
-      var key = childSnapshot.child("name").val();
+      var playerName = childSnapshot.child("name").val();
       var d = childSnapshot.child("done").val();
+
+      var list = document.getElementById("playerOrder");
+
       if(d){
-        addDonePlayerToList(key);
+        addItemToList(list, playerName, {
+          fontWeight: "lighter"
+        });
       } else {
-        addPlayerToList(key);
+        addItemToList(list, playerName, {
+          fontWeight: "bolder"
+        });
       }
     });
   });

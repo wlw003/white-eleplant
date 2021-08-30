@@ -38,7 +38,7 @@ window.addEventListener("load", (event) => {
         if(boxColor && ribbonColor){
           var playerName = gift.child("name").val();
 
-          addPlayerToList(playerName, list);
+          addItemToList(list, playerName);
         }
       });
 

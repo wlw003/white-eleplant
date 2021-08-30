@@ -35,9 +35,9 @@ window.addEventListener("load", (event) => {
   db.ref("game/"+gameCode+"/order").once("value", (snapshot) => {
     // Create player order list
     snapshot.forEach((childSnapshot) => {
-      var name = childSnapshot.child("name").val();
+      var playerName = childSnapshot.child("name").val();
 
-      addPlayerToList(name, list);
+      addItemToList(list, playerName);
     });
 
     // Go to the next page after 3 seconds

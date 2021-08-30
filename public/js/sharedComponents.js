@@ -190,15 +190,21 @@ function getPlayerGiftCode(gameCode, playerName, callBack) {
 }
 
 /**
- * Function that adds player's name on a list
- * @param {string} playerName
- * @param {element} list
+ * Function that adds an item to a list
+ * @param {element} list element
+ * @param {string} item textContent
+ * @param {object} item style
  */
- function addPlayerToList(playerName, list){
-  // Create player list item
+ function addItemToList(list, textContent, style){
+  // Create item element
   var item = document.createElement("li");
-  item.appendChild(document.createTextNode(playerName));
 
-  // Get playerList element and append player to list
+  // Set item text content
+  item.textContent = textContent;
+
+  // Define item style
+  Object.assign(item.style, style);
+
+  // Append item to list
   list.appendChild(item);
 };
