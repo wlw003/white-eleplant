@@ -35,7 +35,7 @@ function generatePlayerOrderList(gameCode) {
  * @param {string} gameCode
  * @param {function} callBack function
  */
-function getCurrentPlayer(gameCode, callBack){
+function getCurrentPlayer(gameCode, callBack) {
   // Get players randomly generated order from database
   db.ref("game/"+gameCode).child("order").once("value", (snapshot) => {
     // For each player...
@@ -112,7 +112,11 @@ function selectGift(gameCode, giftID) {
   });
 }
 
-function addGiftIconToTable(gameCode){
+/**
+ * Function displays interactable gift boxes
+ * @param {string} gameCode
+ */
+function addGiftIconToTable(gameCode) {
   db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
     // Get table element and create new table row element
     var table = document.getElementById("giftTable");
@@ -125,10 +129,10 @@ function addGiftIconToTable(gameCode){
       var img = document.createElement("img");
 
       // Get gift's number of steals left
-      var numSteal = childSnapshot.child("numStealLeft").val();
+      var numStealLeft = childSnapshot.child("numStealLeft").val();
 
       // If a gift has steals left...
-      if (numSteal > 0) {
+      if (numStealLeft > 0) {
         // Get gift ribbon anf box color
         var ribbonColor = childSnapshot.child("ribbonColor").val();
         var boxColor = childSnapshot.child("boxColor").val();
@@ -199,41 +203,49 @@ function addGiftIconToTable(gameCode){
       img.id = childSnapshot.key;
       img.className = "responsive_gift "+ childSnapshot.key;
 
-      // Append img to item and item to table row
       item.appendChild(img);
       tr.appendChild(item);
     });
 
-    // Append table row to table
     table.appendChild(tr);
   });
 }
 
-function addGiftStealNumToTable(c){
-  var table = document.getElementById("giftTable");
-  var tr = document.createElement("tr");
-  var ref = db.ref("game/"+c).child("gift");
-  ref.once("value", (snapshot) => {
+/**
+ * Function displays opened gifts' number of steals left
+ * @param {string} gameCode
+ */
+function addGiftStealNumToTable(gameCode){
+  db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
+    // Get table element and create new table row element
+    var table = document.getElementById("giftTable");
+    var tr = document.createElement("tr");
+
+    // For every gift in the game...
     snapshot.forEach((childSnapshot) => {
-      var numSteal = childSnapshot.child("numStealLeft").val();
-      var open = childSnapshot.child("openStatus").val();
-      var strings = "";
+      // Get gift's number of steals left and create new item element
+      var numStealLeft = childSnapshot.child("numStealLeft").val();
       var item = document.createElement("td");
-      if(open){
-        if(numSteal <= 0){
-          strings = "No steals left!";
-        } else if(numSteal == 1){
-          strings = "1 steal left!"; 
+
+      // If the gift was opened before...
+      if(childSnapshot.child("openStatus").val() === true){
+        if(numStealLeft > 1) {
+          item.textContent = numStealLeft + " steals left!";
+        } else if(numStealLeft === 1) {
+          item.textContent = "1 steal left!";
         } else {
-          strings = numSteal + " steals left!";
+          item.textContent = "No steals left!";
         }
       }
-      item.appendChild(document.createTextNode(strings));
+
+      // Set item's class
       item.className = childSnapshot.key;
+
       tr.appendChild(item);
     });
+
+    table.appendChild(tr);
   });
-  table.appendChild(tr);
 }
 
 function addGiftOwnerToTable(c){
