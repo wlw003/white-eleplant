@@ -15,14 +15,13 @@ firebase.initializeApp(config);
 const db = firebase.database();
 
 /**
- * Function that counts player's name's remaining characters
- * @param {int} playerNameLength 
+ * Function that counts input text box's remaining characters
+ * @param {int} inputLength current inout text length
+ * @param {int} maxLength max characters that an input text box can have
  * @param {element} element containing counter 
  */
-function updateCounter(playerNameLength, counter){
-  var maxLength = 12;
-
-  counter.textContent = maxLength-playerNameLength;
+function updateCounter(inputLength, maxLength, counter){
+  counter.textContent = maxLength-inputLength;
 };
 
 /** 

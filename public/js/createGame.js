@@ -27,7 +27,7 @@ playerName.addEventListener("input", (event) => {
   var counter = document.getElementById("counter");
 
   // Update counter
-  updateCounter(playerName.value.length, counter);
+  updateCounter(playerName.value.length, 12, counter);
 
   // Get errorMessage element
   var errorMessage = document.getElementById("errorMessage");

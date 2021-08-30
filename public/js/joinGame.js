@@ -40,33 +40,25 @@ var handleSubmit = () => {
 const playerName = document.getElementById("playerName");
 
 // Handle playerName element input event
-playerName.addEventListener("keypress", (event) => {
-  // Try to submit if the enter key is pressed
-  if (event.key == "Enter") {
-    // Prevent default error messages from popping up
-    event.preventDefault();
-
-    handleSubmit();
-  } else {
+playerName.addEventListener("input", (event) => {
     // Get counter element
     var counter = document.getElementById("counter");
 
     // Update counter
-    updateCounter(playerName.value.length, counter);
+    updateCounter(playerName.value.length, 12, counter);
 
     // Get errorMessage element
     var errorMessage = document.getElementById("errorMessage");
 
     // Validate player name
     validatePlayerName(playerName, errorMessage);
-  }
 });
 
 // Get gameCode element
 var gameCode = document.getElementById("gameCode");
 
 // Handle gameCode element submit event
-gameCode.addEventListener("keypress", (event) => {
+gameCode.addEventListener("keydown", (event) => {
   // Try to submit if the enter key is pressed
   if (event.key == "Enter") {
     // Prevent default error messages from popping up

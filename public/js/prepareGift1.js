@@ -40,6 +40,20 @@ function writeGiftInfo(gameCode, playerName, giftDes, giftLink, callBack){
   });
 }
 
+// Get gift description element
+const description = document.getElementById("giftDes");
+
+// Handle gift description element input event
+description.addEventListener("input", (event) => {
+  // Get counter element
+  var counter = document.getElementById("counter");
+
+  // Update counter
+  updateCounter(description.value.length, 120, counter);
+});
+
+
+
 // Get roomSubmit element
 let roomSubmit = document.getElementById("roomSubmit");
 
@@ -49,7 +63,7 @@ roomSubmit.addEventListener("click", (event) => {
 
   getPlayerName((playerName) => {
     // Write gift information into database
-    writeGiftInfo(gameCode, playerName, document.getElementById("giftDes").value, document.getElementById("giftLink").value, (error) => {
+    writeGiftInfo(gameCode, playerName, description.value, document.getElementById("giftLink").value, (error) => {
       // Check for set and update error
       if (error == null) {
         window.location.href = "./PrepareGift2.html"+location.search.substring();
