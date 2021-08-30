@@ -1,17 +1,27 @@
-function addOrderList(c){
-  var ref = db.ref("game/"+c).child("order");
-  ref.once("value", (snapshot) => {
+/**
+ * Function that generates player order list
+ * @param {string} gameCode
+ */
+function generatePlayerOrderList(gameCode){
+  // Get players randomly generated order from database
+  db.ref("game/"+gameCode).child("order").once("value", (snapshot) => {
+    // For each player...
     snapshot.forEach((childSnapshot) => {
+      // Get player name and their done status
       var playerName = childSnapshot.child("name").val();
-      var d = childSnapshot.child("done").val();
+      var done = childSnapshot.child("done").val();
 
+      // Get list element
       var list = document.getElementById("playerOrder");
 
-      if(d){
+      // If the player already took their turn...
+      if (done){
+        // Add their name to the player order list lighter
         addItemToList(list, playerName, {
           fontWeight: "lighter"
         });
       } else {
+        // Add their name to the player order list bolder
         addItemToList(list, playerName, {
           fontWeight: "bolder"
         });
@@ -20,19 +30,27 @@ function addOrderList(c){
   });
 }
 
-function getCurrentPlayer(c){
-  var ref = db.ref("game/"+c).child("order");
-  ref.once("value", (snapshot) => {
-    var curr = false;
+/**
+ * Function that gets current player
+ * @param {string} gameCode
+ * @param {function} callBack function
+ */
+function getCurrentPlayer(gameCode, callBack){
+  // Get players randomly generated order from database
+  db.ref("game/"+gameCode).child("order").once("value", (snapshot) => {
+    // For each player...
     snapshot.forEach((childSnapshot) => {
-      var key = childSnapshot.child("name").val();
-      var d = childSnapshot.child("done").val();
-      var currPlayer = "";
-      if(!d && !curr){
-        var n = document.getElementById("currName");
-        n.appendChild(document.createTextNode(key));
-        curr = true;
-        currPlayer = key;
+      // Get player name and their done status
+      var playerName = childSnapshot.child("name").val();
+      var done = childSnapshot.child("done").val();
+
+      // If the player didn't take their turn yet
+      if (!done) {
+        // Callback the player as the current player
+        callBack(playerName);
+
+        // Break out of forEach iteration
+        return true;
       }
     });
   });
@@ -365,8 +383,11 @@ let ud = getUserData();
 let code = ud.code;
 let pname = ud.name;
 //console.log("code is "+ code + " & pname is "+ pname);
-getCurrentPlayer(code);
-addOrderList(code);
+getCurrentPlayer(code, (playerName) => {
+  var node = document.getElementById("currName");
+  node.textContent = playerName;
+});
+generatePlayerOrderList(code);
 addGiftIconToTable(code);
 addOwnGiftToTable(code, pname);
 addGiftOwnerToTable(code);
