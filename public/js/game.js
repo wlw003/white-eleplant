@@ -316,32 +316,42 @@ function addOwnGiftToTable(gameCode, playerName){
   });
 }
 
-function addGiftInfoToTable(c){
-  var table = document.getElementById("giftTable");
-  var tr = document.createElement("tr");
-  var ref = db.ref("game/"+c).child("gift");
-  ref.once("value", (snapshot) => {
+function addGiftInfoToTable(gameCode){
+  db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
+    // Get table element and create new table row element
+    var table = document.getElementById("giftTable");
+    var tr = document.createElement("tr");
+
+    // For every gift in the game...
     snapshot.forEach((childSnapshot) => {
-      var open = childSnapshot.child("openStatus").val();
-      var des = childSnapshot.child("description").val();
-      var link = childSnapshot.child("link").val();
+      // Create new item element
       var item = document.createElement("td");
-      if(open){
+
+      // If the gift was opened before...
+      if(childSnapshot.child("openStatus").val() === true){
+        // Create new a element
         var a = document.createElement("a");
-        a.appendChild(document.createTextNode(des))
-        a.title = des;
-        a.href = link;
+
+        // Set a attributes
+        a.textContent = childSnapshot.child("description").val();
+        a.title = childSnapshot.child("description").val();
+        a.href = childSnapshot.child("link").val();
         a.target = "_blank";
         a.rel = "noopener noreferrer";
+
         item.appendChild(a);
       } else {
-        item.appendChild(document.createTextNode(""));
+        item.textContent = "";
       }
+
+      // Set item's class
       item.className = childSnapshot.key;
+
       tr.appendChild(item);
     });
+
+    table.appendChild(tr);
   });
-  table.appendChild(tr);
 }
 
 function lastMove(c){
@@ -394,41 +404,30 @@ function lastMove(c){
 }
 
 getPlayerName((playerName) => {
-  let code = getGameCode();
-  let pname = playerName;
+  let gameCode = getGameCode();
 
-  //console.log("code is "+ code + " & pname is "+ pname);
-  getCurrentPlayer(code, (playerName) => {
+  getCurrentPlayer(gameCode, (playerName) => {
     var node = document.getElementById("currName");
     node.textContent = playerName;
   });
-  generatePlayerOrderList(code);
-  addOwnGiftToTable(code, pname);
-  addGiftIconToTable(code);
-  addGiftOwnerToTable(code);
-  addGiftInfoToTable(code);
-  addGiftStealNumToTable(code);
-  lastMove(code);
+
+  generatePlayerOrderList(gameCode);
+  addOwnGiftToTable(gameCode, playerName);
+  addGiftIconToTable(gameCode);
+  addGiftOwnerToTable(gameCode);
+  addGiftStealNumToTable(gameCode);
+  addGiftInfoToTable(gameCode);
+  lastMove(gameCode);
 
   //make gift icon clickable only for current player
   var currPlayer = document.getElementById("currName");
   const observer = new MutationObserver(function(){
-    //console.log('callback that runs when observer is triggered');
-    //console.log(currPlayer.innerText);
-    //console.log("pname: "+pname);
-    if(currPlayer.innerText == pname){
+    if(currPlayer.innerText == playerName){
       console.log("same");
-      //console.log(document.querySelectorAll(".responsive_gift"));
-  /*     .forEach(function (icon){
-        icon.addEventListener("click", (event) =>{
-          window.alert("testing " + event.target.id);
-          selectGift(event.target.id);
-        });
-      }); */
     }
   });
   observer.observe(currPlayer, {subtree: true, childList: true});
-  db.ref("game/"+code+"/order").on("child_changed", function(){
+  db.ref("game/"+gameCode+"/order").on("child_changed", function(){
     window.location.href = "./giftreveal.html"+location.search.substring();
   });
 
