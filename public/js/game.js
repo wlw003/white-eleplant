@@ -260,7 +260,7 @@ function addGiftOwnerToTable(c) {
 
     // For every gift in the game...
     snapshot.forEach((childSnapshot) => {
-    // Get owner and create new item element
+      // Get owner and create new item element
       var owner = childSnapshot.child("owner").val();
       var item = document.createElement("td");
 
@@ -279,24 +279,33 @@ function addGiftOwnerToTable(c) {
   });
 }
 
-function addOwnGiftToTable(c, pn){
-  var table = document.getElementById("giftTable");
-  var tr = document.createElement("tr");
-  var ref = db.ref("game/"+c).child("gift");
-  ref.once("value", (snapshot) => {
+function addOwnGiftToTable(gameCode, playerName){
+  db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
+    // Get table element and create new table row element
+    var table = document.getElementById("giftTable");
+    var tr = document.createElement("tr");
+
+    // For every gift in the game...
     snapshot.forEach((childSnapshot) => {
-      var key = childSnapshot.child("name").val();
+      // Get giftDonor and create new item element
+      var giftDonor = childSnapshot.child("name").val();
       var item = document.createElement("td");
-      if(key == pn){
+
+      // If the player is the gift donor...
+      if(giftDonor == playerName){
         item.appendChild(document.createTextNode("This is from you!"));
       } else {
         item.appendChild(document.createTextNode(""));
       }
+
+      // Set item's class
       item.className = childSnapshot.key;
+
       tr.appendChild(item);
     });
+
+    table.appendChild(tr);
   });
-  table.appendChild(tr);
 }
 
 function addGiftInfoToTable(c){
