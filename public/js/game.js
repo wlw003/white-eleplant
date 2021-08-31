@@ -61,18 +61,20 @@ function getCurrentPlayer(gameCode, callBack) {
  * @param {string} giftID
  */
 function selectGift(gameCode, giftID) {
-  // Get current player and database reference to game
-  var currentPlayer = document.getElementById("currName").innerText;
+  // Get database reference to game
   var ref = db.ref("game/"+gameCode);
 
-  // Initialize an object to update the database
-  var update = {};
-
   // Get a snapshot of the game
-  ref.once("value", (snapshot) =>{
-    // Get gift open status and current player's order number
-    var openStatus = snapshot.child("gift/"+giftID+"/openStatus").val();
+  ref.once("value", (snapshot) => {
+    // Get current player and their order number
+    var currentPlayer = document.getElementById("currName").innerText;
     var order = snapshot.child("players/"+currentPlayer+"/order").val();
+
+    // Get gift open status, current player's order number
+    var openStatus = snapshot.child("gift/"+giftID+"/openStatus").val();
+
+    // Initialize an object to update the database
+    var update = {};
 
     // Generate a new key
     var newKey = ref.child("history").push().key;
@@ -252,8 +254,8 @@ function addGiftStealNumToTable(gameCode) {
  * Function displays opened gifts' owners
  * @param {string} gameCode
  */
-function addGiftOwnerToTable(c) {
-  db.ref("game/"+c).child("gift").once("value", (snapshot) => {
+function addGiftOwnerToTable(gameCode) {
+  db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
     // Get table element and create new table row element
     var table = document.getElementById("giftTable");
     var tr = document.createElement("tr");
@@ -279,6 +281,10 @@ function addGiftOwnerToTable(c) {
   });
 }
 
+/**
+ * Function displays owner's gift
+ * @param {string} gameCode
+ */
 function addOwnGiftToTable(gameCode, playerName){
   db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
     // Get table element and create new table row element
@@ -291,8 +297,10 @@ function addOwnGiftToTable(gameCode, playerName){
       var giftDonor = childSnapshot.child("name").val();
       var item = document.createElement("td");
 
+      console.log(giftDonor + ":" + playerName);
+
       // If the player is the gift donor...
-      if(giftDonor == playerName){
+      if(giftDonor === playerName){
         item.appendChild(document.createTextNode("This is from you!"));
       } else {
         item.appendChild(document.createTextNode(""));
@@ -334,26 +342,6 @@ function addGiftInfoToTable(c){
     });
   });
   table.appendChild(tr);
-}
-
-function getUserData(){
-  var sp = location.search.substring(1).split("&");
-  var temp = sp[0].split("=");
-  //console.log(temp);
-  var temp2 = sp[1].split("=");
-  //console.log(temp2);
-  var code = "";
-  var name = "";
-  if(temp[0] == "playerName"){
-    code = temp2[1];
-    name = temp[1];
-  }
-  else {
-    code = temp[1];
-    name = temp2[1];
-  }
-  console.log("code is "+ code + " & name is "+ name);
-  return {code, name};
 }
 
 function lastMove(c){
@@ -403,122 +391,65 @@ function lastMove(c){
       }
     }
   });
+}
 
-/*   //all gift are choosen & first person event has not happened yet
-  ref.child("order").once("value", (snapshot) => {
-    snapshot.forEach((childSnapshot) => {
-      var open = childSnapshot.child("done").val();
-      if(open){
-        doneCounter++;
-      }
-    });
-    if(snapshot.numChildren() == doneCounter){
-      ref.child("firstPersonEvent").set(true);
-      console.log("sdfsd");
-      window.location.href = "./firstperson.html"+location.search.substring();
+getPlayerName((playerName) => {
+  let code = getGameCode();
+  let pname = playerName;
+
+  //console.log("code is "+ code + " & pname is "+ pname);
+  getCurrentPlayer(code, (playerName) => {
+    var node = document.getElementById("currName");
+    node.textContent = playerName;
+  });
+  generatePlayerOrderList(code);
+  addOwnGiftToTable(code, pname);
+  addGiftIconToTable(code);
+  addGiftOwnerToTable(code);
+  addGiftInfoToTable(code);
+  addGiftStealNumToTable(code);
+  lastMove(code);
+
+  //make gift icon clickable only for current player
+  var currPlayer = document.getElementById("currName");
+  const observer = new MutationObserver(function(){
+    //console.log('callback that runs when observer is triggered');
+    //console.log(currPlayer.innerText);
+    //console.log("pname: "+pname);
+    if(currPlayer.innerText == pname){
+      console.log("same");
+      //console.log(document.querySelectorAll(".responsive_gift"));
+  /*     .forEach(function (icon){
+        icon.addEventListener("click", (event) =>{
+          window.alert("testing " + event.target.id);
+          selectGift(event.target.id);
+        });
+      }); */
     }
   });
-
-  ref.child("history").once("value", (childSnapshot) =>{
-    childSnapshot.forEach((childChildSnapshot) => {
-      var string = childChildSnapshot.val();
-     // console.log(string);
-      if(string == "End Game"){
-        //console.log("ending game");
-        window.location.href = "./endgame.html"+location.search.substring();
-      } else if(string == "First person is stealing"){
-        
-        ref.once("value", (snapshot) => {
-          var fpc = snapshot.hasChild("firstPersonEvent");
-          console.log("stealing gift");
-          if(fpc){
-            console.log("firstpersonevent happened");
-            window.location.href = "./endgame.html"+location.search.substring();
-          } else{
-            console.log("firstpersonevent didn't happened");
-            window.location.href = "./firstperson.html"+location.search.substring();
-          }
-        });
-      }
-    });  
-  }); */
-
-
-}
-
-let ud = getUserData();
-let code = ud.code;
-let pname = ud.name;
-//console.log("code is "+ code + " & pname is "+ pname);
-getCurrentPlayer(code, (playerName) => {
-  var node = document.getElementById("currName");
-  node.textContent = playerName;
-});
-generatePlayerOrderList(code);
-addGiftIconToTable(code);
-addOwnGiftToTable(code, pname);
-addGiftOwnerToTable(code);
-addGiftInfoToTable(code);
-addGiftStealNumToTable(code);
-lastMove(code);
-
-/* window.addEventListener("DOMContentLoaded", (event) => {
-  console.log(document.getElementById("currName"));
-  document.querySelectorAll(".responsive_gift").forEach(function (icon){
-    icon.addEventListener("click", (event) =>{
-      window.alert("testing " + event.target.id);
-      selectGift(event.target.id);
-    });
+  observer.observe(currPlayer, {subtree: true, childList: true});
+  db.ref("game/"+code+"/order").on("child_changed", function(){
+    window.location.href = "./giftreveal.html"+location.search.substring();
   });
-  //console.log(document.getElementById("currName").innerHTML);
-  //db.ref("game/"+code+"/order").on("child_changed", location.reload());
-}); */
 
-/* img.addEventListener("click", (event) =>{
-  window.alert("testing " + event.target.id);
-  selectGift(event.target.id);
-}); */
+  // Get the <button> element that closes the modal
+  var closeModal = document.getElementById("closeModal");
 
+  // When the user clicks on <span> (x), close the modal
+  closeModal.onclick = function() {
+    var modal = document.getElementById("myModal");
 
-//make gift icon clickable only for current player
-var currPlayer = document.getElementById("currName");
-const observer = new MutationObserver(function(){
-  //console.log('callback that runs when observer is triggered');
-  //console.log(currPlayer.innerText);
-  //console.log("pname: "+pname);
-  if(currPlayer.innerText == pname){
-    console.log("same");
-    //console.log(document.querySelectorAll(".responsive_gift"));
-/*     .forEach(function (icon){
-      icon.addEventListener("click", (event) =>{
-        window.alert("testing " + event.target.id);
-        selectGift(event.target.id);
-      });
-    }); */
-  }
-});
-observer.observe(currPlayer, {subtree: true, childList: true});
-db.ref("game/"+code+"/order").on("child_changed", function(){
-  window.location.href = "./giftreveal.html"+location.search.substring();
-});
-
-// Get the <button> element that closes the modal
-var closeModal = document.getElementById("closeModal");
-
-// When the user clicks on <span> (x), close the modal
-closeModal.onclick = function() {
-  var modal = document.getElementById("myModal");
-
-  // Close the modal
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  var modal = document.getElementById("myModal");
-
-  if (event.target === modal) {
     // Close the modal
     modal.style.display = "none";
   }
-}
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    var modal = document.getElementById("myModal");
+
+    if (event.target === modal) {
+      // Close the modal
+      modal.style.display = "none";
+    }
+  }
+});
