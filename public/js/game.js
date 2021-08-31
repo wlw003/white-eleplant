@@ -15,7 +15,7 @@ function generatePlayerOrderList(gameCode) {
       var list = document.getElementById("playerOrder");
 
       // If the player already took their turn...
-      if (done){
+      if (done) {
         // Add their name to the player order list lighter
         addItemToList(list, playerName, {
           fontWeight: "lighter"
@@ -80,7 +80,7 @@ function selectGift(gameCode, giftID) {
     var newKey = ref.child("history").push().key;
 
     // If the gift was opened before...
-    if(openStatus) {
+    if (openStatus) {
       // Get gift's previous owner and their order number
       var prevOwner = snapshot.child("gift/"+giftID+"/owner").val();
       var prevOwnerOrder = snapshot.child("players/"+prevOwner+"/order").val();
@@ -230,10 +230,10 @@ function addGiftStealNumToTable(gameCode) {
       var item = document.createElement("td");
 
       // If the gift was opened before...
-      if(childSnapshot.child("openStatus").val() === true){
-        if(numStealLeft > 1) {
+      if (childSnapshot.child("openStatus").val() === true) {
+        if (numStealLeft > 1) {
           item.textContent = numStealLeft + " steals left!";
-        } else if(numStealLeft === 1) {
+        } else if (numStealLeft === 1) {
           item.textContent = "1 steal left!";
         } else {
           item.textContent = "No steals left!";
@@ -267,7 +267,7 @@ function addGiftOwnerToTable(gameCode) {
       var item = document.createElement("td");
 
       // If the gift was opened before...
-      if(childSnapshot.child("openStatus").val() === true){
+      if (childSnapshot.child("openStatus").val() === true) {
         item.textContent = owner;
       }
 
@@ -285,7 +285,7 @@ function addGiftOwnerToTable(gameCode) {
  * Function displays owner's gift
  * @param {string} gameCode
  */
-function addOwnGiftToTable(gameCode, playerName){
+function addOwnGiftToTable(gameCode, playerName) {
   db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
     // Get table element and create new table row element
     var table = document.getElementById("giftTable");
@@ -297,10 +297,8 @@ function addOwnGiftToTable(gameCode, playerName){
       var giftDonor = childSnapshot.child("name").val();
       var item = document.createElement("td");
 
-      console.log(giftDonor + ":" + playerName);
-
       // If the player is the gift donor...
-      if(giftDonor === playerName){
+      if (giftDonor === playerName) {
         item.appendChild(document.createTextNode("This is from you!"));
       } else {
         item.appendChild(document.createTextNode(""));
@@ -316,7 +314,7 @@ function addOwnGiftToTable(gameCode, playerName){
   });
 }
 
-function addGiftInfoToTable(gameCode){
+function addGiftInfoToTable(gameCode) {
   db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
     // Get table element and create new table row element
     var table = document.getElementById("giftTable");
@@ -328,7 +326,7 @@ function addGiftInfoToTable(gameCode){
       var item = document.createElement("td");
 
       // If the gift was opened before...
-      if(childSnapshot.child("openStatus").val() === true){
+      if (childSnapshot.child("openStatus").val() === true) {
         // Create new a element
         var a = document.createElement("a");
 
@@ -354,49 +352,39 @@ function addGiftInfoToTable(gameCode){
   });
 }
 
-function lastMove(c){
-  var ref = db.ref("game/"+c);
-  var doneCounter = 0;
+function lastMove(gameCode) {
+  db.ref("game/"+gameCode).once("value").then(function(snapshot) {
+    var doneCounter = 0;
 
-  ref.once("value").then(function(snapshot){
-    var fpe = snapshot.hasChild("firstPersonEvent");
-    if(fpe){
-      //first person event has happened already
-      console.log("firstPersonEvent");
-      //want to check if everyone has choosen a gift already
-      snapshot.child("order").forEach((childSnapshot) => {
-        var open = childSnapshot.child("done").val();
-        if(open){
-          doneCounter++;
-        }
-      })
-      if(snapshot.child("order").numChildren() == doneCounter){
-        console.log("sdfsd");
-        window.location.href = "./endgame.html"+location.search.substring();
+    // For each player in the player order list...
+    snapshot.child("order").forEach((childSnapshot) => {
+      // If player is done playing...
+      if (childSnapshot.child("done").val() === true) {
+        doneCounter++;
       }
-      //case when all gift are stolen
+    });
+
+    // If every player is done playing...
+    if (snapshot.child("order").numChildren() == doneCounter) {
+      window.location.href = "./endgame.html"+location.search.substring();
+    }
+
+    // If first person event...
+    if (snapshot.hasChild("firstPersonEvent") === true) {
       var stealCounter = 0;
-      snapshot.child("gift").forEach((childSnapshot) =>{
+
+      // For every gift in the game
+      snapshot.child("gift").forEach((childSnapshot) => {
         var numSteal = childSnapshot.child("numStealLeft").val();
-        if(numSteal <= 0){
+
+        // If gift has no steals left...
+        if (numSteal < 1) {
           stealCounter++;
         }
       });
-      if(snapshot.child("gift").numChildren() == stealCounter){
-        window.location.href = "./endgame.html"+location.search.substring();
-      }
-    } else{
-      //first person even has not happened
-      //want to check if everyone has choosen a gift already
-      snapshot.child("order").forEach((childSnapshot) => {
-        var open = childSnapshot.child("done").val();
-        if(open){
-          doneCounter++;
-        }
-      })
-      if(snapshot.child("order").numChildren() == doneCounter){
-        console.log("sdfsd");
-        //window.location.href = "./firstperson.html"+location.search.substring();
+
+      // If no gifts have steals left...
+      if (snapshot.child("gift").numChildren() == stealCounter) {
         window.location.href = "./endgame.html"+location.search.substring();
       }
     }
@@ -421,13 +409,13 @@ getPlayerName((playerName) => {
 
   //make gift icon clickable only for current player
   var currPlayer = document.getElementById("currName");
-  const observer = new MutationObserver(function(){
-    if(currPlayer.innerText == playerName){
+  const observer = new MutationObserver(function() {
+    if (currPlayer.innerText == playerName) {
       console.log("same");
     }
   });
   observer.observe(currPlayer, {subtree: true, childList: true});
-  db.ref("game/"+gameCode+"/order").on("child_changed", function(){
+  db.ref("game/"+gameCode+"/order").on("child_changed", function() {
     window.location.href = "./giftreveal.html"+location.search.substring();
   });
 
