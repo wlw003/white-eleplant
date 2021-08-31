@@ -314,6 +314,10 @@ function addOwnGiftToTable(gameCode, playerName) {
   });
 }
 
+/**
+ * Function displays gift information
+ * @param {string} gameCode
+ */
 function addGiftInfoToTable(gameCode) {
   db.ref("game/"+gameCode).child("gift").once("value", (snapshot) => {
     // Get table element and create new table row element
@@ -352,6 +356,10 @@ function addGiftInfoToTable(gameCode) {
   });
 }
 
+/**
+ * Function handles endgame events
+ * @param {string} gameCode
+ */
 function lastMove(gameCode) {
   db.ref("game/"+gameCode).once("value").then(function(snapshot) {
     var doneCounter = 0;
@@ -391,6 +399,7 @@ function lastMove(gameCode) {
   });
 }
 
+// Invoke functions and generate webpage
 getPlayerName((playerName) => {
   var currentPlayer = document.getElementById("currName");
   let gameCode = getGameCode();
