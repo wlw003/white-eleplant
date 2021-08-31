@@ -392,6 +392,7 @@ function lastMove(gameCode) {
 }
 
 getPlayerName((playerName) => {
+  var currentPlayer = document.getElementById("currName");
   let gameCode = getGameCode();
 
   getCurrentPlayer(gameCode, (playerName) => {
@@ -399,44 +400,37 @@ getPlayerName((playerName) => {
     node.textContent = playerName;
   });
 
+  // Generate webpage
   generatePlayerOrderList(gameCode);
   addOwnGiftToTable(gameCode, playerName);
   addGiftIconToTable(gameCode);
   addGiftOwnerToTable(gameCode);
   addGiftStealNumToTable(gameCode);
   addGiftInfoToTable(gameCode);
+
+  // Handle endgame
   lastMove(gameCode);
 
-  //make gift icon clickable only for current player
-  var currPlayer = document.getElementById("currName");
-  const observer = new MutationObserver(function() {
-    if (currPlayer.innerText == playerName) {
-      console.log("same");
-    }
-  });
-  observer.observe(currPlayer, {subtree: true, childList: true});
   db.ref("game/"+gameCode+"/order").on("child_changed", function() {
     window.location.href = "./giftreveal.html"+location.search.substring();
   });
+});
 
-  // Get the <button> element that closes the modal
-  var closeModal = document.getElementById("closeModal");
+// Get the <button> element that closes the modal
+var closeModal = document.getElementById("closeModal");
 
-  // When the user clicks on <span> (x), close the modal
-  closeModal.onclick = function() {
-    var modal = document.getElementById("myModal");
+// Hanlde closeModal element click event
+closeModal.onclick = function() {
+  // Close modal
+  document.getElementById("myModal").style.display = "none";
+}
 
-    // Close the modal
+// Handle window click event
+window.onclick = function(event) {
+  var modal = document.getElementById("myModal");
+
+  if (event.target === modal) {
+    // Close modal
     modal.style.display = "none";
   }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    var modal = document.getElementById("myModal");
-
-    if (event.target === modal) {
-      // Close the modal
-      modal.style.display = "none";
-    }
-  }
-});
+}
