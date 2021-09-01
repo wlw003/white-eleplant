@@ -6,7 +6,7 @@
  * @param {string} giftLink gift URL
  * @param {*} callBack 
  */
-function writeGiftInfo(gameCode, playerName, giftDes, giftLink, callBack){
+function writeGiftInfo(gameCode, playerName, giftDes, giftLink, callBack) {
   // Retrieve a snapshot of all existing gifts in the database
   db.ref("game/" + gameCode).child("gift").once("value", (snapshot) => {
     var giftCode;
@@ -59,16 +59,43 @@ let roomSubmit = document.getElementById("roomSubmit");
 
 // Handle roomSubmit element click event
 roomSubmit.addEventListener("click", (event) => {
+  let giftLink = document.getElementById("giftLink").value;
   var gameCode = getGameCode();
+
+  // Create a regular expression to check if gift URL is secure
+  let regex = /https:\/\//;
+
+  // If the player did not enter a gift description...
+  if (description.value === "") {
+    alert("Oh no! Please enter a gift description");
+
+    return;
+  }
+
+  // If the gift URL is secure...
+  if (regex.test(giftLink)) {
+    // Validate URL
+    try {
+      new URL(giftLink);
+    } catch(error) {
+      alert("Oh no! Please enter a valid URL");
+
+      return;
+    }
+  } else {
+    alert("Oh no! Please enter a URL that starts with HTTPS://");
+
+    return;
+  }
 
   getPlayerName((playerName) => {
     // Write gift information into database
-    writeGiftInfo(gameCode, playerName, description.value, document.getElementById("giftLink").value, (error) => {
+    writeGiftInfo(gameCode, playerName, description.value, giftLink, (error) => {
       // Check for set and update error
       if (error == null) {
         window.location.href = "./PrepareGift2.html"+location.search.substring();
       } else {
-        window.alert(error);
+        alert(error);
       }
     });
   });
