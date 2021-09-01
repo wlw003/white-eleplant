@@ -138,14 +138,36 @@ function addGiftIconToTable(snapshot, gameCode) {
       img.alt = boxColor + " gift box with " + ribbonColor + " ribbon";
 
       // Handle gift click event
-      img.addEventListener("click", (event) =>{
+      img.addEventListener("click", (event) => {
         let currentPlayer = document.getElementById("currName").textContent;
 
         getPlayerName((playerName) => {
           // If the player is the current player
           if (currentPlayer === playerName) {
-            // Allow them to select a gift
-            selectGift(snapshot, gameCode, event.target.id);
+            let roomSubmit = document.getElementById("roomSubmit");
+
+            // If gift previously selected...
+            if (roomSubmit.value !== "") {
+              // Unhighlight gift
+              document.getElementById(roomSubmit.value).style.border = "none";
+            }
+
+            // If selected gift is re-selected
+            if (roomSubmit.value === event.target.id) {
+              // Hide submit button and clear selection
+              roomSubmit.style.visibility = "hidden";
+              roomSubmit.value = "";
+            } else {
+              // Show submit button and remember selection
+              roomSubmit.style.visibility = "visible";
+              roomSubmit.value = event.target.id;
+
+              // Highlight gift
+              Object.assign(event.target.style, {
+                border: "10px solid #ACE6F9",
+                boxSizing: "border-box"
+              });
+            }
           } else {
             // Get gift information modal
             var modal = document.getElementById("myModal");
@@ -402,6 +424,21 @@ getPlayerName((playerName) => {
     addGiftStealNumToTable(snapshot, gameCode);
     addGiftInfoToTable(snapshot, gameCode);
 
+    // Get roomSubmit element
+    let roomSubmit = document.getElementById("roomSubmit");
+
+    // Handle roomSubmit click event
+    roomSubmit.addEventListener("click", (event) => {
+      if (event.target.value === undefined) {
+        alert("Please select a gift");
+      } else {
+        let gameCode = getGameCode();
+
+        // Submit player's gift selection to database
+        selectGift(snapshot, gameCode, event.target.value);
+      }
+    });
+
     // Handle endgame
     lastMove(snapshot, gameCode);
   });
@@ -414,7 +451,7 @@ getPlayerName((playerName) => {
 // Get the <button> element that closes the modal
 var closeModal = document.getElementById("closeModal");
 
-// Hanlde closeModal element click event
+// Handle closeModal element click event
 closeModal.onclick = function() {
   // Close modal
   document.getElementById("myModal").style.display = "none";
