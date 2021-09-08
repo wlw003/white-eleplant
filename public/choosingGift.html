@@ -12,7 +12,8 @@
             https://firebase.google.com/docs/web/setup#available-libraries -->
         <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
         <script type="text/javascript" src="js/sharedComponents.js"></script>
-        <link href="css/style.css" rel="stylesheet">
+        <link href="css/layout.css" rel="stylesheet">
+        <link href="css/choosingGift.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;500&display=swap" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -20,33 +21,27 @@
     </head>
     <body>
         <div class="main-container">
-            <section id="blank">
-            </section>
-
             <section id="banner">
                 <h1><span id="currName"></span> is choosing a gift</h1>
             </section>
 
             <section id="content">
-                <br>
-                <div class="grid-container2">
-                    <div class="item1">
-                        <ol id="playerOrder">
-                            <h2>Order</h2>
-                        </ol>
-                    </div>
-                    <div class="giftwithincontainer">
-                        <table id="giftTable">
-                        </table>
+                <div id="content-body">
+                    <div class="grid-container2">
+                        <div class="item1">
+                            <ol id="playerOrder">
+                                <h2>Order</h2>
+                            </ol>
+                        </div>
+                        <div class="giftwithincontainer">
+                            <table id="giftTable">
+                            </table>
+                        </div>
                     </div>
                 </div>
-                <button type="submit" id="roomSubmit" style="visibility: hidden">I want it</button>
-            </section>
-
-            <section id="CTA">
-            </section>
-
-            <section id="blank">
+                <div id="CTA">
+                    <button type="submit" id="roomSubmit">I want it</button>
+                </div>
             </section>
         </div>
 
