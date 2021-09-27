@@ -192,6 +192,8 @@ function handleGiftClick(img){
 
 /**
  * Function to add gifts and its information to the webpage.
+ * Each gift is a child to the giftContainer and is the parent of 
+ * giftOwner, giftIcon, and numSteal.
  * @param {object} snapshot of "game/"+gameCode in database
  */
 function addGiftsToContainer(snapshot) {
@@ -202,10 +204,11 @@ function addGiftsToContainer(snapshot) {
     var gift = document.createElement("div");
     gift.className = "gift";
 
-    // add gift's owner info
     // create text element for gift's owner
     var giftOwner = document.createElement("p");
     giftOwner.className = "giftOwner";
+
+    // get gift's owner info
     // check if the gift was opened before
     if(childSnapshot.child("openStatus").val() === true) {
       giftOwner.textContent = childSnapshot.child("owner").val();
@@ -213,7 +216,7 @@ function addGiftsToContainer(snapshot) {
     gift.appendChild(giftOwner);
 
 
-    // create img element that will be child of gift
+    // create img element for gift icon
     var giftIcon = document.createElement("img");
     
     // Get gift's number of steals left
