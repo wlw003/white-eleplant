@@ -1,8 +1,9 @@
 .grid-container2 {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 75% 25%;
   grid-gap: 10px;
   padding: 10px;
+  width: 100%;
 }
 
 .grid-container2 > div {
@@ -21,17 +22,13 @@
   width: auto;
   height: auto;
 }
-.giftwithincontainer{
-  overflow-x:auto;
+
+#giftwithincontainer{
+  background-color: aqua;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-#giftTable{
-  word-wrap:break-word;
-  word-break:break-all;
-  border-spacing: 10px;
-  table-layout: fixed;
-  width: 100%;
-}
 
 #myModel{
   display: none;
@@ -91,12 +88,4 @@
 @keyframes zoom {
   from {transform:scale(0)}
   to {transform:scale(1)}
-}
-
-#giftInformation {
-  display: flex;
-  height: 50vmin;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-direction: column;
 }
