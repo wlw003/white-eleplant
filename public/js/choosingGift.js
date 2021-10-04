@@ -141,52 +141,62 @@ function handleGiftClick(img){
             border: "10px solid #ACE6F9",
             boxSizing: "border-box"
           });
+
+          displayModal(event);
         }
-      } 
-      // Get gift information modal
-      var modal = document.getElementById("myModal");
-      
-      //get game code
-      var gameCode = getGameCode();
-
-      // Get the clicked gift information from the database
-      db.ref("game/"+gameCode+"/gift/"+event.target.id).once("value", (snapshot) => {
-        // If the gift has been opened...
-        if (snapshot.child("openStatus").val() === true) {
-          // Get gift description element
-          let giftDescription = document.getElementById("giftDescription");
-
-          // Display gift description
-          giftDescription.textContent = snapshot.child("description").val();
-
-          // Change gift descriptions style
-          giftDescription.style.fontWeight = "bold";
-
-          // Create link tag element
-          let a = document.createElement('a');
-
-          // Define link tag attributes
-          a.textContent = snapshot.child("link").val();
-          a.title = snapshot.child("link").val();
-          a.href = snapshot.child("link").val();
-          a.rel = "noopener noreferrer";
-          a.target = "_blank";
-
-          // Change link's style
-          a.style.textDecoration = "underline";
-          a.style.color = "blue";
-
-          // Append link to giftURL element in DOM
-          document.getElementById("giftURL").appendChild(a);
-
-          // Open the display modal
-          modal.style.display = "block";
-        } else {
-          alert("You can't look at unopened gifts...");
-        }
-      });
-      
+      } else {
+        displayModal(event);
+      }
     })
+  });
+}
+
+/**
+ * Function to display modal
+ * @param {object} event gift click event
+ */
+function displayModal(event) {
+  // Get gift information modal
+  var modal = document.getElementById("myModal");
+
+  //get game code
+  var gameCode = getGameCode();
+
+  // Get the clicked gift information from the database
+  db.ref("game/"+gameCode+"/gift/"+event.target.id).once("value", (snapshot) => {
+    // If the gift has been opened...
+    if (snapshot.child("openStatus").val() === true) {
+      // Get gift description element
+      let giftDescription = document.getElementById("giftDescription");
+
+      // Display gift description
+      giftDescription.textContent = snapshot.child("description").val();
+
+      // Change gift descriptions style
+      giftDescription.style.fontWeight = "bold";
+
+      // Create link tag element
+      let a = document.createElement('a');
+
+      // Define link tag attributes
+      a.textContent = snapshot.child("link").val();
+      a.title = snapshot.child("link").val();
+      a.href = snapshot.child("link").val();
+      a.rel = "noopener noreferrer";
+      a.target = "_blank";
+
+      // Change link's style
+      a.style.textDecoration = "underline";
+      a.style.color = "blue";
+
+      // Append link to giftURL element in DOM
+      document.getElementById("giftURL").appendChild(a);
+
+      // Open the display modal
+      modal.style.display = "block";
+    } else {
+      alert("You can't look at unopened gifts...");
+    }
   });
 }
 
@@ -346,16 +356,27 @@ var closeModal = document.getElementById("closeModal");
 
 // Handle closeModal element click event
 closeModal.onclick = function() {
+  let giftUrl = document.getElementById("giftURL");
+
   // Close modal
   document.getElementById("myModal").style.display = "none";
+  
+  giftUrl.removeChild(
+    giftUrl.childNodes[0]
+  );
 }
 
 // Handle window click event
 window.onclick = function(event) {
+  let giftUrl = document.getElementById("giftURL");
   var modal = document.getElementById("myModal");
 
   if (event.target === modal) {
     // Close modal
     modal.style.display = "none";
+
+    giftUrl.removeChild(
+      giftUrl.childNodes[0]
+    );
   }
 }
