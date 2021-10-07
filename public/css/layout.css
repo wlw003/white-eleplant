@@ -7,6 +7,8 @@ body{
     font-family: 'Raleway', sans-serif;
     font-size: 3vmin;
     font-weight: 100;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 h1{
@@ -113,9 +115,9 @@ input[type="text"]{
         "button";
     grid-area: main;
     justify-content: center;
-    align-content: center;
     align-items: center;
     justify-items: center;
+
 }
 
 .main-container {

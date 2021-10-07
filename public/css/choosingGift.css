@@ -1,26 +1,43 @@
 .grid-container2 {
-  display: grid;
-  grid-template-columns: 75% 25%;
-  grid-gap: 10px;
+  display: flex;
+  flex-wrap: wrap-reverse;
   padding: 10px;
   width: 100%;
+  justify-content: flex-start;
 }
 
-.grid-container2 > div {
-  text-align: center;
-  padding: 10px;
+#playerOrder {
+  text-align: left;
+  max-width: 20%;
 }
 
-.item1 {
-  grid-row: 1 / 3;
-  grid-column: 2;
+#playerOrder > h2{
+  text-align: left;
 }
-
 .responsive_gift{
-  max-width: 10vw;
-  max-height: 12vh;
+  max-width: 125px;
+  max-height: 135px;
   width: auto;
   height: auto;
+}
+
+#giftContainer{
+  display: flex;
+  column-gap: 92px;
+  row-gap: 78px;
+  max-width: 80%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.gift{
+  font-weight: bolder;
+  width: 10ch;
+}
+
+#roomSubmit{
+  visibility: hidden;
 }
 
 #giftInformation {
@@ -31,19 +48,8 @@
   flex-direction: column;
 }
 
-#giftwithincontainer{
-  background-color: aqua;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-
 #myModel{
   display: none;
-}
-
-#roomSubmit{
-  visibility: hidden;
 }
 
 /* !!!!! ALL below are for the Modal (background) */
