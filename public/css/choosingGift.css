@@ -4,16 +4,24 @@
   padding: 10px;
   width: 100%;
   justify-content: flex-start;
+  column-gap: 2rem;
+  row-gap: 2rem;
 }
 
-#playerOrder {
-  text-align: left;
+#order {
   max-width: 20%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-#playerOrder > h2{
+#playerOrder{
+  justify-content: center;
   text-align: left;
 }
+
 .responsive_gift{
   max-width: 125px;
   max-height: 135px;
@@ -28,12 +36,14 @@
   max-width: 80%;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .gift{
   font-weight: bolder;
-  width: 10ch;
+  width: 12ch;
+  justify-content: center;
 }
 
 #roomSubmit{

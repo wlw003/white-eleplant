@@ -86,6 +86,7 @@ input[type="text"]{
     grid-area: banner;
     min-width: 0;
     min-height: 0;
+    text-align: center;
 }
 
 #content-body{
@@ -96,7 +97,7 @@ input[type="text"]{
 #CTA{
     grid-area: button;
     align-items: center;
-    margin: 2rem;
+    margin: 1.5rem;
 }
 
 #content{
@@ -109,7 +110,7 @@ input[type="text"]{
     min-width: 0;
     min-height: 0;
     display: grid;
-    grid-template-rows: 3fr 1fr;
+    grid-template-rows: 3.5fr 0.5fr;
     grid-template-areas: 
         "cBody"
         "button";
@@ -117,14 +118,13 @@ input[type="text"]{
     justify-content: center;
     align-items: center;
     justify-items: center;
-
 }
 
 .main-container {
     font-family: 'Raleway', sans-serif;
     background:rgb(255, 255, 255);
-    width: 95vw;
-    height: 95vh;
+    width: 95%;
+    height: 95%;
     display: grid;
     grid-template-rows: 5% 1.5fr 7fr 5%;
     grid-template-areas: 
