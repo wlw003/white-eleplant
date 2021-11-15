@@ -74,18 +74,28 @@ function selectGift(snapshot, gameCode, giftID) {
 
   // If the gift was opened before...
   if (openStatus) {
-    // Get gift's previous owner and their order number
-    var prevOwner = snapshot.child("gift/"+giftID+"/owner").val();
-    var prevOwnerOrder = snapshot.child("players/"+prevOwner+"/order").val();
+    // Get previous gift owner
+    var prevOwner = snapshot.child("gift/"+giftID+"/prevOwner").val();
+
+    // Prevent back and forth steals
+    if (prevOwner === currentPlayer) {
+      alert("You cannot steal your gift back this round");
+
+      return;
+    }
+
+    // Get gift's current owner and their order number
+    var currentOwner = snapshot.child("gift/"+giftID+"/owner").val();
+    var currentOwnerOrder = snapshot.child("players/"+currentOwner+"/order").val();
 
     // Get gift's number of steals left
     var numStealLeft = snapshot.child("gift/"+giftID+"/numStealLeft").val();
 
     // Change the previous owner's done status to false
-    // Set gift's previous owner to prevOwner
+    // Set gift's current owner to prevOwner
     // Decrease gift's steal counter
-    update["order/"+prevOwnerOrder+"/done"] = false;
-    update["gift/"+giftID+"/prevOwner"] = prevOwner;
+    update["order/"+currentOwnerOrder+"/done"] = false;
+    update["gift/"+giftID+"/prevOwner"] = currentOwner;
     update["gift/"+giftID+"/numStealLeft"] = numStealLeft - 1;
   } else {
     // Change gift's open status to true
@@ -102,6 +112,16 @@ function selectGift(snapshot, gameCode, giftID) {
   // Change done status of current player to true
   update["gift/"+giftID+"/owner"] = currentPlayer;
   update["order/"+order+"/done"] = true;
+
+  // Allow player to steal back gift next round
+  snapshot.child("gift").forEach((childSnapshot) => {
+    var prevOwner = childSnapshot.child("prevOwner").val();
+    var giftID = childSnapshot.key;
+
+    if (prevOwner === currentPlayer) {
+      update["gift/"+giftID+"/prevOwner"] = "";
+    }
+  });
 
   ref.update(update);
 }
