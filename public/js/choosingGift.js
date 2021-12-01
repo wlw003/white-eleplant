@@ -148,12 +148,10 @@ function handleGiftClick(img){
 
         // If selected gift is re-selected
         if (roomSubmit.value === event.target.id) {
-          // Hide submit button and clear selection
-          roomSubmit.style.visibility = "hidden";
+          // Clear selection
           roomSubmit.value = "";
         } else {
-          // Show submit button and remember selection
-          roomSubmit.style.visibility = "visible";
+          // Remember selection
           roomSubmit.value = event.target.id;
 
           // Highlight gift
@@ -311,26 +309,40 @@ function addGiftsToContainer(snapshot) {
   });
 
   // If every player is done playing...
-  if (snapshot.child("order").numChildren() == doneCounter) {
-    window.location.href = "./endgame.html"+location.search.substring();
-  }
+  if (snapshot.child("order").numChildren() === doneCounter) {
+    // If first person event...
+    if (snapshot.hasChild("firstPersonEvent") === false) {
+      var stealCounter = 0;
+  
+      // For every gift in the game
+      snapshot.child("gift").forEach((childSnapshot) => {
+        var numSteal = childSnapshot.child("numStealLeft").val();
+  
+        // If gift has no steals left...
+        if (numSteal < 1) {
+          stealCounter++;
+        }
+      });
+  
+      // If no gifts have steals left...
+      if (snapshot.child("gift").numChildren() == stealCounter) {
+        window.location.href = "./endgame.html"+location.search.substring();
+      } else {
+        var gameCode = getGameCode();
+        var ref = db.ref("game/"+gameCode);
+        
+        var players = snapshot.child("order").val();
+        
+        firstPlayer = players[Object.keys(players)[0]];
+        firstPlayerOrder = Object.keys(players)[0];
 
-  // If first person event...
-  if (snapshot.hasChild("firstPersonEvent") === true) {
-    var stealCounter = 0;
+        var update = {};
+        update["order/"+firstPlayerOrder+"/done"] = false;
+        update["firstPersonEvent"] = "In progress";
 
-    // For every gift in the game
-    snapshot.child("gift").forEach((childSnapshot) => {
-      var numSteal = childSnapshot.child("numStealLeft").val();
-
-      // If gift has no steals left...
-      if (numSteal < 1) {
-        stealCounter++;
+        ref.update(update);
       }
-    });
-
-    // If no gifts have steals left...
-    if (snapshot.child("gift").numChildren() == stealCounter) {
+    } else {
       window.location.href = "./endgame.html"+location.search.substring();
     }
   }
@@ -347,23 +359,83 @@ getPlayerName((playerName) => {
     generatePlayerOrderList(snapshot);
     addGiftsToContainer(snapshot);
 
-    // Get roomSubmit element
-    let roomSubmit = document.getElementById("roomSubmit");
+    getPlayerName((playerName) => {
+      var currentPlayer = document.getElementById("currName").textContent;
 
-    // Handle roomSubmit click event
-    roomSubmit.addEventListener("click", (event) => {
-      if (event.target.value === undefined) {
-        alert("Please select a gift");
+      if (currentPlayer === playerName) {
+        // Get roomSubmit element
+        let roomSubmit = document.getElementById("roomSubmit");
+        roomSubmit.style.visibility = "visible";
+
+        if (snapshot.child("firstPersonEvent").val() === "In progress") {
+          const banner = document.querySelector("#banner > h1").childNodes[1];
+          banner.textContent = " went first, so they have a chance to steal!";
+
+          let cta = document.getElementById("CTA");
+
+          let keepPresent = document.createElement("button");
+          keepPresent.textContent = "Keep present";
+
+          cta.appendChild(keepPresent);
+
+          // Handle roomSubmit click event
+          roomSubmit.addEventListener("click", (event) => {
+            if (event.target.value === "") {
+              alert("Please select a gift");
+            } else {
+              let gameCode = getGameCode();
+              var ref = db.ref("game/"+gameCode);
+
+              var gifts = snapshot.child("gift").val();
+              let currentPlayerGiftId;
+
+              for (var giftId in gifts) {
+                if (gifts[giftId].owner === currentPlayer) {
+                  currentPlayerGiftId = giftId;
+
+                  break;
+                }
+              }
+
+              let update = {};
+
+              update["gift/"+currentPlayerGiftId+"/owner"] = "";
+              update["firstPersonEvent"] = "Done";
+
+              ref.update(update).then(() => {
+                // Submit player's gift selection to database
+                selectGift(snapshot, gameCode, event.target.value);
+              });
+            }
+          });
+
+          // Handle keepPresent click event
+          keepPresent.addEventListener("click", (event) => {
+            window.location.href = "./endgame.html"+location.search.substring();
+          });
+        } else {
+          // Handle roomSubmit click event
+          roomSubmit.addEventListener("click", (event) => {
+            if (event.target.value === "") {
+              alert("Please select a gift");
+            } else {
+              let gameCode = getGameCode();
+      
+              // Submit player's gift selection to database
+              selectGift(snapshot, gameCode, event.target.value);
+            }
+          });
+        }
       } else {
-        let gameCode = getGameCode();
-
-        // Submit player's gift selection to database
-        selectGift(snapshot, gameCode, event.target.value);
+        if (snapshot.child("firstPersonEvent").val() === "In progress") {
+          const banner = document.querySelector("#banner > h1").childNodes[1];
+          banner.textContent = " went first, so they have a chance to steal!";
+        }
       }
+      
+      // Handle endgame
+      lastMove(snapshot);
     });
-
-    // Handle endgame
-    lastMove(snapshot);
   });
 
   db.ref("game/"+gameCode+"/order").on("child_changed", function() {
