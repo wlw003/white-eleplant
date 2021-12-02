@@ -1,10 +1,10 @@
+/**
+ * Function that redirects to the game summary page after 3 seconds
+ */
 function goToNextPage(){
   var timeleft = 3;
-  //var countdown = document.getElementById("countdown");
-  //countdown.appendChild(document.createTextNode(timeleft));
   var pageTimer = setInterval(function(){
     timeleft--;
-    //countdown.textContent = timeleft;
     if(timeleft <= 0) {
       clearInterval(pageTimer);
       window.location.href = "./summary.html"+location.search.substring();
@@ -13,32 +13,21 @@ function goToNextPage(){
 }
 
 window.addEventListener("load", (event) => {
-  var sp = location.search.substring(1).split("&");
-  var temp = sp[0].split("=");
-  //console.log(temp);
-  var temp2 = sp[1].split("=");
-  //console.log(temp2);
-
-  if(temp[0] == "playerName"){
-    var code = temp2[1];
-    var name = temp[1];
-  }
-  else {
-    var code = temp[1];
-    var name = temp2[1];
-  }
-
-  var ref = db.ref("game/"+code).child("gift");
+  var gameCode = getGameCode();
+  var ref = db.ref("game/"+gameCode).child("gift");
   ref.once("value", (snapshot) =>{  
-    //console.log(snapshot);  
+
     var list = document.getElementById("giftSummary");
     snapshot.forEach((childSnapshot) =>{
+
+      // get gift info
       var owner = childSnapshot.child("owner").val();
-      //console.log(owner);
       var giftDes = childSnapshot.child("description").val();
-      //var gifter = childSnapshot.child("name").val();
       var link = childSnapshot.child("link").val();
 
+      // create a li element with text in the following format:
+      // [player] has received [gift]
+      // [gift] should be a link
       var item = document.createElement("li");
       var txt = owner + " has received ";
       item.appendChild(document.createTextNode(txt));
@@ -48,9 +37,12 @@ window.addEventListener("load", (event) => {
       a.href = link;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
+
+      // append childs
       item.appendChild(a);
       list.appendChild(item);
     });
   });
+
   goToNextPage();
 });

@@ -275,8 +275,6 @@ function addGiftsToContainer(snapshot) {
 
     //add "This is yours"! badge
     let gameCode = getGameCode();
-
-    // get player's gift code
     getPlayerName((playerName) =>{
       // get player's gift code
       getPlayerGiftCode(gameCode, playerName, (giftCode) =>{
