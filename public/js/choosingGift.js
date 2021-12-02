@@ -255,7 +255,7 @@ function addGiftsToContainer(snapshot) {
     var numStealLeft = childSnapshot.child("numStealLeft").val();
 
     // If a gift has steals left...
-    if (numStealLeft > 0) {
+    if (numStealLeft > 0 || giftOwner.textContent === "") {
       // Get gift ribbon anf box color
       var ribbonColor = childSnapshot.child("ribbonColor").val();
       var boxColor = childSnapshot.child("boxColor").val();
