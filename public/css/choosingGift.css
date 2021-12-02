@@ -59,6 +59,10 @@
   visibility: hidden;
 }
 
+#keepPresent {
+  visibility: hidden;
+}
+
 #giftInformation {
   display: flex;
   height: 50vmin;
