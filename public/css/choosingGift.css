@@ -29,6 +29,14 @@
   height: auto;
 }
 
+.your_gift{
+  position: absolute;
+  right: 10%;
+  bottom: 10%;
+  width: 25%;
+  max-width: 25%;
+}
+
 #giftContainer{
   display: flex;
   column-gap: 92px;
@@ -44,6 +52,7 @@
   font-weight: bolder;
   width: 12ch;
   justify-content: center;
+  position: relative;
 }
 
 #roomSubmit{

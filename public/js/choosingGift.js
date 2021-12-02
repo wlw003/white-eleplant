@@ -273,6 +273,24 @@ function addGiftsToContainer(snapshot) {
     giftIcon.className = "responsive_gift "+ childSnapshot.key;
     gift.appendChild(giftIcon);
 
+    //add "This is yours"! badge
+    let gameCode = getGameCode();
+
+    // get player's gift code
+    getPlayerName((playerName) =>{
+      // get player's gift code
+      getPlayerGiftCode(gameCode, playerName, (giftCode) =>{
+        // compare player's giftCode with current gift key
+        if(giftCode == childSnapshot.key){
+          var badge = document.createElement("img");
+          badge.src = "./images/your gift.png";
+          badge.alt = "This is your present!";
+          badge.className = "your_gift";
+          gift.appendChild(badge);
+        }
+      });
+      
+    });
 
     // create text element for number of steals
     var numSteal = document.createElement("p");
@@ -294,6 +312,7 @@ function addGiftsToContainer(snapshot) {
     container.appendChild(gift);
   });
 }
+
 
 /**
  * Function handles endgame events
