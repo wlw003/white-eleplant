@@ -432,7 +432,14 @@ getPlayerName((playerName) => {
 
           // Handle keepPresent click event
           keepPresent.addEventListener("click", (event) => {
-            window.location.href = "./endgame.html"+location.search.substring();
+            // update game done status to true
+            let update = {};
+            update["status/done"] = "true";
+
+            db.ref("game/"+gameCode).update(update).then(() =>{
+              window.location.href = "./endgame.html"+location.search.substring();
+            });
+            
           });
         } else {
           // Handle roomSubmit click event
@@ -459,8 +466,15 @@ getPlayerName((playerName) => {
     });
   });
 
+  // non current players page redirects
   db.ref("game/"+gameCode+"/order").on("child_changed", function() {
     window.location.href = "./giftreveal.html"+location.search.substring();
+  });
+
+  db.ref("game/"+gameCode+"/status").on("child_changed", (snapshot)  => {
+    if(snapshot.child("done")){
+      window.location.href = "./endgame.html"+location.search.substring();
+    }
   });
 });
 
