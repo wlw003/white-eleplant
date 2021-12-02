@@ -283,7 +283,7 @@ function addGiftsToContainer(snapshot) {
         // compare player's giftCode with current gift key
         if(giftCode == childSnapshot.key){
           var badge = document.createElement("img");
-          badge.src = "./images/your gift.png";
+          badge.src = "./images/Present badge.png";
           badge.alt = "This is your present!";
           badge.className = "your_gift";
           gift.appendChild(badge);
