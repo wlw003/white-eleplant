@@ -1,23 +1,31 @@
 /**
- * Function that creates a hyperlink using gift information. The gift 
- * description will be used as clickable text, leading to the gift URL.
+ * Function that displays the gift information. The gift URL
+ * is under the gift description.
  * @param {string} gameCode current game code
  * @param {string} giftID current gift ID
  */
 function createLink(gameCode, giftID) {
   db.ref("game/"+gameCode+"/gift/"+giftID).once("value").then((snapshot) => {
+    // get gift info
+    var link = snapshot.child("link").val();
+    var description = snapshot.child("description").val();
+    
+    // create text node for gift description
+    var txtNode = document.createTextNode(description);
+
     // Create link tag element
     var a = document.createElement('a');
 
     // Define link tag attributes
-    a.textContent = snapshot.child("description").val();
-    a.title = snapshot.child("description").val();
-    a.href = snapshot.child("link").val();
+    a.textContent = link;
+    a.title = link;
+    a.href = link;
     a.rel = "noopener noreferrer";
     a.target = "_blank";
 
     // Append link tag element to giftDes element in DOM
-    document.getElementById("giftDes").appendChild(a);
+    document.getElementById("giftDes").appendChild(txtNode);
+    document.getElementById("giftInfo").appendChild(a);
   });
 }
 

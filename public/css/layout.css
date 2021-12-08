@@ -150,6 +150,11 @@ input[type="text"]{
     list-style-type:none;
 }
 
+#giftInfo{
+    max-width: 75%;
+    word-break: break-all;
+}
+
 a:visited {
     color:#888
 }
