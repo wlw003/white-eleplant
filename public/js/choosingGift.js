@@ -164,12 +164,24 @@ function handleGiftClick(img){
             boxSizing: "border-box"
           });
 
-          displayModal(event);
+          viewGiftInfo(event);
         }
       } else {
-        displayModal(event);
+        viewGiftInfo(event);
       }
     })
+  });
+}
+
+/**
+ * Function to view gift
+ * @param {object} event 
+ */
+function viewGiftInfo(event){
+  // handle button click event
+  var btn = document.getElementById("viewGift");
+  btn.addEventListener("click", () => {
+    displayModal(event);
   });
 }
 
@@ -434,7 +446,7 @@ getPlayerName((playerName) => {
           keepPresent.addEventListener("click", (event) => {
             // update game done status to true
             let update = {};
-            update["status/done"] = "true";
+            update["status/done"] = true;
 
             db.ref("game/"+gameCode).update(update).then(() =>{
               window.location.href = "./endgame.html"+location.search.substring();
@@ -467,14 +479,14 @@ getPlayerName((playerName) => {
   });
 
   // non current players page redirects
-  db.ref("game/"+gameCode+"/order").on("child_changed", function() {
-    window.location.href = "./giftreveal.html"+location.search.substring();
-  });
-
   db.ref("game/"+gameCode+"/status").on("child_changed", (snapshot)  => {
     if(snapshot.child("done")){
       window.location.href = "./endgame.html"+location.search.substring();
     }
+  });
+
+  db.ref("game/"+gameCode+"/order").on("child_changed", function() {
+    window.location.href = "./giftreveal.html"+location.search.substring();
   });
 });
 

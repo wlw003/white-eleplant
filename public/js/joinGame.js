@@ -14,19 +14,29 @@ var handleSubmit = () => {
     db.ref("game").ref.once("value", (snapshot) => {
       // If the game code exists...
       if(gameCode !== "" && snapshot.child(gameCode).exists()){
-        // Retrieve a snapshot of all existing players in the database
-        db.ref("game").child(gameCode+"/players").once("value", (childSnapshot) =>{
-          // If a player with the same name already exists...
-          if(childSnapshot.child(playerName).exists()){
-            window.alert("This name is already taken! Please choose another name.");
-          } else{
-            createNewPlayer(gameCode, playerName, false, (playerID) =>{
-              // Modify URL
-              document.location.search = "?playerName="+playerName+"&game="+gameCode;
-              window.location.href = "./WaitingRoom.html"+"?playerName="+playerID+"&game="+gameCode;
-            });
-          }
-        });
+        // Check if the game has already started or ended
+        var status = snapshot.child(gameCode+"/status");
+        var startStatus = status.child("start").val();
+        var endStatus = status.child("done").val();
+        if(startStatus) {
+          window.alert("Can't join the game! Game has already started");
+        } else if (endStatus) {
+          window.alert("Can't join a finished game!");
+        } else {
+          // Retrieve a snapshot of all existing players in the database
+          db.ref("game").child(gameCode+"/players").once("value", (childSnapshot) =>{
+            // If a player with the same name already exists...
+            if(childSnapshot.child(playerName).exists()){
+              window.alert("This name is already taken! Please choose another name.");
+            } else{
+              createNewPlayer(gameCode, playerName, false, (playerID) =>{
+                // Modify URL
+                document.location.search = "?playerName="+playerName+"&game="+gameCode;
+                window.location.href = "./WaitingRoom.html"+"?playerName="+playerID+"&game="+gameCode;
+              });
+            }
+          });
+        }
       } else{
         window.alert("Invaild Code! Please enter a vaild game code.")
       }
