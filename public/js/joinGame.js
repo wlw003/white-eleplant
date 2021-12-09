@@ -18,10 +18,10 @@ var handleSubmit = () => {
         var status = snapshot.child(gameCode+"/status");
         var startStatus = status.child("start").val();
         var endStatus = status.child("done").val();
-        if(startStatus) {
-          window.alert("Can't join the game! Game has already started");
-        } else if (endStatus) {
+        if(endStatus) {
           window.alert("Can't join a finished game!");
+        } else if (startStatus) {
+          window.alert("Can't join the game! Game has already started");
         } else {
           // Retrieve a snapshot of all existing players in the database
           db.ref("game").child(gameCode+"/players").once("value", (childSnapshot) =>{
