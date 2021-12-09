@@ -429,6 +429,7 @@ getPlayerName((playerName) => {
 
               update["gift/"+currentPlayerGiftId+"/owner"] = "";
               update["firstPersonEvent"] = "Done";
+              update["status/firstPerson"] = true;
 
               ref.update(update).then(() => {
                 // Submit player's gift selection to database
@@ -442,6 +443,7 @@ getPlayerName((playerName) => {
             // update game done status to true
             let update = {};
             update["status/done"] = true;
+            update["status/firstPerson"] = true;
 
             db.ref("game/"+gameCode).update(update).then(() =>{
               window.location.href = "./endgame.html"+location.search.substring();
@@ -475,7 +477,7 @@ getPlayerName((playerName) => {
 
   // non current players page redirects
   db.ref("game/"+gameCode+"/status").on("child_changed", (snapshot)  => {
-    if(snapshot.child("done")){
+    if(snapshot.child("done") && snapshot.child("firstPerson")){
       window.location.href = "./endgame.html"+location.search.substring();
     }
   });
