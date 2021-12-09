@@ -163,25 +163,11 @@ function handleGiftClick(img){
             border: "10px solid #ACE6F9",
             boxSizing: "border-box"
           });
-
-          viewGiftInfo(event);
         }
       } else {
-        viewGiftInfo(event);
+        displayModal(event);
       }
     })
-  });
-}
-
-/**
- * Function to view gift
- * @param {object} event 
- */
-function viewGiftInfo(event){
-  // handle button click event
-  var btn = document.getElementById("viewGift");
-  btn.addEventListener("click", () => {
-    displayModal(event);
   });
 }
 
@@ -399,6 +385,13 @@ getPlayerName((playerName) => {
         // Get roomSubmit element
         let roomSubmit = document.getElementById("roomSubmit");
         roomSubmit.style.visibility = "visible";
+
+        let viewGift = document.getElementById("viewGift");
+        viewGift.style.visibility = "visible";
+
+        viewGift.addEventListener("click", (event) => {
+          displayModal(event);
+        });
 
         if (snapshot.child("firstPersonEvent").val() === "In progress") {
           const banner = document.querySelector("#banner > h1").childNodes[1];

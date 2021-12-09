@@ -59,6 +59,10 @@
   visibility: hidden;
 }
 
+#viewGift {
+  visibility: hidden;
+}
+
 #keepPresent {
   visibility: hidden;
 }
