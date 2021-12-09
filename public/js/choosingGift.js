@@ -390,6 +390,8 @@ getPlayerName((playerName) => {
         viewGift.style.visibility = "visible";
 
         viewGift.addEventListener("click", (event) => {
+          event.target.id = roomSubmit.value;
+
           displayModal(event);
         });
 
